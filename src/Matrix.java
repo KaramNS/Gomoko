@@ -15,11 +15,19 @@ public class Matrix {
 
     /*######## Getters/Setter */
 
+    /**
+     *  set a cell in a position in the matrix
+     * @param x is a the x axis
+     * @param y is the y axis
+     * @param cell is the cell you want to put in this slot
+     */
     public void setTable(int x, int y , Cell cell){
         this.table[x][y] = cell;
     }
 
 
+
+ 
     @Override
     public String toString() {
         String s = "";
