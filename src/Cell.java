@@ -22,7 +22,8 @@ enum Colors {
     YELLOW,
     PURPLE,
     ORANGE,
-    WHITE;
+    BLACK, // black == there is no cell
+    WHITE; //white ==  cell empty
 }
 
 public class Cell{
@@ -36,6 +37,7 @@ private Colors color;
 
     public Cell(){
         this.color = Colors.WHITE;
+        
     }
 
 
@@ -88,6 +90,20 @@ private Colors color;
 
     /*################ Methods #############*/
 
+    public boolean  isWin(Direction direction){
+        var neighbor =this.directions.get(direction);
+        int counter = 0;
+
+        while(neighbor.getColor() == this.getColor()){
+            counter += 1;
+            if(counter == 5){
+                return true;
+            }
+            neighbor.isWin(direction);
+
+        }
+        return false;
+    }
     
 
 
