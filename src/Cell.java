@@ -34,7 +34,7 @@ private Colors color;
 
     /*############# Constructors ###########*/
 
-    Cell(){
+    public Cell(){
         this.color = Colors.WHITE;
     }
 
@@ -55,7 +55,7 @@ private Colors color;
 
     @Override
     public String toString() {
-        var s = String.format("Cell color: %s", this.colo)
+        var s = String.format("Cell color: %s", this.colo);
         return s;
     }
 
