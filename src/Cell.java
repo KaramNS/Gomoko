@@ -48,7 +48,7 @@ private Colors color;
      * Getter for colors
      * @return the color of the cell
      */
-    public Colors getColor(){
+    public  Colors getColor(){
         return this.color;
     }
 
@@ -59,7 +59,7 @@ private Colors color;
      * cell is the neighbor
      * @return the cell of the direction you specified
      */
-    public Cell getNeighbor(Direction direction){
+    public  Cell getNeighbor(Direction direction){
         return directions.get(direction);
     }
 
@@ -67,7 +67,7 @@ private Colors color;
      * set a new colors for the cell
      * @param newColor the color you want for this cell
      */
-    public void setColor(Colors newColor){
+    private void setColor(Colors newColor){
         this.color = newColor;
     }
 
@@ -77,7 +77,7 @@ private Colors color;
      * @param direction the direction of the neighbor
      * @return the color of the neighbor
      */
-    public Colors getNeighbColors(Direction direction){
+    private Colors getNeighborColors(Direction direction){
         return getNeighbor(direction).getColor();
     }
 
@@ -90,10 +90,16 @@ private Colors color;
 
     /*################ Methods #############*/
 
+    /**
+     * Verrify if it is win
+     * @param direction is the direction you want to verify if it is win
+     * 
+     * @return true if win, else return false
+     */
     public boolean  isWin(Direction direction){
         var neighbor =this.directions.get(direction);
         int counter = 0;
-
+    
         while(neighbor.getColor() == this.getColor()){
             counter += 1;
             if(counter == 5){
