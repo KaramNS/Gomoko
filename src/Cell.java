@@ -40,7 +40,7 @@ private Token token;
      * Getter for Color
      * @return the color of the cell
      */
-    private  Color getColor(){
+    public  Color getColor(){
         return this.token.getColor();
     }
     
@@ -69,7 +69,7 @@ private Token token;
      * @param direction the direction of the neighbor
      * @return the color of the neighbor
      */
-    private Color getNeighborColor(Direction direction){
+    public Color getNeighborColor(Direction direction){
         return getNeighbor(direction).getColor();
     }
     
