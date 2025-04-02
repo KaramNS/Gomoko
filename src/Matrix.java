@@ -2,14 +2,19 @@ package src;
 
 public class Matrix {
     
-    private Cell[][] table;
+    private Cell[][] grid;
 
 
 
     /*######## Constructors ###### */
 
     public Matrix(){
-        this.table = new Cell[15][15];
+        this.grid = new Cell[15][15];
+        for(Cell[] e : this.grid){
+            for(Cell caseCell : e){
+                caseCell = new Cell();
+            }
+        }
     }
 
 
@@ -21,8 +26,8 @@ public class Matrix {
      * @param y is the y axis
      * @param cell is the cell you want to put in this slot
      */
-    public void setTable(int x, int y , Cell cell){
-        this.table[x][y] = cell;
+    public void setGrid(int x, int y , Cell cell){
+        this.grid[x][y] = cell;
     }
 
 
@@ -31,7 +36,7 @@ public class Matrix {
     @Override
     public String toString() {
         String s = "";
-        int length = this.table.length;
+        int length = this.grid.length;
 
 
         for(int i = 0 ; i < length; i++) {
@@ -40,7 +45,7 @@ public class Matrix {
 
             for(int j = 0 ; j < length ; j++){
 
-                s = s + table[i][j] + " ";
+                s = s + grid[i][j] + " ";
 
             }
 

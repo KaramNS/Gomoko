@@ -48,7 +48,7 @@ private Colors color;
      * Getter for colors
      * @return the color of the cell
      */
-    public  Colors getColor(){
+    private  Colors getColor(){
         return this.color;
     }
 
@@ -96,16 +96,15 @@ private Colors color;
      * 
      * @return true if win, else return false
      */
-    public boolean  isWin(Direction direction){
+    public boolean  isWin(Direction direction,int counter){
         var neighbor =this.directions.get(direction);
-        int counter = 0;
     
         while(neighbor.getColor() == this.getColor()){
             counter += 1;
             if(counter == 5){
                 return true;
             }
-            neighbor.isWin(direction);
+            neighbor.isWin(direction,counter);
 
         }
         return false;
