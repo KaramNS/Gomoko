@@ -8,8 +8,8 @@ enum Color {
     YELLOW,
     PURPLE,
     ORANGE,
-    BLACK, // black == there is no cell
-    WHITE; //white ==  cell empty
+    BLACK, 
+    WHITE; 
 }
 public class Token {
     private  final Color color;
@@ -24,4 +24,12 @@ public class Token {
     public Color getColor(){
         return this.color;
     }
+
+    @Override
+    public String toString() {
+        return ""+this.getColor();
+    }
+
+
+    
 }
