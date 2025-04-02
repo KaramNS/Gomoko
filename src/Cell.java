@@ -37,6 +37,7 @@ private Colors color;
 
     public Cell(){
         this.color = Colors.WHITE;
+        this.directions = new EnumMap<>(Direction.class);
         
     }
 
@@ -51,7 +52,7 @@ private Colors color;
     private  Colors getColor(){
         return this.color;
     }
-
+    
 
     /**
      * 
@@ -62,7 +63,7 @@ private Colors color;
     public  Cell getNeighbor(Direction direction){
         return directions.get(direction);
     }
-
+    
     /**
      * set a new colors for the cell
      * @param newColor the color you want for this cell
@@ -70,8 +71,8 @@ private Colors color;
     private void setColor(Colors newColor){
         this.color = newColor;
     }
-
-
+    
+    
     /**
      * Get the color of a specified neighbor
      * @param direction the direction of the neighbor
@@ -80,7 +81,28 @@ private Colors color;
     private Colors getNeighborColors(Direction direction){
         return getNeighbor(direction).getColor();
     }
+    
+    
+    /**
+     * Get the opposite direction of the parameter
+     * @param dir the direction you want to get the opposite
+     * @return the opposite direction
+     */
+    private Direction getOpposite(Direction dir) {
+        return switch (dir) {
+            case UP -> Direction.DOWN;
+            case DOWN -> Direction.UP;
+            case LEFT -> Direction.RIGHT;
+            case RIGHT -> Direction.LEFT;
+            case UP_LEFT -> Direction.DOWN_RIGHT;
+            case UP_RIGHT -> Direction.DOWN_LEFT;
+            case DOWN_LEFT -> Direction.UP_RIGHT;
+            case DOWN_RIGHT -> Direction.UP_LEFT;
+        };
+    }
 
+
+    /*############ toString() ############## */
 
     @Override
     public String toString() {
@@ -90,26 +112,48 @@ private Colors color;
 
     /*################ Methods #############*/
 
+
     /**
-     * Verrify if it is win
-     * @param direction is the direction you want to verify if it is win
-     * 
-     * @return true if win, else return false
+     * count the colors in the same direction, starting with the current cell
+     * @param direction the direction you want to verrify if it is win
+     * @return a boolean if it is win
      */
-    public boolean  isWin(Direction direction,int counter){
-        var neighbor =this.directions.get(direction);
-    
-        while(neighbor.getColor() == this.getColor()){
-            counter += 1;
-            if(counter == 5){
+    private int countColors(Direction direction){
+
+        var neighbor = this.getNeighbor(direction);
+        int count = 0;
+
+        while(neighbor != null && neighbor.getColor() == this.getColor() ) { 
+
+            count ++;            
+            neighbor.countColors(direction);
+            
+        }
+
+        return (count );
+    }
+
+
+
+    /**
+     * verrify if you win the game, starting with a cell
+     * @param total the total number of colors in the same direction
+     * @return a boolean, true if you win
+     */
+    public boolean isWin(int total){
+
+        for(Direction dir : Direction.values()){
+            int count = 1;
+            count += countColors(dir);
+            count += countColors(getOpposite(dir));
+
+            if(count >= total){
                 return true;
             }
-            neighbor.isWin(direction,counter);
 
         }
         return false;
+  
     }
     
-
-
 }

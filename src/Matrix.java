@@ -56,5 +56,19 @@ public class Matrix {
 
 
     
+    public boolean checkIsWin(){
+
+        
+        for(Cell[] c : this.grid){
+            for(Cell caseCell : c){
+                if(caseCell.isWin( 5)){
+                    return true;
+
+                }
+            }
+        }
+
+        return false;
+    }
 
 }
