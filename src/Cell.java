@@ -15,7 +15,7 @@ enum Direction{
 
 }
 
-enum Colors {
+enum Color {
     RED,
     BLUE,
     GREEN,
@@ -30,13 +30,13 @@ public class Cell{
 
 private EnumMap<Direction, Cell> directions;
 
-private Colors color;
+private Color color;
 
 
     /*############# Constructors ###########*/
 
     public Cell(){
-        this.color = Colors.WHITE;
+        this.color = Color.WHITE;
         this.directions = new EnumMap<>(Direction.class);
         
     }
@@ -46,10 +46,10 @@ private Colors color;
     /*############# Getters/Setters ###########*/
 
     /**
-     * Getter for colors
+     * Getter for Color
      * @return the color of the cell
      */
-    private  Colors getColor(){
+    private  Color getColor(){
         return this.color;
     }
     
@@ -65,10 +65,10 @@ private Colors color;
     }
     
     /**
-     * set a new colors for the cell
+     * set a new Color for the cell
      * @param newColor the color you want for this cell
      */
-    private void setColor(Colors newColor){
+    private void setColor(Color newColor){
         this.color = newColor;
     }
     
@@ -78,7 +78,7 @@ private Colors color;
      * @param direction the direction of the neighbor
      * @return the color of the neighbor
      */
-    private Colors getNeighborColors(Direction direction){
+    private Color getNeighborColor(Direction direction){
         return getNeighbor(direction).getColor();
     }
     
@@ -114,11 +114,11 @@ private Colors color;
 
 
     /**
-     * count the colors in the same direction, starting with the current cell
+     * count the Color in the same direction, starting with the current cell
      * @param direction the direction you want to verrify if it is win
      * @return a boolean if it is win
      */
-    private int countColors(Direction direction){
+    private int countColor(Direction direction){
 
         var neighbor = this.getNeighbor(direction);
         int count = 0;
@@ -126,7 +126,7 @@ private Colors color;
         while(neighbor != null && neighbor.getColor() == this.getColor() ) { 
 
             count ++;            
-            neighbor.countColors(direction);
+            neighbor.countColor(direction);
             
         }
 
@@ -137,15 +137,15 @@ private Colors color;
 
     /**
      * verrify if you win the game, starting with a cell
-     * @param total the total number of colors in the same direction
+     * @param total the total number of Color in the same direction
      * @return a boolean, true if you win
      */
     public boolean isWin(int total){
 
         for(Direction dir : Direction.values()){
             int count = 1;
-            count += countColors(dir);
-            count += countColors(getOpposite(dir));
+            count += countColor(dir);
+            count += countColor(getOpposite(dir));
 
             if(count >= total){
                 return true;

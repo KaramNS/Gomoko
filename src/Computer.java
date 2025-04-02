@@ -9,6 +9,14 @@ package src;
  */
 
 public class Computer extends User
-{
-    
+{   
+    /**
+     * @description Constructor for Computer class, 
+     * @param color The Color of the player.
+     */
+    public Computer (Color color)
+    {
+        super ("Computer", 0, color) ; // IDEA : Use a default color for the computer player
+
+    }
 }

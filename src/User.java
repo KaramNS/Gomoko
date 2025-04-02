@@ -29,6 +29,17 @@ public abstract class User
     {
         return score ;
     }
+
+    private Color playerColor ;
+
+    /**
+     * Getter method for the player color.
+     * @return Color
+     */
+    public Color color ()
+    {
+        return this.playerColor ;
+    }
     
     /**
      * Constructor for User class.
@@ -36,20 +47,18 @@ public abstract class User
      * @param score The score of the player.
      */
 
-    public User (String name, int score) 
+    public User (String name, int score, Color playerColor) 
     {
         this.name = name ;
-        this.score = 0 ;
+        this.score = score ;
+
+        this.playerColor = playerColor ;
     }
 
-    /*
-     * Method to choose a placement on the board to play a move (place a token).
+    /**
+     * @description Method to choose a placement on the board to play a move (place a token).
      */
     abstract Coordonates chosePlacement () ;
-    
-        // Implementation for choosing a placement on the board
-        // This method should be overridden in subclasses
-
 
     /**
      * Methode to return the object state as a string.
