@@ -5,7 +5,6 @@ public class Matrix {
     private Cell[][] grid;
 
 
-
     /*######## Constructors ###### */
 
     public Matrix(){
@@ -32,7 +31,7 @@ public class Matrix {
 
 
 
- 
+    public int getLenngth()
     @Override
     public String toString() {
         String s = "";
@@ -58,7 +57,7 @@ public class Matrix {
     
     public boolean checkIsWin(){
 
-        
+
         for(Cell[] c : this.grid){
             for(Cell caseCell : c){
                 if(caseCell.isWin( 5)){
