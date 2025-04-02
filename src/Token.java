@@ -1,6 +1,5 @@
 package src;
 
-
 enum Color {
     RED,
     BLUE,

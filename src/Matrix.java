@@ -7,6 +7,9 @@ public class Matrix {
 
     /*######## Constructors ###### */
 
+    /**
+     * Default Constructor : Initialize the grid with a length of 15
+     */
     public Matrix(){
         this.grid = new Cell[15][15];
         for(Cell[] e : this.grid){
@@ -16,8 +19,22 @@ public class Matrix {
         }
     }
 
+    /**
+     * Constructor, initialize the grid with the length in the parameter
+     * @param length the length of the matrix
+     */
+    public Matrix(int length){
 
-    /*######## Getters/Setter */
+        this.grid = new Cell[length][length];
+
+        for(Cell[] e : this.grid){
+            for(Cell caseCell : e){
+                caseCell = new Cell();
+            }
+        }
+        
+    }
+    /*######## Getters/Setter ############*/
 
     /**
      *  set a cell in a position in the matrix
@@ -31,7 +48,10 @@ public class Matrix {
 
 
 
-    public int getLenngth()
+    public int getLength(){
+        return this.grid[0].length;
+    }
+
     @Override
     public String toString() {
         String s = "";
@@ -48,8 +68,8 @@ public class Matrix {
 
             }
 
-            s = s+ "\n";
         }
+        s = s+ "\n";
         return s;
     }
 

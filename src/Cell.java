@@ -21,13 +21,13 @@ public class Cell{
 
 private EnumMap<Direction, Cell> directions;
 
-private Color color;
+private Token token;
 
 
     /*############# Constructors ###########*/
 
     public Cell(){
-        this.color = Color.WHITE;
+        this.token = new Token(Color.WHITE);
         this.directions = new EnumMap<>(Direction.class);
         
     }
@@ -41,7 +41,7 @@ private Color color;
      * @return the color of the cell
      */
     private  Color getColor(){
-        return this.color;
+        return this.token.getColor();
     }
     
 
@@ -56,11 +56,11 @@ private Color color;
     }
     
     /**
-     * set a new Color for the cell
-     * @param newColor the color you want for this cell
+     * set a new Tokenfor the cell
+     * @param newToken the Token you want for this cell
      */
-    private void setColor(Color newColor){
-        this.color = newColor;
+    private void setToken(Token newToken){
+        this.token = newToken;
     }
     
     
@@ -97,7 +97,7 @@ private Color color;
 
     @Override
     public String toString() {
-        var s = String.format("%s", this.color);
+        var s = String.format("%s", this.token);
         return s;
     }
 
