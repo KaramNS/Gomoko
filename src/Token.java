@@ -1,7 +1,7 @@
 package src;
 
-
-enum Color {
+enum Color 
+{
     RED,
     BLUE,
     GREEN,
@@ -11,15 +11,14 @@ enum Color {
     BLACK, 
     WHITE; 
 }
-public class Token {
+
+public class Token 
+{
     private  final Color color;
-
-
 
     Token(Color newColor){
         this.color = newColor;
     }
-
 
     public Color getColor(){
         return this.color;
@@ -29,7 +28,4 @@ public class Token {
     public String toString() {
         return ""+this.getColor();
     }
-
-
-    
 }
