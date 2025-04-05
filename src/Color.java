@@ -13,4 +13,12 @@ public enum Color {
     ORANGE("\u001B[38;5;208m■"), 
     BLACK("\u001B[30m■"),  
     WHITE("\u001B[37m□");  
+
+private final String ansiCode;
+
+    Color(String ansiCode) {
+        this.ansiCode = ansiCode + "\u001B[0m";  
+    }
+
+    
 }
