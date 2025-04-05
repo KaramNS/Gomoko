@@ -5,6 +5,7 @@ import java.util.Scanner;
  * @author Syrine-BEN HASSINE
  * @description This class represents the main program that allows players to play 
  * alternately on the board. 
+ * It handles player setup, board initialization, checks for win conditions 
  */
 
  public class Main {
@@ -17,6 +18,10 @@ import java.util.Scanner;
         Matrix board = new Matrix(size, winCondition);
         board.setNeighbors();
         
+        System.out.println("\n=== Game Setup ===");
+        System.out.println("Board Size: " + size + "x" + size);
+        System.out.println("Win Condition: " + winCondition + " in a row");
+        
         System.out.println("=== Player 1 Setup ===");
         User player1 = createPlayer(scanner, 1);
         System.out.println("\n=== Player 2 Setup ===");
@@ -25,6 +30,7 @@ import java.util.Scanner;
         User currentPlayer = player1;
         boolean gameOver = false;
         
+        /* --- Game loop --- */
         while (!gameOver) {
             System.out.println("\nCurrent Board:" + board);
             
@@ -48,7 +54,6 @@ import java.util.Scanner;
         scanner.close();
     }
 
-    // Keep the rest of the methods unchanged except remove printBoard()
     private static User createPlayer(Scanner scanner, int playerNumber) {
         System.out.print("Enter name for Player " + playerNumber + ": ");
         String name = scanner.nextLine();
