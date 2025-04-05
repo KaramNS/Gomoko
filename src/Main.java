@@ -7,8 +7,7 @@ import java.util.Scanner;
  * alternately on the board. 
  */
 
-
-public class Main {
+ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
@@ -17,15 +16,39 @@ public class Main {
         
         Matrix board = new Matrix(size, winCondition);
         board.setNeighbors();
+        
+        System.out.println("=== Player 1 Setup ===");
+        User player1 = createPlayer(scanner, 1);
+        System.out.println("\n=== Player 2 Setup ===");
+        User player2 = createPlayer(scanner, 2);
+        
+        User currentPlayer = player1;
+        boolean gameOver = false;
+        
+        while (!gameOver) {
+            System.out.println("\nCurrent Board:" + board);
+            
+            System.out.println("\n" + currentPlayer.name() + "'s turn (" + currentPlayer.color() + ")");
+            Coordonates move = getValidMove(scanner, board, currentPlayer);
+            
+            board.putToken(move.x(), move.y(), new Token(currentPlayer.color()));
+            
+            if (board.checkIsWin()) {
+                System.out.println("\nFinal Board:" + board);
+                System.out.println("\n" + currentPlayer.name() + " wins!");
+                gameOver = true;
+            } else if (isBoardFull(board)) {
+                System.out.println("\nFinal Board:" + board);
+                System.out.println("\nIt's a draw!");
+                gameOver = true;
+            } else {
+                currentPlayer = (currentPlayer == player1) ? player2 : player1;
+            }
+        }
+        scanner.close();
     }
-    // Player setup
-    System.out.println("=== Player 1 Setup ===");
-    User player1 = createPlayer(scanner, 1);
-    System.out.println("\n=== Player 2 Setup ===");
-    User player2 = createPlayer(scanner, 2);
-    
-    User currentPlayer = player1;
-    boolean gameOver = false;
+
+    // Keep the rest of the methods unchanged except remove printBoard()
     private static User createPlayer(Scanner scanner, int playerNumber) {
         System.out.print("Enter name for Player " + playerNumber + ": ");
         String name = scanner.nextLine();
@@ -46,7 +69,7 @@ public class Main {
         while (true) {
             System.out.print("Select color for Player " + playerNumber + " (1-" + colors.length + "): ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
             
             if (choice >= 1 && choice <= colors.length && colors[choice-1] != Color.WHITE) {
                 return colors[choice-1];
@@ -54,7 +77,8 @@ public class Main {
             System.out.println("Invalid selection!");
         }
     }
-        private static Coordonates getValidMove(Scanner scanner, Matrix board, User player) {
+
+    private static Coordonates getValidMove(Scanner scanner, Matrix board, User player) {
         int size = board.getLength();
         
         while (true) {
@@ -74,19 +98,28 @@ public class Main {
                 System.out.println("Invalid position! Please enter values between 1 and " + size);
             }
         }
+    }
 
-        private static boolean isBoardFull(Matrix board) {
-            int size = board.getLength();
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
-                    if (board.getCell(i, j).getColor() == Color.WHITE) {
-                        return false;
-                    }
+    private static boolean isBoardFull(Matrix board) {
+        int size = board.getLength();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board.getCell(i, j).getColor() == Color.WHITE) {
+                    return false;
                 }
             }
-            return true;
         }
+        return true;
     }
-    
+}
 
+class Human extends User {
+    public Human(String name, Color color) {
+        super(name, 0, color);
+    }
+
+    @Override
+    public Coordonates chosePlacement() {
+        return null;
+    }
 }
