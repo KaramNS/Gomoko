@@ -1,5 +1,5 @@
 package src;
-
+import java.util.Scanner;
 
 /**
  * @author Syrine-BEN HASSINE
@@ -9,5 +9,13 @@ package src;
 
 
 public class Main {
-    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        int size = args.length > 0 ? Integer.parseInt(args[0]) : 15;
+        int winCondition = args.length > 1 ? Integer.parseInt(args[1]) : 5;
+        
+        Matrix board = new Matrix(size, winCondition);
+        board.setNeighbors();
+    }
 }
