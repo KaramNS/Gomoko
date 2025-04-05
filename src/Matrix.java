@@ -198,4 +198,8 @@ public class Matrix {
         this.checkIsWin(currentCell);
     }
 
+    public Cell getCell(int x, int y) {
+        return grid[x][y];
+    }
+
 }
