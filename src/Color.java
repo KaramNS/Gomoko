@@ -20,5 +20,8 @@ private final String ansiCode;
         this.ansiCode = ansiCode + "\u001B[0m";  
     }
 
-    
-}
+    @Override
+    public String toString() {
+        return this.ansiCode;
+    }
+}    
