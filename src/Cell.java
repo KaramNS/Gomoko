@@ -63,7 +63,7 @@ private Token token;
      * set a new Tokenfor the cell
      * @param newToken the Token to assign to this cell
      */
-    private void setToken(Token newToken){
+    public void setToken(Token newToken){
         this.token = newToken;
     }
     

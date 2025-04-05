@@ -117,7 +117,7 @@ public class Matrix {
 
         for(Cell[] c : this.grid){
             for(Cell caseCell : c){
-                if(caseCell.isWon( numberNeededToWin)){
+                if(caseCell.isWon( this.numberNeededToWin)){
                     return true;
 
                 }
@@ -127,6 +127,9 @@ public class Matrix {
         return false;
     }
 
+    public boolean checkIsWin(Cell cell){
+        return cell.isWon(this.numberNeededToWin);
+    }
 
     /**
      * Sets all valid neighbors for each cell in the grid.
@@ -180,6 +183,19 @@ public class Matrix {
                 }
             }
         }
-}
+    }
+
+    /**
+     * Put a token in a specified position on the board.
+     * @param xAxis The x axis 
+     * @param yAxis The y axis
+     * @param token The token you want to put in the specified position on board
+     */
+    public void putToken(int xAxis, int yAxis, Token token){
+
+        var currentCell = this.grid[xAxis][yAxis];
+        currentCell.setToken(token);
+        this.checkIsWin(currentCell);
+    }
 
 }
