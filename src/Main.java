@@ -18,4 +18,13 @@ public class Main {
         Matrix board = new Matrix(size, winCondition);
         board.setNeighbors();
     }
+    // Player setup
+    System.out.println("=== Player 1 Setup ===");
+    User player1 = createPlayer(scanner, 1);
+    System.out.println("\n=== Player 2 Setup ===");
+    User player2 = createPlayer(scanner, 2);
+    
+    User currentPlayer = player1;
+    boolean gameOver = false;
+    
 }
