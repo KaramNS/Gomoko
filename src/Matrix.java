@@ -21,9 +21,9 @@ public class Matrix {
     public Matrix(){
         this.numberNeededToWin = 5;
         this.grid = new Cell[15][15];
-        for(Cell[] e : this.grid){
-            for(Cell caseCell : e){
-                caseCell = new Cell();
+        for(int i = 0; i < 15; i++){
+            for(int j = 0; j < 15; i++){
+                this.grid[i][j] = new Cell();
             }
         }
     }
@@ -38,9 +38,9 @@ public class Matrix {
         this.grid = new Cell[length][length];
         this.numberNeededToWin = 5;
 
-        for(Cell[] e : this.grid){
-            for(Cell caseCell : e){
-                caseCell = new Cell();
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; i++){
+                this.grid[i][j] = new Cell();
             }
         }
         
@@ -56,8 +56,8 @@ public class Matrix {
         this.grid = new Cell[length][length];
         this.numberNeededToWin = numberWin;
 
-        for(int i = 0; i < getLength(); i++){
-            for(int j = 0; j < getLength(); i++){
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; i++){
                 this.grid[i][j] = new Cell();
             }
         }
