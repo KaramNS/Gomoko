@@ -1,17 +1,5 @@
 package src;
 
-enum Color 
-{
-    RED,
-    BLUE,
-    GREEN,
-    YELLOW,
-    PURPLE,
-    ORANGE,
-    BLACK, 
-    WHITE; 
-}
-
 public class Token 
 {
     private  final Color color;
