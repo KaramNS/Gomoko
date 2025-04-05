@@ -26,5 +26,33 @@ public class Main {
     
     User currentPlayer = player1;
     boolean gameOver = false;
-    
+    private static User createPlayer(Scanner scanner, int playerNumber) {
+        System.out.print("Enter name for Player " + playerNumber + ": ");
+        String name = scanner.nextLine();
+        
+        Color color = selectColor(scanner, playerNumber);
+        return new Human(name, color);
+    }
+
+    private static Color selectColor(Scanner scanner, int playerNumber) {
+        System.out.println("Available colors:");
+        Color[] colors = Color.values();
+        for (int i = 0; i < colors.length; i++) {
+            if (colors[i] != Color.WHITE) {
+                System.out.println((i+1) + ". " + colors[i]);
+            }
+        }
+        
+        while (true) {
+            System.out.print("Select color for Player " + playerNumber + " (1-" + colors.length + "): ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
+            
+            if (choice >= 1 && choice <= colors.length && colors[choice-1] != Color.WHITE) {
+                return colors[choice-1];
+            }
+            System.out.println("Invalid selection!");
+        }
+    }
+
 }
