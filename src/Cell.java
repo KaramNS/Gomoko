@@ -16,7 +16,11 @@ enum Direction{
 }
 
 
-
+/**
+ * @author Jean-Baptiste
+ * @description This class represent a cell in the matrix, wich corresponds to a slot on
+ * the board. It can indicate if it is won or not and its value is its color.
+ */
 public class Cell{
 
 private EnumMap<Direction, Cell> directions;
@@ -47,8 +51,8 @@ private Token token;
 
     /**
      * 
-     * @param direction is a Direction you want to know which
-     * cell is the neighbor
+     * @param direction is a Direction  in wich you want to find 
+     * the neighboring cell
      * @return the cell of the direction you specified
      */
     public  Cell getNeighbor(Direction direction){
@@ -57,7 +61,7 @@ private Token token;
     
     /**
      * set a new Tokenfor the cell
-     * @param newToken the Token you want for this cell
+     * @param newToken the Token to assign to this cell
      */
     private void setToken(Token newToken){
         this.token = newToken;
@@ -105,9 +109,10 @@ private Token token;
 
 
     /**
-     * count the Color in the same direction, starting with the current cell
-     * @param direction the direction you want to verrify if it is win
-     * @return a boolean if it is win
+     * count the number of consecutive cells with the same color in the given direction, 
+     * *starting from the current cell
+     * @param direction the direction to check for a winning line
+     * @return The number of consecutive same-colored cells int that direction
      */
     private int countColor(Direction direction){
 
@@ -127,11 +132,11 @@ private Token token;
 
 
     /**
-     * verrify if you win the game, starting with a cell
-     * @param total the total number of Color in the same direction
-     * @return a boolean, true if you win
+     * verifies if you won the game, starting with this cell
+     * @param total the total number of same-colored cells needed in the same direction
+     * @return a boolean, true if the requires number is met, false otherwise
      */
-    public boolean isWin(int total){
+    public boolean isWon(int total){
 
         for(Direction dir : Direction.values()){
             int count = 1;
@@ -146,5 +151,7 @@ private Token token;
         return false;
   
     }
+
+
     
 }
