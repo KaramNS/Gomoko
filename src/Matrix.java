@@ -39,7 +39,7 @@ public class Matrix {
         this.numberNeededToWin = 5;
 
         for(int i = 0; i < length; i++){
-            for(int j = 0; j < length; i++){
+            for(int j = 0; j < length; j++){
                 this.grid[i][j] = new Cell();
             }
         }
@@ -57,7 +57,7 @@ public class Matrix {
         this.numberNeededToWin = numberWin;
 
         for(int i = 0; i < length; i++){
-            for(int j = 0; j < length; i++){
+            for(int j = 0; j < length; j++){
                 this.grid[i][j] = new Cell();
             }
         }
