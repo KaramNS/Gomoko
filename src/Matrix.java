@@ -128,12 +128,58 @@ public class Matrix {
     }
 
 
-        public void setNeighbors(){
+    /**
+ * Sets all valid neighbors for each cell in the grid.
+ * Each cell will have its surrounding cells assigned according to the 8 directions.
+ */
+public void setNeighbors() {
+    int length = getLength();
 
-            for(int i = 0; i < getLength() ; i ++){
-                for(int j = 0 ; j < getLength(); j++){
-                    grid[i][j].setNeighbors()
-                }
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < length; j++) {
+            Cell currentCell = grid[i][j];
+
+            // check for UP
+            if (i > 0) {
+                currentCell.setNeighbor(grid[i - 1][j], Direction.UP);
+            }
+
+            // check for DOWN
+            if (i < length - 1) {
+                currentCell.setNeighbor(grid[i + 1][j], Direction.DOWN);
+            }
+
+            // check for LEFT
+            if (j > 0) {
+                currentCell.setNeighbor(grid[i][j - 1], Direction.LEFT);
+            }
+
+            //check for  RIGHT
+            if (j < length - 1) {
+                currentCell.setNeighbor(grid[i][j + 1], Direction.RIGHT);
+            }
+
+            //check for  UP_LEFT
+            if (i > 0 && j > 0) {
+                currentCell.setNeighbor(grid[i - 1][j - 1], Direction.UP_LEFT);
+            }
+
+            //check for  UP_RIGHT
+            if (i > 0 && j < length - 1) {
+                currentCell.setNeighbor(grid[i - 1][j + 1], Direction.UP_RIGHT);
+            }
+
+            //check for  DOWN_LEFT
+            if (i < length - 1 && j > 0) {
+                currentCell.setNeighbor(grid[i + 1][j - 1], Direction.DOWN_LEFT);
+            }
+
+            //check for  DOWN_RIGHT
+            if (i < length - 1 && j < length - 1) {
+                currentCell.setNeighbor(grid[i + 1][j + 1], Direction.DOWN_RIGHT);
             }
         }
+    }
+}
+
 }
