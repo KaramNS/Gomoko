@@ -78,7 +78,10 @@ public class Matrix {
     }
 
 
-
+    /**
+     * Gets the length of the squaer board
+     * @return Length of the square board
+     */
     public int getLength(){
         return this.grid[0].length;
     }
@@ -105,7 +108,10 @@ public class Matrix {
     }
 
 
-    
+    /**
+     * Check if you win the game
+     * @return True if you win, false otherwise
+     */
     public boolean checkIsWin(){
 
 
@@ -121,4 +127,13 @@ public class Matrix {
         return false;
     }
 
+
+        public void setNeighbors(){
+
+            for(int i = 0; i < getLength() ; i ++){
+                for(int j = 0 ; j < getLength(); j++){
+                    grid[i][j].setNeighbors()
+                }
+            }
+        }
 }

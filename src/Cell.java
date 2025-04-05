@@ -76,8 +76,16 @@ private Token token;
     public Color getNeighborColor(Direction direction){
         return getNeighbor(direction).getColor();
     }
-    
-    
+    /**
+     * Sets a neighboring cell in the specified direction
+     * 
+     * @param neighborCell The cell to be set as the neighbor
+     * @param directionNeighbor The direction in wich the neighbor
+     * is located relative to this cell
+     */
+    public void setNeighbor(Cell neighborCell, Direction directionNeighbor){
+        this.directions.put(directionNeighbor, neighborCell);
+    }
     /**
      * Get the opposite direction of the parameter
      * @param dir the direction you want to get the opposite
@@ -151,6 +159,7 @@ private Token token;
         return false;
   
     }
+    
 
 
     
