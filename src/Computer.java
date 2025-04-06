@@ -27,4 +27,10 @@ public class Computer extends User
 
         return new Coordonates(x, y) ;
     }
+
+    @Override
+    Coordonates chosePlacement() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'chosePlacement'");
+    }
 }
