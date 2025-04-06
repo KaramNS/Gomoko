@@ -30,6 +30,10 @@ private Token token;
 
     /*############# Constructors ###########*/
 
+    /**
+     * Default constructor for a Cell, set the token color of the cell to white
+     * to specify his emptyness
+     */
     public Cell(){
         this.token = new Token(Color.WHITE);
         this.directions = new EnumMap<>(Direction.class);
@@ -50,7 +54,7 @@ private Token token;
     
 
     /**
-     * 
+     * Get the Neighboring cell in a specified direction
      * @param direction is a Direction  in wich you want to find 
      * the neighboring cell
      * @return the cell of the direction you specified

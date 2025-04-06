@@ -8,10 +8,18 @@ public class Token
 {
     private  final Color color;
 
+    /**
+     * Constructor for the token, set his color with a specified color
+     * @param newColor The specified color for the new token
+     */
     Token(Color newColor){
         this.color = newColor;
     }
 
+    /**
+     * Gets the color of the token
+     * @return the color of the token
+     */
     public Color getColor(){
         return this.color;
     }
