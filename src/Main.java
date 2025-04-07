@@ -21,7 +21,7 @@ import java.util.Scanner;
         System.out.println("\n=== Game Setup ===");
         System.out.println("Board Size: " + size + "x" + size);
         System.out.println("Win Condition: " + winCondition + " in a row");
-        
+
         System.out.println("=== Player 1 Setup ===");
         User player1 = createPlayer(scanner, 1);
         System.out.println("\n=== Player 2 Setup ===");
@@ -32,7 +32,7 @@ import java.util.Scanner;
         
         /* --- Game loop --- */
         while (!gameOver) {
-            System.out.println("\nCurrent Board:" + board);
+            System.out.println("\n=== Current Board === " + board);
             
             System.out.println("\n" + currentPlayer.name() + "'s turn (" + currentPlayer.color() + ")");
             Coordonates move = getValidMove(scanner, board, currentPlayer);
@@ -43,7 +43,7 @@ import java.util.Scanner;
                 System.out.println("\nFinal Board:" + board);
                 System.out.println("\n" + currentPlayer.name() + " wins!");
                 gameOver = true;
-            } else if (isBoardFull(board)) {
+            } else if (board.isBoardFull(board)) {
                 System.out.println("\nFinal Board:" + board);
                 System.out.println("\nIt's a draw!");
                 gameOver = true;
@@ -105,17 +105,7 @@ import java.util.Scanner;
         }
     }
 
-    private static boolean isBoardFull(Matrix board) {
-        int size = board.getLength();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (board.getCell(i, j).getColor() == Color.WHITE) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+    
 }
 
 class Human extends User {

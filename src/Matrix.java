@@ -1,7 +1,7 @@
 package src;
 
 /**
- * @author Jean-Baptiste
+ * @author Jean-Baptiste + Syrine BEN HASSINE 
  * @descritption This class represents the  game board
  * the number of tokens needed to win can be set in the constructor  
  * (default is 5 in a row)
@@ -202,4 +202,15 @@ public class Matrix {
         return grid[x][y];
     }
 
+    public boolean isBoardFull(Matrix board) {
+        int size = board.getLength();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board.getCell(i, j).getColor() == Color.WHITE) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
