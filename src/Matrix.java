@@ -198,10 +198,19 @@ public class Matrix {
         this.checkIsWin(currentCell);
     }
 
+    /**
+     * Get the cell at the specified coordinates in the grid.
+     * @param x coordinate (row index)
+     * @param y coordinate (column index)
+     */
     public Cell getCell(int x, int y) {
         return grid[x][y];
     }
 
+    /**
+     * Check if the entire board is full, meaning all cells are occupied.
+     * @param board The Matrix representing the game board
+     */
     public boolean isBoardFull(Matrix board) {
         int size = board.getLength();
         for (int i = 0; i < size; i++) {
