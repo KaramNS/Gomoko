@@ -4,3 +4,6 @@
 
 # Ignore .class files
 *.class
+
+# Ignore .DS_Store files (for macUsers)
+*.DS_Store
