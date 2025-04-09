@@ -139,10 +139,12 @@ public class Matrix {
      */
     public boolean  putToken(int xAxis, int yAxis, Token token){
         Coordonates coord = new Coordonates(xAxis,yAxis);
-        isValidMove(coord);
+        if(isValidMove(coord)){
         var currentCell = this.grid[coord.x()][coord.y()];
         currentCell.setToken(token);
         return currentCell.isWon(numberNeededToWin);
+        }
+        return false;
     }
 
     /**
