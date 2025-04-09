@@ -171,11 +171,12 @@ public class Matrix {
      * Check if the entire board is full, meaning all cells are occupied.
      * @param board The Matrix representing the game board
      */
-    public boolean isBoardFull(Matrix board) {
-        int size = board.getLength();
+    public boolean isBoardFull() {
+        int size = this.getLength();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (board.getCell(i, j).getColor() == Color.WHITE) {
+                Coordonates coord = new Coordonates(i, j);
+                if (this.getCell(coord).getColor() == Color.WHITE) {
                     return false;
                 }
             }
@@ -270,7 +271,7 @@ public class Matrix {
        
             try {
                 if (coord.x() >= 0 && coord.x() < size && coord.y() >= 0 && coord.y() < size) {
-                    Cell cell = this.getCell(coord.x(), coord.y());
+                    Cell cell = this.getCell(coord);
                     if (cell.getColor() == Color.WHITE) {
                         return true;
                     }
