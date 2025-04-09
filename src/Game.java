@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -92,11 +92,12 @@ public class Game implements Serializable
     /**
      * @description Start the game 
      */
-    public void start () 
+    public User start () 
     {
         Random random = new Random () ; 
         int starterChoice = random.nextInt(2) ;
         User nextUser ;
+
         if ( starterChoice == 0 )
         {
             nextUser = this.player1 ;
@@ -108,11 +109,20 @@ public class Game implements Serializable
 
         this.placeFirstToken(nextUser) ; 
         
-        while ( ! this.matrix.putToken(nextUser.chosePlacement(), nextUser.token() ) && nextUser.haveTokens())
+        while ( ! this.matrix.putToken(nextUser.chosePlacement(), nextUser.token() ) && nextUser.haveTokens() )
         {
-
+            nextUser = ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
         }
 
-
+        if ( nextUser.haveTokens() )
+        {
+            System.out.println("Player " + nextUser.name() + " won the game") ;
+            return nextUser ;
+        }
+        else
+        {
+            System.out.println("No more tokens left for " + nextUser.name() + " !") ;
+            return ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
+        }
     }
 }
