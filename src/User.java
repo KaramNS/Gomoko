@@ -1,5 +1,7 @@
 package src ;
 
+import java.util.ArrayList;
+
 /**
  * User abstract class representing a player in the game.
  * It contains the player's name and score.
@@ -45,14 +47,58 @@ public abstract class User
      * Constructor for User class.
      * @param name The name of the player.
      * @param score The score of the player.
+     * @param playerColor The color of the player.
+     * @param startingTokenCount The number of tokens the player starts with.
      */
 
-    public User (String name, int score, Color playerColor) 
+    public User (String name, int score, Color playerColor, int startingTokenCount) 
     {
         this.name = name ;
         this.score = score ;
 
         this.playerColor = playerColor ;
+
+        this.tokens = new ArrayList<Token>(startingTokenCount) ;
+
+        for (int i = 0 ; i < startingTokenCount ; i++)
+        {
+            tokens.add( new Token(playerColor) ) ;
+        }
+    }
+
+    private ArrayList<Token> tokens = new ArrayList<Token>() ;
+
+    /**
+     * Getter method for the player's tokens.
+     * @return ArrayList of Token objects.
+     */
+    public ArrayList<Token> tokens ()
+    {
+        return tokens ;
+    }
+
+    /**
+     * @description Method to check if the player has tokens left.
+     * @return boolean indicating if the player has tokens left.
+     */
+    public boolean haveTokens ()
+    {
+        return tokens.size() > 0 ;
+    }
+
+    public Token token ()
+    {
+        if ( this.haveTokens() )
+        {
+            Token t = tokens.get(0) ;
+            tokens.remove(0) ;
+
+            return t ;
+        }
+        else
+        {
+            throw new IllegalStateException("No more tokens left") ;
+        }
     }
 
     /**

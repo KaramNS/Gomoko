@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 
 /**
  * Game class representing a game of Gomoku.
@@ -18,6 +20,8 @@ public class Game implements Serializable
 {
     private final User player1 ;
     private final User player2 ;
+
+    // private final ArrayList< User > players ; IDEA 
 
     private final Matrix matrix ; // final ? 
 
@@ -74,10 +78,15 @@ public class Game implements Serializable
         return null ;
     }
 
+    /**
+     * @description Place the first token in the center of the matrix
+     * @param statingUser
+     */
 
-    public void placeFirstToken (User statingUser)
+    public void placeFirstToken (User startingUser)
     {
-        int center = this.matrix.getLength() / 2 ;
+        int center = ( this.matrix.getLength() / 2 ) + 1 ;
+        this.matrix.putToken( center, center, startingUser.token() ) ;
     }
     
     /**
@@ -85,6 +94,25 @@ public class Game implements Serializable
      */
     public void start () 
     {
+        Random random = new Random () ; 
+        int starterChoice = random.nextInt(2) ;
+        User nextUser ;
+        if ( starterChoice == 0 )
+        {
+            nextUser = this.player1 ;
+        }
+        else 
+        {
+            nextUser = this.player2 ;
+        }
+
+        this.placeFirstToken(nextUser) ; 
         
+        while ( ! this.matrix.putToken(nextUser.chosePlacement(), nextUser.token() ) && nextUser.haveTokens())
+        {
+
+        }
+
+
     }
 }
