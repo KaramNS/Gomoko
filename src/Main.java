@@ -8,58 +8,72 @@ import java.util.Scanner;
  * It handles player setup, board initialization, checks for win conditions 
  */
 
- public class Main {
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
+
+        // Get the board size and win condition from arguments or use defaults
         int size = args.length > 0 ? Integer.parseInt(args[0]) : 15;
         int winCondition = args.length > 1 ? Integer.parseInt(args[1]) : 5;
-        
+
+        // Initialize the game board
         Matrix board = new Matrix(size, winCondition);
-        board.setNeighbors();
-        
+        board.setNeighbors(); // Set up neighbors for each cell
+
         System.out.println("\n=== Game Setup ===");
         System.out.println("Board Size: " + size + "x" + size);
         System.out.println("Win Condition: " + winCondition + " in a row");
 
+        // Setup the players
         System.out.println("=== Player 1 Setup ===");
         User player1 = createPlayer(scanner, 1);
         System.out.println("\n=== Player 2 Setup ===");
         User player2 = createPlayer(scanner, 2);
-        
-        User currentPlayer = player1;
+
+        User currentPlayer = player1; // Start with Player 1
         boolean gameOver = false;
-        
-        /* --- Game loop --- */
+        int moveCount = 0;
+
+        // Game loop
         while (!gameOver) {
-            System.out.println("\n=== Current Board === " + board);
-            
+            System.out.println("\n=== Current Board ===");
+            System.out.println(board); // Print the current board before making a move
+
             System.out.println("\n" + currentPlayer.name() + "'s turn (" + currentPlayer.color() + ")");
-            Coordonates move = getValidMove(scanner, board, currentPlayer);
-            
+            Coordonates move = getValidMove(scanner, board);
+
+            // Place the token for the current player
             board.putToken(move.x(), move.y(), new Token(currentPlayer.color()));
-            
+            moveCount++;
+
+            // Print the board after the move
+            System.out.println("\n=== Updated Board ===");
+            System.out.println(board); // Print the updated board with the placed token
+
+            // Check game state
             if (board.checkIsWin()) {
-                System.out.println("\nFinal Board:" + board);
+                System.out.println("\nFinal Board:");
+                System.out.println(board);
                 System.out.println("\n" + currentPlayer.name() + " wins!");
                 gameOver = true;
-            } else if (board.isBoardFull(board)) {
-                System.out.println("\nFinal Board:" + board);
+            } else if (moveCount >= size * size || board.isBoardFull(board)) {
+                System.out.println("\nFinal Board:");
+                System.out.println(board);
                 System.out.println("\nIt's a draw!");
                 gameOver = true;
             } else {
-                currentPlayer = (currentPlayer == player1) ? player2 : player1;
+                currentPlayer = (currentPlayer == player1) ? player2 : player1; // Switch player
             }
         }
+
         scanner.close();
     }
 
     private static User createPlayer(Scanner scanner, int playerNumber) {
         System.out.print("Enter name for Player " + playerNumber + ": ");
         String name = scanner.nextLine();
-        
         Color color = selectColor(scanner, playerNumber);
-        return new Human(name, color);
+        return new Human(name, 0, color);
     }
 
     private static Color selectColor(Scanner scanner, int playerNumber) {
@@ -67,54 +81,45 @@ import java.util.Scanner;
         Color[] colors = Color.values();
         for (int i = 0; i < colors.length; i++) {
             if (colors[i] != Color.WHITE) {
-                System.out.println((i+1) + ". " + colors[i]);
+                System.out.println((i + 1) + ". " + colors[i]);
             }
         }
-        
-        while (true) {
-            System.out.print("Select color for Player " + playerNumber + " (1-" + colors.length + "): ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            
-            if (choice >= 1 && choice <= colors.length && colors[choice-1] != Color.WHITE) {
-                return colors[choice-1];
-            }
-            System.out.println("Invalid selection!");
-        }
-    }
 
-    private static Coordonates getValidMove(Scanner scanner, Matrix board, User player) {
-        int size = board.getLength();
-        
         while (true) {
-            System.out.print("Enter row (1-" + size + "): ");
-            int row = scanner.nextInt() - 1;
-            System.out.print("Enter column (1-" + size + "): ");
-            int col = scanner.nextInt() - 1;
-            scanner.nextLine(); 
-            
-            if (row >= 0 && row < size && col >= 0 && col < size) {
-                Cell cell = board.getCell(row, col);
-                if (cell.getColor() == Color.WHITE) {
-                    return new Coordonates(row, col);
+            try {
+                System.out.print("Select color for Player " + playerNumber + " (1-" + colors.length + "): ");
+                int choice = Integer.parseInt(scanner.nextLine());
+                if (choice >= 1 && choice <= colors.length && colors[choice - 1] != Color.WHITE) {
+                    return colors[choice - 1];
                 }
-                System.out.println("That cell is already occupied!");
-            } else {
-                System.out.println("Invalid position! Please enter values between 1 and " + size);
+                System.out.println("Invalid selection! Try again.");
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number!");
             }
         }
     }
 
-    
-}
+    private static Coordonates getValidMove(Scanner scanner, Matrix board) {
+        int size = board.getLength();
+        while (true) {
+            try {
+                System.out.print("Enter row (1-" + size + "): ");
+                int row = Integer.parseInt(scanner.nextLine()) - 1;
+                System.out.print("Enter column (1-" + size + "): ");
+                int col = Integer.parseInt(scanner.nextLine()) - 1;
 
-class Human extends User {
-    public Human(String name, Color color) {
-        super(name, 0, color);
-    }
-
-    @Override
-    public Coordonates chosePlacement() {
-        return null;
+                if (row >= 0 && row < size && col >= 0 && col < size) {
+                    Cell cell = board.getCell(row, col);
+                    if (cell.getColor() == Color.WHITE) {
+                        return new Coordonates(row, col);
+                    }
+                    System.out.println("That cell is already occupied! Try another.");
+                } else {
+                    System.out.println("Invalid position! Please enter values between 1 and " + size);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter numbers only.");
+            }
+        }
     }
 }
