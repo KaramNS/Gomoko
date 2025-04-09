@@ -32,7 +32,7 @@ private Token token;
 
     /**
      * Default constructor for a Cell, set the token color of the cell to white
-     * to specify his emptyness
+     * to specify his emptyness 
      */
     public Cell(){
         this.token = new Token(Color.WHITE);
