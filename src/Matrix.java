@@ -138,16 +138,31 @@ public class Matrix {
      * @param token The token you want to put in the specified position on board
      */
     public boolean  putToken(int xAxis, int yAxis, Token token){
-
-        var currentCell = this.grid[xAxis][yAxis];
+        Coordonates coord = new Coordonates(xAxis,yAxis);
+        isValidMove(coord, this);
+        var currentCell = this.grid[coord.x()][coord.y()];
         currentCell.setToken(token);
         return currentCell.isWon(numberNeededToWin);
     }
 
-    public boolean  putToken(Coordonates coord, Token token){
-        var currentCell = this.grid[coord.x()][coord.y()];
-        currentCell.setToken(token);
-        return currentCell.isWon(numberNeededToWin);
+    /**
+     * Put a token in the game and check if it is won. If it is , 
+     * return true.
+     * @param coord The coordonates of the future token
+     * @param token the token to put on the board
+     * @return true if you win the game, false otherwise
+     */
+    public boolean putToken(Coordonates coord, Token token){
+        
+        
+        if(isValidMove(coord, this)){
+            var currentCell = this.grid[coord.x()][coord.y()];
+            currentCell.setToken(token);
+            return currentCell.isWon(numberNeededToWin);
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -244,7 +259,7 @@ public class Matrix {
 
 
     /**
-     * Says if the move is valid, can throws a NumberE
+     * Says if the move is valid, can throws a NumberFormatException
      * @param coord The coordonates you want to know if 
      * @param board The Board iof the game (Matrix)
      * @return True if the move is valid, false otherwise
