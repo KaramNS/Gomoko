@@ -195,6 +195,8 @@ public class Matrix {
 
         var currentCell = this.grid[xAxis][yAxis];
         currentCell.setToken(token);
+        System.out.println("Placed token at: (" + xAxis + ", " + yAxis + ")");
+
         this.checkIsWin(currentCell);
     }
 
