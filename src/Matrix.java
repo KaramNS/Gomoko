@@ -1,7 +1,7 @@
 package src;
 
 /**
- * @author Jean-Baptiste
+ * @author Jean-Baptiste + Syrine BEN HASSINE 
  * @descritption This class represents the  game board
  * the number of tokens needed to win can be set in the constructor  
  * (default is 5 in a row)
@@ -195,11 +195,33 @@ public class Matrix {
 
         var currentCell = this.grid[xAxis][yAxis];
         currentCell.setToken(token);
+        System.out.println("Placed token at: (" + xAxis + ", " + yAxis + ")");
+
         this.checkIsWin(currentCell);
     }
 
+    /**
+     * Get the cell at the specified coordinates in the grid.
+     * @param x coordinate (row index)
+     * @param y coordinate (column index)
+     */
     public Cell getCell(int x, int y) {
         return grid[x][y];
     }
 
+    /**
+     * Check if the entire board is full, meaning all cells are occupied.
+     * @param board The Matrix representing the game board
+     */
+    public boolean isBoardFull(Matrix board) {
+        int size = board.getLength();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board.getCell(i, j).getColor() == Color.WHITE) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
