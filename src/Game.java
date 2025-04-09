@@ -20,17 +20,22 @@ public class Game implements Serializable
     private final User player2 ;
 
     private final Matrix matrix ; // final ? 
+
     /**
      * @description Constructor for Game class, 
      */
     public Game ()
     {
-        this.player1 = new Humain(Color.PURPLE) ;
+        this.player1 = new Human(Color.PURPLE) ;
         this.player2 = new Computer(Color.YELLOW) ;
 
         this.matrix = new Matrix() ;
     }
 
+    /**
+     * @description Save the instance in a file
+     * @throws IOException
+     */
     public void save () throws IOException 
     {
         StringBuilder sb = new StringBuilder() ;
@@ -49,6 +54,11 @@ public class Game implements Serializable
         }
     }
 
+    /**
+     * 
+     * @param fileName of the file that contains the Game object to be loaded 
+     * @return A Game instance
+     */
     public static Game load (String fileName)
     {
         try ( ObjectInputStream in = new ObjectInputStream( new FileInputStream( "./SavedGames/" + fileName) ) ) 
@@ -63,5 +73,20 @@ public class Game implements Serializable
 
         return null ;
     }
+
+
+    public void placeFirstToken (User statingUser)
+    {
+        int center = this.matrix.getLength() / 2 ;
+    }
+    
+    /**
+     * @description Start the game 
+     */
+    public void start () 
+    {
+
+    }
+
 
 }

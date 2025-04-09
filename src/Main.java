@@ -117,14 +117,3 @@ import java.util.Scanner;
         return true;
     }
 }
-
-class Human extends User {
-    public Human(String name, Color color) {
-        super(name, 0, color);
-    }
-
-    @Override
-    public Coordonates chosePlacement() {
-        return null;
-    }
-}

@@ -6,7 +6,7 @@ package src ;
  * @author ELNASORY Karam
  */
 
-public class Humain extends User 
+public class Human extends User 
 {
 
     /**
@@ -14,16 +14,21 @@ public class Humain extends User
      * @param name The name of the player.
      * @param score The score of the player.
      */
-    public Humain (String name, int score, Color color) 
+    public Human (String name, int score, Color color) 
     {
         super(name, score, color) ;
+    }
+
+    public Human (String name, Color color) 
+    {
+        super(name, 0, color) ;
     }
 
     /**
      * @description Constructor for Humain class, meant to be used for new players.
      * Will prompt the user for their name, and init the score to 0.
      */
-    public Humain (Color color)
+    public Human (Color color)
     {
         super (promptForName(), 0, color) ;
     }
