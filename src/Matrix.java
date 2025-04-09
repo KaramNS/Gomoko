@@ -139,10 +139,12 @@ public class Matrix {
      */
     public boolean  putToken(int xAxis, int yAxis, Token token){
         Coordonates coord = new Coordonates(xAxis,yAxis);
-        isValidMove(coord, this);
+        if(isValidMove(coord)){
         var currentCell = this.grid[coord.x()][coord.y()];
         currentCell.setToken(token);
         return currentCell.isWon(numberNeededToWin);
+        }
+        return false;
     }
 
     /**
@@ -155,7 +157,7 @@ public class Matrix {
     public boolean putToken(Coordonates coord, Token token){
         
         
-        if(isValidMove(coord, this)){
+        if(isValidMove(coord)){
             var currentCell = this.grid[coord.x()][coord.y()];
             currentCell.setToken(token);
             return currentCell.isWon(numberNeededToWin);
@@ -261,15 +263,14 @@ public class Matrix {
     /**
      * Says if the move is valid, can throws a NumberFormatException
      * @param coord The coordonates you want to know if 
-     * @param board The Board iof the game (Matrix)
      * @return True if the move is valid, false otherwise
      */
-    private boolean isValidMove(Coordonates coord, Matrix board)  {
-        int size = board.getLength();
+    private boolean isValidMove(Coordonates coord)  {
+        int size = this.getLength();
        
             try {
                 if (coord.x() >= 0 && coord.x() < size && coord.y() >= 0 && coord.y() < size) {
-                    Cell cell = board.getCell(coord.x(), coord.y());
+                    Cell cell = this.getCell(coord.x(), coord.y());
                     if (cell.getColor() == Color.WHITE) {
                         return true;
                     }
