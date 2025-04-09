@@ -114,10 +114,10 @@ public class Matrix {
      * Get the cell at the specified coordinates in the grid.
      * @param x coordinate (row index)
      * @param y coordinate (column index)
-     */
-    public Cell getCell(int x, int y) {
+     public Cell getCell(int x, int y) {
         return grid[x][y];
     }
+    */
     /**
      * Get the cell at the specified coordinates in the grid
      * @param coord The coordonates in the grid
