@@ -7,9 +7,6 @@ import java.util.Scanner;
  * alternately on the board. 
  * It handles player setup, board initialization, checks for win conditions 
  */
-package src;
-
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
