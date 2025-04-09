@@ -137,17 +137,17 @@ public class Matrix {
      * @param yAxis The y axis
      * @param token The token you want to put in the specified position on board
      */
-    public void putToken(int xAxis, int yAxis, Token token){
+    public boolean  putToken(int xAxis, int yAxis, Token token){
 
         var currentCell = this.grid[xAxis][yAxis];
         currentCell.setToken(token);
-        currentCell.isWon(numberNeededToWin);
+        return currentCell.isWon(numberNeededToWin);
     }
 
-    public void putToken(Coordonates coord, Token token){
+    public boolean  putToken(Coordonates coord, Token token){
         var currentCell = this.grid[coord.x()][coord.y()];
         currentCell.setToken(token);
-        currentCell.isWon(numberNeededToWin);
+        return currentCell.isWon(numberNeededToWin);
     }
 
     /**
