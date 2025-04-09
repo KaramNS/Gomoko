@@ -141,13 +141,13 @@ public class Matrix {
 
         var currentCell = this.grid[xAxis][yAxis];
         currentCell.setToken(token);
-        this.checkIsWin(currentCell);
+        currentCell.isWon(numberNeededToWin);
     }
 
     public void putToken(Coordonates coord, Token token){
         var currentCell = this.grid[coord.x()][coord.y()];
         currentCell.setToken(token);
-        this.checkIsWin(currentCell);
+        currentCell.isWon(numberNeededToWin);
     }
 
     /**
@@ -241,4 +241,43 @@ public class Matrix {
             }
         }
     }
+
+
+    /**
+     * Says if the move is valid, can throws a NumberE
+     * @param coord The coordonates you want to know if 
+     * @param board The Board iof the game (Matrix)
+     * @return True if the move is valid, false otherwise
+     */
+    private boolean isValidMove(Coordonates coord, Matrix board)  {
+        int size = board.getLength();
+       
+            try {
+                if (coord.x() >= 0 && coord.x() < size && coord.y() >= 0 && coord.y() < size) {
+                    Cell cell = board.getCell(coord.x(), coord.y());
+                    if (cell.getColor() == Color.WHITE) {
+                        return true;
+                    }
+                    System.out.println("That cell is already occupied! Try another.");
+                    return false;
+                } else {
+                    System.out.println("Invalid position! Please enter values between 1 and " + size);
+                    return false;
+                
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter numbers only.");
+                return false;
+            }
+        
+    }
+
+
+    // System.out.print("Enter row (1-" + size + "): ");
+    // int row = Integer.parseInt(scanner.nextLine()) - 1;
+    // System.out.print("Enter column (1-" + size + "): ");
+    // int col = Integer.parseInt(scanner.nextLine()) - 1;
+
+
+
 }
