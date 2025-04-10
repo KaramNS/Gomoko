@@ -98,6 +98,7 @@ public class Game implements Serializable
         int starterChoice = random.nextInt(2) ;
         User nextUser ;
 
+        
         if ( starterChoice == 0 )
         {
             nextUser = this.player1 ;
@@ -106,12 +107,15 @@ public class Game implements Serializable
         {
             nextUser = this.player2 ;
         }
-
+        
         this.placeFirstToken(nextUser) ; 
+
+        System.out.println( this.matrix.toString() ) ;
         
         while ( ! this.matrix.putToken(nextUser.chosePlacement(), nextUser.token() ) && nextUser.haveTokens() )
         {
             nextUser = ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
+            System.out.println( this.matrix.toString() ) ;
         }
 
         if ( nextUser.haveTokens() )
@@ -125,4 +129,11 @@ public class Game implements Serializable
             return ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
         }
     }
+
+    public static void main (String [] args)
+    {
+        Game game = new Game();
+        game.start() ;
+    }
+
 }

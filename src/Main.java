@@ -56,7 +56,7 @@ public class Main {
                 System.out.println(board);
                 System.out.println("\n" + currentPlayer.name() + " wins!");
                 gameOver = true;
-            } else if (moveCount >= size * size || board.isBoardFull(board)) {
+            } else if (moveCount >= size * size || board.isBoardFull()) {
                 System.out.println("\nFinal Board:");
                 System.out.println(board);
                 System.out.println("\nIt's a draw!");
@@ -73,7 +73,7 @@ public class Main {
         System.out.print("Enter name for Player " + playerNumber + ": ");
         String name = scanner.nextLine();
         Color color = Color.chooseColor(scanner, playerNumber);
-        return new Humain(name, 0, color);
+        return new Human(name, 0, color);
     }
 
     
@@ -88,7 +88,7 @@ public class Main {
                 int col = Integer.parseInt(scanner.nextLine()) - 1;
 
                 if (row >= 0 && row < size && col >= 0 && col < size) {
-                    Cell cell = board.getCell(row, col);
+                    Cell cell = board.getCell( new Coordonates(row, col) );
                     if (cell.getColor() == Color.WHITE) {
                         return new Coordonates(row, col);
                     }
