@@ -91,7 +91,7 @@ public class Launcher {
                 int col = Integer.parseInt(scanner.nextLine()) - 1;
 
                 Coordonates coord = new Coordonates(row, col);
-                if (board.isValidMove(coord)) {
+                if (board.isValidMove(coord)) { 
                     return coord;
                 }
             } catch (NumberFormatException e) {

@@ -266,7 +266,7 @@ public class Matrix {
      * @param coord The coordonates you want to know if 
      * @return True if the move is valid, false otherwise
      */
-    private boolean isValidMove(Coordonates coord)  {
+    public boolean isValidMove(Coordonates coord)  {
         int size = this.getLength();
        
             try {
