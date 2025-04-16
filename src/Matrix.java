@@ -365,12 +365,4 @@ public class Matrix {
         
     }
 
-
-    // System.out.print("Enter row (1-" + size + "): ");
-    // int row = Integer.parseInt(scanner.nextLine()) - 1;
-    // System.out.print("Enter column (1-" + size + "): ");
-    // int col = Integer.parseInt(scanner.nextLine()) - 1;
-
-
-
 }
