@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-// import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -34,6 +33,7 @@ public class Game implements Serializable
         this.player2 = new Computer(Color.YELLOW) ;
 
         this.matrix = new Matrix(15, 5) ;
+        
     }
 
     /**

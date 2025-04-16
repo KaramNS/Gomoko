@@ -29,6 +29,8 @@ public class Matrix {
                 this.grid.get(i).add(new Cell());
             }
         }
+
+        this.setNeighbors();
     }
 
     /**
@@ -47,6 +49,7 @@ public class Matrix {
                 this.grid.get(i).add(new Cell());
             }
         }
+        this.setNeighbors();
         
     }
 
@@ -66,7 +69,7 @@ public class Matrix {
                 this.grid.get(i).add(new Cell());
             }
         }
-        
+        this.setNeighbors();
     }
 
 
