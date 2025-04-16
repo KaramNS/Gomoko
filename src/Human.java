@@ -1,7 +1,5 @@
 package src ;
 
-import java.util.Scanner;
-
 /**
  * Humain class representing a human player in the game.
  * It extends the User class.
@@ -10,7 +8,6 @@ import java.util.Scanner;
 
 public class Human extends User 
 {
-
     /**
      * @description Constructor for Humain class, meant to be used for already known players.
      * @param name The name of the player.
@@ -48,10 +45,6 @@ public class Human extends User
     {
         System.out.print("Enter your name: ") ;
         String name = System.console().readLine() ;
-
-        // Scanner scanner = new Scanner(System.in) ;
-        // String name = scanner.nextLine() ;
-        // scanner.close () ;
 
         return name ;
     }
@@ -91,10 +84,6 @@ public class Human extends User
         System.out.print("Enter your move (x y): ") ;
         String input = System.console().readLine() ;
 
-        // Scanner scanner = new Scanner(System.in) ;
-        // String input = scanner.nextLine() ;
-        // scanner.close () ;
-
         String[] parts = input.split("\\s+") ;
 
         if (parts.length == 2) 
@@ -119,5 +108,4 @@ public class Human extends User
             return chosePlacement() ; // Retry the input
         }
     } 
-
 }
