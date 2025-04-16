@@ -1,5 +1,7 @@
 package src;
 
+import java.util.Random;
+
 /**
  * @description This class represents a computer player in the game.
  * * It extends the User class and inherits its properties and methods.
@@ -16,7 +18,7 @@ public class Computer extends User
      */
     public Computer (Color color)
     {
-        super ("Computer", 0, color) ; // IDEA : Use a default color for the computer player
+        super ("Computer", 15, color) ; // IDEA : Use a default color for the computer player
     }
 
     public Coordonates chosePlacement (Matrix matrix) 
@@ -29,8 +31,10 @@ public class Computer extends User
     }
 
     @Override
-    Coordonates chosePlacement() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'chosePlacement'");
+    public Coordonates chosePlacement() 
+    {
+        Random random = new Random() ;
+        Coordonates placement = new Coordonates(random.nextInt(15) , random.nextInt(15)) ;
+        return placement ;
     }
 }
