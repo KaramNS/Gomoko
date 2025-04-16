@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 /**
  * @author Syrine-BEN HASSINE
- * @description This class represents 
+ * @description This class manages the launching of the game, can acte  
  */
 
 public class Launcher {

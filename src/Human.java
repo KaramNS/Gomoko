@@ -1,5 +1,7 @@
 package src ;
 
+import java.util.Scanner;
+
 /**
  * Humain class representing a human player in the game.
  * It extends the User class.
@@ -21,7 +23,7 @@ public class Human extends User
 
     public Human (String name, Color color) 
     {
-        super(name, 0, color) ;
+        super(name, 15, color) ;
     }
 
     /**
@@ -30,7 +32,7 @@ public class Human extends User
      */
     public Human (Color color)
     {
-        super (promptForName(), 0, color) ;
+        super (promptForName(), 15, color) ;
     }
 
     /**
@@ -41,6 +43,11 @@ public class Human extends User
     {
         System.out.print("Enter your name: ") ;
         String name = System.console().readLine() ;
+
+        // Scanner scanner = new Scanner(System.in) ;
+        // String name = scanner.nextLine() ;
+        // scanner.close () ;
+
         return name ;
     }
 
@@ -54,7 +61,11 @@ public class Human extends User
         System.out.print("Enter your move (x y): ") ;
         String input = System.console().readLine() ;
 
-        String[] parts = input.split("//d+ //d+") ;
+        // Scanner scanner = new Scanner(System.in) ;
+        // String input = scanner.nextLine() ;
+        // scanner.close () ;
+
+        String[] parts = input.split("\\s+") ;
 
         if (parts.length == 2) 
         {

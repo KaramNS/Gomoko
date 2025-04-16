@@ -33,7 +33,7 @@ public class Game implements Serializable
         this.player1 = new Human(Color.PURPLE) ;
         this.player2 = new Computer(Color.YELLOW) ;
 
-        this.matrix = new Matrix() ;
+        this.matrix = new Matrix(15, 5) ;
     }
 
     /**
@@ -98,7 +98,6 @@ public class Game implements Serializable
         int starterChoice = random.nextInt(2) ;
         User nextUser ;
 
-        
         if ( starterChoice == 0 )
         {
             nextUser = this.player1 ;
@@ -110,6 +109,7 @@ public class Game implements Serializable
         
         this.placeFirstToken(nextUser) ; 
 
+        clear() ;
         System.out.println( this.matrix.toString() ) ;
         
         while ( ! this.matrix.putToken(nextUser.chosePlacement(), nextUser.token() ) && nextUser.haveTokens() )
@@ -127,6 +127,29 @@ public class Game implements Serializable
         {
             System.out.println("No more tokens left for " + nextUser.name() + " !") ;
             return ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
+        }
+    }
+
+    /**
+     * @description Clear the console, to get a cleaner terminal
+     * 
+     */
+    public static void clear() 
+    {
+        try 
+        {
+            final String os = System.getProperty("os.name");
+
+            if (os.contains("Windows")) 
+            {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } 
+        catch (final Exception e) 
+        {
+            System.out.println("Erreur lors de l'effacement de la console : " + e.getMessage());
         }
     }
 
