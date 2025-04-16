@@ -85,8 +85,14 @@ public class Matrix {
         this.grid.get(x).set(y, cell);
     }
 
+    /**
+     * set a cell in a position in the matrix
+     * @param coord the coordonates where to set the cell
+     * @param cell is the cell you want to put in this slot
+     */
     public void setGrid(Coordonates coord, Cell cell){
         this.grid.get(coord.x()).set(coord.y(), cell);
+        setNeighbors();
 
     }
 
@@ -99,12 +105,18 @@ public class Matrix {
         return this.grid.size();
     }
 
+   /** 
+    * Gets the heught of the square board
+    * @return Height of the square board
+    */
     public int getHeight(){
         return this.grid.get(0).size();
     }
+
+
     @Override
     public String toString() {
-        String s = "";
+        String s = "";  
         int length = this.getLength();
         int height = this.getHeight();
 
@@ -228,7 +240,7 @@ public class Matrix {
      * Sets all valid neighbors for each cell in the grid.
      * Each cell will have its surrounding cells assigned according to the 8 directions.
      */
-    public void setNeighbors() {
+    public final void setNeighbors() {
         int length = getLength();
         int height = getHeight();
 
@@ -262,7 +274,7 @@ public class Matrix {
                 }
 
                 //check for  UP_RIGHT
-                if (i > 0 && j < length - 1) {
+                if (i > 0 && j < height - 1) {
                     currentCell.setNeighbor(grid.get(i - 1).get(j + 1), Direction.UP_RIGHT);
                 }
 
@@ -272,13 +284,58 @@ public class Matrix {
                 }
 
                 //check for  DOWN_RIGHT
-                if (i < length - 1 && j < length - 1) {
+                if (i < length - 1 && j < height - 1) {
                     currentCell.setNeighbor(grid.get(i + 1).get(j + 1), Direction.DOWN_RIGHT);
                 }
             }
         }
     }
 
+    public void setNeighbors(Coordonates coord){
+        var currentCell = this.getCell(coord);
+        int length = getLength();
+        int height = getHeight();
+
+        // check for UP
+        if (coord.x() > 0) {
+            currentCell.setNeighbor(grid.get(coord.x()- 1).get(coord.y()), Direction.UP);
+        }
+
+        // check for DOWN
+        if (coord.x() < length - 1) {
+            currentCell.setNeighbor(grid.get(coord.x() + 1).get(coord.y()), Direction.DOWN);
+        }
+
+        // check for LEFT
+        if (coord.y() > 0) {
+            currentCell.setNeighbor(grid.get(coord.x()).get(coord.y() - 1), Direction.LEFT);
+        }
+
+        //check for  RIGHT
+        if (coord.y() < height - 1) {
+            currentCell.setNeighbor(grid.get(coord.x()).get(coord.y() + 1), Direction.RIGHT);
+        }
+
+        //check for  UP_LEFT
+        if (coord.x() > 0 && coord.y() > 0) {
+            currentCell.setNeighbor(grid.get(coord.x() - 1).get(coord.y() - 1), Direction.UP_LEFT);
+        }
+
+        //check for  UP_RIGHT
+        if (coord.x() > 0 && coord.y() < height - 1) {
+            currentCell.setNeighbor(grid.get(coord.x()- 1).get(coord.y() + 1), Direction.UP_RIGHT);
+        }
+
+        //check for  DOWN_LEFT
+        if (coord.x() < length - 1 && coord.y() > 0) {
+            currentCell.setNeighbor(grid.get(coord.x() + 1).get(coord.y() - 1), Direction.DOWN_LEFT);
+        }
+
+        //check for  DOWN_RIGHT
+        if (coord.x() < length - 1 && coord.y() < height - 1) {
+            currentCell.setNeighbor(grid.get(coord.x() + 1).get(coord.y() + 1), Direction.DOWN_RIGHT);
+        }
+    }
 
     /**
      * Says if the move is valid, can throws a NumberFormatException
