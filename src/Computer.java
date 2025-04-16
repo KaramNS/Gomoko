@@ -6,7 +6,7 @@ import java.util.Random;
  * @description This class represents a computer player in the game.
  * * It extends the User class and inherits its properties and methods.
  * 
- * @author ELNASORY Karam
+ * @author ELNASORY Karam - Syrine BEN HASSINE
  * 
  */
 
@@ -21,6 +21,11 @@ public class Computer extends User
         super ("Computer", 15, color) ; // IDEA : Use a default color for the computer player
     }
 
+    /**
+     * @description This method is used to choose a placement on the matrix.
+     * @param matrix
+     * @return
+     */
     public Coordonates chosePlacement (Matrix matrix) 
     {
         // Randomly choose a placement on the matrix
@@ -30,6 +35,11 @@ public class Computer extends User
         return new Coordonates(x, y) ;
     }
 
+    /**
+     * @description This method is used to choose a placement on the matrix.
+     * It randomly chooses a placement on the matrix.
+     * @return Coordonates The coordinates of the placement.
+     */
     @Override
     public Coordonates chosePlacement() 
     {
