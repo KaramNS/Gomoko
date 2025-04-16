@@ -12,7 +12,7 @@ public class Human extends User
 {
 
     /**
-     * @description Constructor for Humain class, meant to be used for already nown players.
+     * @description Constructor for Humain class, meant to be used for already known players.
      * @param name The name of the player.
      * @param score The score of the player.
      */
@@ -21,6 +21,11 @@ public class Human extends User
         super(name, score, color) ;
     }
 
+    /**
+     * @description Constructor for Humain class, meant to be used for new players.
+     * @param name name of the player
+     * @param color color of the player
+     */
     public Human (String name, Color color) 
     {
         super(name, 15, color) ;
@@ -49,6 +54,31 @@ public class Human extends User
         // scanner.close () ;
 
         return name ;
+    }
+
+    public static Color promptForColor ()
+    {
+        System.out.print("Choose a color: ") ;
+        Color.displayAvailableColors() ;
+        String colorInput = System.console().readLine() ;
+        int colorIndex = Integer.parseInt(colorInput) ;
+
+        Color[] colors = Color.values();
+
+        try 
+        {
+            if (colorIndex >= 1 && colorIndex < colors.length && colors[colorIndex - 1] != Color.WHITE) 
+            {
+                return colors[colorIndex - 1];
+            }
+            System.out.println("Invalid selection! Try again.");
+        } 
+        catch (NumberFormatException e) 
+        {
+            System.out.println("Please enter a valid number!");
+            return promptForColor() ; 
+        }
+        return null ; // This line should never be reached, it is just to satisfy the compiler and make the typing system 
     }
 
     /**
