@@ -20,7 +20,7 @@ public class Game implements Serializable
     private final User player1 ;
     private final User player2 ;
 
-    // private final ArrayList< User > players ; IDEA 
+    // private final ArrayList< User > players ; // IDEA 
 
     private final Matrix matrix ; // final ? 
 
@@ -86,6 +86,7 @@ public class Game implements Serializable
     public void placeFirstToken (User startingUser)
     {
         int center = ( this.matrix.getLength() / 2 ) + 1 ;
+        System.out.println(startingUser.toString() + " Starts \n") ;
         this.matrix.putToken( center, center, startingUser.token() ) ;
     }
     
@@ -108,6 +109,9 @@ public class Game implements Serializable
         }
         
         this.placeFirstToken(nextUser) ; 
+
+        // Swicht currentUser
+        nextUser = ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
 
         clear() ;
         System.out.println( this.matrix.toString() ) ;
