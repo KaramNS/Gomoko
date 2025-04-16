@@ -1,5 +1,7 @@
 package src;
 
+import java.util.ArrayList;
+
 /**
  * @author Jean-Baptiste + Syrine BEN HASSINE 
  * @descritption This class represents the  game board
@@ -8,7 +10,7 @@ package src;
  */
 public class Matrix {
     
-    private Cell[][] grid;
+    private final ArrayList<ArrayList<Cell>> grid;
     private int numberNeededToWin = 5;
 
 
@@ -20,10 +22,11 @@ public class Matrix {
      */
     public Matrix(){
         this.numberNeededToWin = 5;
-        this.grid = new Cell[15][15];
+        this.grid = new ArrayList<>();
         for(int i = 0; i < 15; i++){
-            for(int j = 0; j < 15; i++){
-                this.grid[i][j] = new Cell();
+            this.grid.add(new ArrayList<>());
+            for(int j = 0; j < 15; j++){
+                this.grid.get(i).add(new Cell());
             }
         }
     }
@@ -35,12 +38,13 @@ public class Matrix {
      */
     public Matrix(int length){
 
-        this.grid = new Cell[length][length];
+        this.grid = new ArrayList<>();
         this.numberNeededToWin = 5;
 
         for(int i = 0; i < length; i++){
+            this.grid.add(new ArrayList<>());
             for(int j = 0; j < length; j++){
-                this.grid[i][j] = new Cell();
+                this.grid.get(i).add(new Cell());
             }
         }
         
@@ -53,12 +57,13 @@ public class Matrix {
      * @param numberWin the number of tokens in a row required to win
      */
     public Matrix(int length, int numberWin){
-        this.grid = new Cell[length][length];
+        this.grid = new ArrayList<>();
         this.numberNeededToWin = numberWin;
 
         for(int i = 0; i < length; i++){
+            this.grid.add(new ArrayList<>());
             for(int j = 0; j < length; j++){
-                this.grid[i][j] = new Cell();
+                this.grid.get(i).add(new Cell());
             }
         }
         
@@ -74,31 +79,40 @@ public class Matrix {
      * @param cell is the cell you want to put in this slot
      */
     public void setGrid(int x, int y , Cell cell){
-        this.grid[x][y] = cell;
+        this.grid.get(x).set(y, cell);
+    }
+
+    public void setGrid(Coordonates coord, Cell cell){
+        this.grid.get(coord.x()).set(coord.y(), cell);
+
     }
 
 
-    /**
+    /** 
      * Gets the length of the squaer board
      * @return Length of the square board
      */
     public int getLength(){
-        return this.grid[0].length;
+        return this.grid.size();
     }
 
+    public int getHeight(){
+        return this.grid.get(0).size();
+    }
     @Override
     public String toString() {
         String s = "";
-        int length = this.grid.length;
+        int length = this.getLength();
+        int height = this.getHeight();
 
 
         for(int i = 0 ; i < length; i++) {
 
             s = s+ "\n";
 
-            for(int j = 0 ; j < length ; j++){
+            for(int j = 0 ; j < height ; j++){
 
-                s = s + grid[i][j] + " ";
+                s = s + grid.get(i).get(j)+ " ";
 
             }
 
@@ -124,7 +138,7 @@ public class Matrix {
      * @return
      */
     public Cell getCell(Coordonates coord){
-        return grid[coord.x()][coord.y()];
+        return grid.get(coord.x()).get(coord.y());
     }
     
     
@@ -133,15 +147,16 @@ public class Matrix {
 
     /**
      * Put a token in a specified position on the board.
-     * @param xAxis The x axis 
-     * @param yAxis The y axis
+     * @param xAxis The x axis @deprecated /!\ Use the other version with Coordonnates in parameters
+     * @param yAxis The y axis @deprecated /!\ Use the other version with Coordonnates in parameters
      * @param token The token you want to put in the specified position on board
+     * 
      */
     public boolean  putToken(int xAxis, int yAxis, Token token){
         Coordonates coord = new Coordonates(xAxis,yAxis);
         if(isValidMove(coord)){
-        var currentCell = this.grid[coord.x()][coord.y()];
-        currentCell.setToken(token);
+            var currentCell = this.grid.get(coord.x()).get(coord.y());
+            currentCell.setToken(token);
         return currentCell.isWon(numberNeededToWin);
         }
         return false;
@@ -158,7 +173,7 @@ public class Matrix {
         
         
         if(isValidMove(coord)){
-            var currentCell = this.grid[coord.x()][coord.y()];
+            var currentCell = this.grid.get(coord.x()).get(coord.y());
             currentCell.setToken(token);
             return currentCell.isWon(numberNeededToWin);
         }
@@ -190,7 +205,7 @@ public class Matrix {
     public boolean checkIsWin(){
 
 
-        for(Cell[] c : this.grid){
+        for(ArrayList<Cell> c : this.grid){
             for(Cell caseCell : c){
                 if(caseCell.isWon( this.numberNeededToWin)){
                     return true;
@@ -212,49 +227,50 @@ public class Matrix {
      */
     public void setNeighbors() {
         int length = getLength();
+        int height = getHeight();
 
         for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
-                Cell currentCell = grid[i][j];
+            for (int j = 0; j < height; j++) {
+                Cell currentCell = this.grid.get(i).get(j);
 
                 // check for UP
                 if (i > 0) {
-                    currentCell.setNeighbor(grid[i - 1][j], Direction.UP);
+                    currentCell.setNeighbor(grid.get(i - 1).get(j), Direction.UP);
                 }
 
                 // check for DOWN
                 if (i < length - 1) {
-                    currentCell.setNeighbor(grid[i + 1][j], Direction.DOWN);
+                    currentCell.setNeighbor(grid.get(i + 1).get(j), Direction.DOWN);
                 }
 
                 // check for LEFT
                 if (j > 0) {
-                    currentCell.setNeighbor(grid[i][j - 1], Direction.LEFT);
+                    currentCell.setNeighbor(grid.get(i).get(j - 1), Direction.LEFT);
                 }
 
                 //check for  RIGHT
                 if (j < length - 1) {
-                    currentCell.setNeighbor(grid[i][j + 1], Direction.RIGHT);
+                    currentCell.setNeighbor(grid.get(i).get(j + 1), Direction.RIGHT);
                 }
 
                 //check for  UP_LEFT
                 if (i > 0 && j > 0) {
-                    currentCell.setNeighbor(grid[i - 1][j - 1], Direction.UP_LEFT);
+                    currentCell.setNeighbor(grid.get(i - 1).get(j - 1), Direction.UP_LEFT);
                 }
 
                 //check for  UP_RIGHT
                 if (i > 0 && j < length - 1) {
-                    currentCell.setNeighbor(grid[i - 1][j + 1], Direction.UP_RIGHT);
+                    currentCell.setNeighbor(grid.get(i - 1).get(j + 1), Direction.UP_RIGHT);
                 }
 
                 //check for  DOWN_LEFT
                 if (i < length - 1 && j > 0) {
-                    currentCell.setNeighbor(grid[i + 1][j - 1], Direction.DOWN_LEFT);
+                    currentCell.setNeighbor(grid.get(i + 1).get(j - 1), Direction.DOWN_LEFT);
                 }
 
                 //check for  DOWN_RIGHT
                 if (i < length - 1 && j < length - 1) {
-                    currentCell.setNeighbor(grid[i + 1][j + 1], Direction.DOWN_RIGHT);
+                    currentCell.setNeighbor(grid.get(i + 1).get(j + 1), Direction.DOWN_RIGHT);
                 }
             }
         }

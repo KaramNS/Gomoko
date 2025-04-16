@@ -134,7 +134,7 @@ private Token token;
         while(neighbor != null && neighbor.getColor() == this.getColor() ) { 
 
             count ++;            
-            neighbor.countColor(direction);
+            neighbor = neighbor.getNeighbor(direction);
             
         }
 
