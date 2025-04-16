@@ -6,7 +6,7 @@ import java.util.Random;
  * @description This class represents a computer player in the game.
  * * It extends the User class and inherits its properties and methods.
  * 
- * @author ELNASORY Karam
+ * @author ELNASORY Karam - Syrine BEN HASSINE
  * 
  */
 
