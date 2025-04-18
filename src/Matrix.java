@@ -161,23 +161,6 @@ public class Matrix {
     /*################### Methods ################### */
 
     /**
-     * Put a token in a specified position on the board.
-     * @param xAxis The x axis @deprecated /!\ Use the other version with Coordonnates in parameters
-     * @param yAxis The y axis @deprecated /!\ Use the other version with Coordonnates in parameters
-     * @param token The token you want to put in the specified position on board
-     * 
-     */
-    public boolean  putToken(int xAxis, int yAxis, Token token){
-        Coordonates coord = new Coordonates(xAxis,yAxis);
-        if(isValidMove(coord)){
-            var currentCell = this.grid.get(coord.x()).get(coord.y());
-            currentCell.setToken(token);
-        return currentCell.isWon(numberNeededToWin);
-        }
-        return false;
-    }
-
-    /**
      * Put a token in the game and check if it is won. If it is , 
      * return true.
      * @param coord The coordonates of the future token
@@ -217,6 +200,8 @@ public class Matrix {
         }
         return true;
     }
+
+    
     /**
      * Check if you win the game
      * @return True if you win, false otherwise
@@ -370,6 +355,10 @@ public class Matrix {
     }
 
 
+
+    /**
+     * Extends the Board in line and in column (one and one, right and down)
+     */
     private void extendBoard(){
         
         int lengthBefore = getLength();
