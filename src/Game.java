@@ -111,7 +111,7 @@ public class Game implements Serializable
     {
         int center = ( this.matrix.getLength() / 2 ) + 1 ;
         System.out.println(startingUser.toString() + " Starts \n") ;
-        this.matrix.putToken( center, center, startingUser.token() ) ;
+        this.matrix.putToken( new Coordonates(center, center), startingUser.token() ) ;
     }
     
     /**
@@ -187,5 +187,4 @@ public class Game implements Serializable
         Game game = new Game();
         game.start() ;
     }
-
 }
