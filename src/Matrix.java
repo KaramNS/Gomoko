@@ -188,8 +188,12 @@ public class Matrix {
         
         
         if(isValidMove(coord)){
+            if(coord.x() == getLength()-1 || coord.y() == getLength()-1){
+                extendBoard();
+            }
             var currentCell = this.grid.get(coord.x()).get(coord.y());
             currentCell.setToken(token);
+
             return currentCell.isWon(numberNeededToWin);
         }
         else{
@@ -364,5 +368,37 @@ public class Matrix {
             }
         
     }
+
+
+    private void extendBoard(){
+        
+        int lengthBefore = getLength();
+        int heightBefore = getHeight();
+
+        //add a new Column
+        for (int j = 0 ; j < lengthBefore ; j++){
+            this.grid.get(j).add(new Cell());
+        }
+
+        //add a new Line
+        ArrayList<Cell>newRow = new ArrayList<>(); 
+        for(int i = 0 ; i < heightBefore +1; i++ ){
+
+            newRow.add(new Cell());
+        }
+        this.grid.add(newRow);
+
+        //update the neighbors
+        for(int k = 0; k <getHeight(); k++){
+  
+            setNeighbors(new Coordonates(getLength() -1, k));
+        }
+
+        for(int k = 0; k <getLength(); k++){
+
+            setNeighbors(new Coordonates(k, getHeight()-1));
+        }
+    }
+
 
 }
