@@ -1,5 +1,4 @@
 package src;
-import java.io.Console;
 import java.util.Scanner;
 
 /**
@@ -33,7 +32,7 @@ public class Launcher {
 
         board = new Matrix(size, winCondition);
         board.setNeighbors();
-        setupBoard();
+        
         setupPlayers(mode);
         game = new Game(); 
         game.start();
@@ -76,16 +75,41 @@ public class Launcher {
     /**
      * Displays the board configuration (size and win condition).
      */
+    @SuppressWarnings("unused")
     private void setupBoard() {
         System.out.println("\n=== Game Setup ===");
         System.out.println("Board Size: " + size + "x" + size);
         System.out.println("Win Condition: " + winCondition + " in a row");
+        //ajouter affichage score 
     }
 
+    private void changeSettings(){
+        int boardSizeMax = 30; 
+        int changeSize = 0;   
+        int changeWin = 0;
+        int changeScore = 0 ; 
+
+        while(changeSize <= boardSizeMax && winCondition <= boardSizeMax && changeScore <= boardSizeMax){
+            String changeSizeInput = System.console().readLine() ;
+            changeSize = Integer.parseInt(changeSizeInput) ;
+            System.out.println("Choose board size ? " );
+            
+            System.out.println("Change Win condition ? ");
+            String changeWinInput = System.console().readLine(); 
+            winCondition = Integer.parseInt(changeSizeInput); 
+
+            System.out.println("Change score condition ? ");
+            String changeScoreInput = System.console().readLine();
+            changeScoreInput = Integer.parseInt(changeScoreInput);
+            
+        }
+
+    }
     /*
      * Let the user choose to change game settings
      * or play with default game conditions 
      */
+
     private void setupSettings(){
         int choiseSettings = 0;
         
@@ -102,7 +126,15 @@ public class Launcher {
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a number (1 or 2).");
             }
-        } 
+
+        if (choiseSettings == 1){
+            setupBoard();
+        }
+        else if (choiseSettings == 2 ){
+            
+        }
+        
+    } 
 
     }
     /**
@@ -172,28 +204,4 @@ public class Launcher {
             }
         }
     }
-    /*
-     * 
-     private void gameLoop() {
-        boolean gameOver = false;
-        
-        while (!gameOver) {
-            afficherBoard();
-            System.out.println("\n" + currentPlayer.name() + "'s turn (" + currentPlayer.color() + ")");
-            Coordonates move = getValidMove();
-            
-            if (board.putToken(move, new Token(currentPlayer.color()))) {
-                afficherBoard();
-                System.out.println("\n" + currentPlayer.name() + " wins!");
-                gameOver = true;
-            } else if (board.isBoardFull()) {  // Simplified check for draw
-                afficherBoard();
-                System.out.println("\nIt's a draw!");
-                gameOver = true;
-            } else {
-                currentPlayer = (currentPlayer == player1) ? player2 : player1;
-            }
-        }
-    }
-    */
 }
