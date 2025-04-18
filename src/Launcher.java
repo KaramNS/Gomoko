@@ -39,6 +39,9 @@ public class Launcher {
         scanner.close();
     }
 
+    /**
+     * Displays a welcome message at the start of the game.
+     */
     private void printWelcomeMessage() {
         System.out.println("=====================================");
         System.out.println("🎮  Welcome to GOMOKU GAME !!");
@@ -47,6 +50,11 @@ public class Launcher {
         System.out.println();
     }
 
+    /**
+     * Lets the user choose the game mode (vs player or vs computer).
+     * 
+     * @return 1 for human vs human, 2 for human vs computer
+     */
     private int chooseGameMode() {
         System.out.println("Choose your game mode:");
         System.out.println("1 - Play against another player");
@@ -64,12 +72,20 @@ public class Launcher {
         return choice;
     }
 
+    /**
+     * Displays the board configuration (size and win condition).
+     */
     private void setupBoard() {
         System.out.println("\n=== Game Setup ===");
         System.out.println("Board Size: " + size + "x" + size);
         System.out.println("Win Condition: " + winCondition + " in a row");
     }
 
+    /**
+     * Sets up players based on the chosen game mode.
+     * 
+     * @param mode 1 for player vs player, 2 for player vs computer
+     */
     private void setupPlayers(int mode) {
         System.out.println("\n=== Player 1 Setup ===");
         player1 = createPlayer(1);
