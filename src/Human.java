@@ -38,13 +38,24 @@ public class Human extends User
     }
 
     /**
+     * @description This constructor is meant to be used with 
+     * @param score to be parametered if we want to change the game initial conditions
+     * @return
+     */
+    public Human (int score) 
+    {
+        super ( promptForName(), score, promptForColor() ) ;
+    }
+
+    /**
      * @description Method to prompt the user for their name.
      * @return The name of the player as a String.
      */
     public static String promptForName () 
     {
         System.out.print("Enter your name: ") ;
-        String name = System.console().readLine() ;
+
+        String name = System.console().readLine() ; // TO TEST 
 
         return name ;
     }
@@ -75,7 +86,7 @@ public class Human extends User
     }
 
     /**
-     * Method to choose a placement on the board to play a move (place a token).
+     * @description Method to choose a placement on the board to play a move (place a token).
      * @return Coordonates object representing the chosen placement.
      */
     @Override

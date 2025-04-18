@@ -1,4 +1,5 @@
 package src;
+import java.io.Console;
 import java.util.Scanner;
 
 /**
@@ -39,6 +40,9 @@ public class Launcher {
         scanner.close();
     }
 
+    /**
+     * Displays a welcome message at the start of the game.
+     */
     private void printWelcomeMessage() {
         System.out.println("=====================================");
         System.out.println("🎮  Welcome to GOMOKU GAME !!");
@@ -47,6 +51,11 @@ public class Launcher {
         System.out.println();
     }
 
+    /**
+     * Lets the user choose the game mode (vs player or vs computer).
+     * 
+     * @return 1 for human vs human, 2 for human vs computer
+     */
     private int chooseGameMode() {
         System.out.println("Choose your game mode:");
         System.out.println("1 - Play against another player");
@@ -64,12 +73,43 @@ public class Launcher {
         return choice;
     }
 
+    /**
+     * Displays the board configuration (size and win condition).
+     */
     private void setupBoard() {
         System.out.println("\n=== Game Setup ===");
         System.out.println("Board Size: " + size + "x" + size);
         System.out.println("Win Condition: " + winCondition + " in a row");
     }
 
+    /*
+     * Let the user choose to change game settings
+     * or play with default game conditions 
+     */
+    private void setupSettings(){
+        int choiseSettings = 0;
+        
+        System.out.println("\n=== Choose : ===");
+        System.out.println("1) Playing with default conditions of the game ");
+        System.out.println("2) Settings: Change game conditions ");
+        
+        while(choiseSettings != 1 && choiseSettings != 2){
+            System.out.println("Enter 1 or 2 please ! ");
+            try {
+                String choiseSettingsInput = System.console().readLine() ;
+                choiseSettings= Integer.parseInt(choiseSettingsInput) ;
+                    
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number (1 or 2).");
+            }
+        } 
+
+    }
+    /**
+     * Sets up players based on the chosen game mode.
+     * 
+     * @param mode 1 for player vs player, 2 for player vs computer
+     */
     private void setupPlayers(int mode) {
         System.out.println("\n=== Player 1 Setup ===");
         player1 = createPlayer(1);
@@ -93,14 +133,22 @@ public class Launcher {
     
     
 
-    private User createPlayer(int playerNumber) {
-        System.out.print("Enter name for Player " + playerNumber + ": ");
-        String name = scanner.nextLine();
-        Color color = Color.chooseColor(scanner, playerNumber);
-        return new Human(name, 0, color);
+        /**
+     * Creates a Human player by asking for name and color.
+     *
+     * @param playerNumber The player number for display.
+     * @return A Human object initialized with user inputs.
+     */
+    private Human createPlayer(int playerNumber) {
+        System.out.println("=== Player " + playerNumber + " ===");
+        C
+        return new Human(name, color );
     }
     
 
+    /**
+     * Displays the current board in the console.
+     */
     private void afficherBoard() {
         System.out.println("\n=== Current Board ===");
         System.out.println(board);
