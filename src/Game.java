@@ -33,9 +33,33 @@ public class Game implements Serializable
         this.player2 = new Computer(Color.YELLOW) ;
 
         this.matrix = new Matrix(15, 5) ;
-        
     }
 
+    /**
+     * @description Constructor for Game class, 
+     * @param player1 the first player
+     * @param player2 the second player
+     */
+    public Game ( Human player1, Human player2 )
+    {
+        this.player1 = player1 ;
+        this.player2 = player2 ;
+
+        this.matrix = new Matrix(15, 5) ;
+    }
+
+    /**
+     * @description Constructor for Game class, 1 Human and 1 Computer
+     * @param player
+     */
+    public Game (Human player)
+    {
+        this.player1 = player ;
+        this.player2 = new Computer(Color.YELLOW) ;
+
+        this.matrix = new Matrix(15, 5) ;
+    }
+    
     /**
      * @description Save the instance in a file
      * @throws IOException
@@ -119,6 +143,7 @@ public class Game implements Serializable
         while ( ! this.matrix.putToken(nextUser.chosePlacement(), nextUser.token() ) && nextUser.haveTokens() )
         {
             nextUser = ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
+            clear () ;
             System.out.println( this.matrix.toString() ) ;
         }
 
