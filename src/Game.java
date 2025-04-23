@@ -1,5 +1,6 @@
 package src ;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,12 +21,12 @@ public class Game implements Serializable
     private final User player1 ;
     private final User player2 ;
 
-    // private final ArrayList< User > players ; // IDEA 
+    // private final ArrayList< User > players ; // IDEA
 
     private final Matrix matrix ; // final ? 
 
     /**
-     * @description Constructor for Game class, 
+     * @description Constructor for Game class, For testing purposes
      */
     public Game ()
     {
@@ -36,7 +37,7 @@ public class Game implements Serializable
     }
 
     /**
-     * @description Constructor for Game class, 
+     * @description Constructor for Game class, Human vs Human
      * @param player1 the first player
      * @param player2 the second player
      */
@@ -49,7 +50,7 @@ public class Game implements Serializable
     }
 
     /**
-     * @description Constructor for Game class, 1 Human and 1 Computer
+     * @description Constructor for Game class, Human vs Computer
      * @param player
      */
     public Game (Human player)
@@ -83,7 +84,7 @@ public class Game implements Serializable
     }
 
     /**
-     * 
+     * @description Load a Game instance from a file
      * @param fileName of the file that contains the Game object to be loaded 
      * @return A Game instance
      */
@@ -103,8 +104,34 @@ public class Game implements Serializable
     }
 
     /**
+     * @description Discover the saved games in the directory "SavedGames", and display them to the user.
+     */
+    public static void discoverSavedGames ()
+    {
+        File directory = new File("./SavedGames/") ;
+
+        File[] files = directory.listFiles() ;
+
+        if ( files != null && files.length > 0 )
+        {
+            System.out.println("Saved games:") ;
+            for ( File file : files )
+            {
+                if ( file.isFile() )
+                {
+                    System.out.println( file.getName() ) ;
+                }
+            }
+        }
+        else
+        {
+            System.out.println("No saved games found.") ;
+        }
+    }
+
+    /**
      * @description Place the first token in the center of the matrix
-     * @param statingUser
+     * @param startingUser the first user to play
      */
 
     public void placeFirstToken (User startingUser)
@@ -117,7 +144,7 @@ public class Game implements Serializable
     /**
      * @description Start the game 
      */
-    public User start () 
+    public User start () // TODO : return a boolean false to go to in game menu, true 
     {
         Random random = new Random () ; 
         int starterChoice = random.nextInt(2) ;
@@ -139,7 +166,7 @@ public class Game implements Serializable
 
         clear() ;
         System.out.println( this.matrix.toString() ) ;
-        
+        // TODO : chosePlacement(Matrix matrix) and handls invalid tokens placement 
         while ( ! this.matrix.putToken(nextUser.chosePlacement(), nextUser.token() ) && nextUser.haveTokens() )
         {
             nextUser = ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
@@ -184,6 +211,7 @@ public class Game implements Serializable
 
     public static void main (String [] args)
     {
+        discoverSavedGames();
         Game game = new Game();
         game.start() ;
     }
