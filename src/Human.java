@@ -9,7 +9,7 @@ package src ;
 public class Human extends User 
 {
     /**
-     * @description Constructor for Humain class, meant to be used for already known players.
+     * @description Constructor for Humain class, meant to be used to create a custom player.
      * @param name The name of the player.
      * @param score The score of the player.
      */
@@ -29,8 +29,9 @@ public class Human extends User
     }
 
     /**
-     * @description Constructor for Humain class, meant to be used for new players.
-     * Will prompt the user for their name, and init the score to 0.
+     * @description Constructor for Humain class, for new players, interact's with the user.
+     * @param color color of the player
+     * Will prompt the user for their name, and init the score to 15 (default).
      */
     public Human (Color color)
     {
@@ -39,8 +40,7 @@ public class Human extends User
 
     /**
      * @description This constructor is meant to be used with 
-     * @param score to be parametered if we want to change the game initial conditions
-     * @return
+     * @param score to be parametered if we want to change the game initial conditions.
      */
     public Human (int score) 
     {
