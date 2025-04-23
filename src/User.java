@@ -2,7 +2,7 @@ package src ;
 
 /**
  * User abstract class representing a player in the game.
- * It contains the player's name and score.
+ * It contains the player's name, tokens color and score.
  * @author ELNASORY Karam
  */
 public abstract class User 
@@ -99,9 +99,12 @@ public abstract class User
 
         sb.append ("Score : ") ;
         sb.append (score) ;
+        sb.append (" | ") ;
+
+        sb.append ("Color : ") ;
+        sb.append (color().toString()) ;
         sb.append (" \n ") ;
 
         return sb.toString() ;
     }
-
 }
