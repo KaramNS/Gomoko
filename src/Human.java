@@ -55,7 +55,7 @@ public class Human extends User
     {
         System.out.print("Enter your name: ") ;
 
-        String name = System.console().readLine() ; // TO TEST 
+        String name = System.console().readLine() ;  
 
         return name ;
     }
@@ -90,12 +90,15 @@ public class Human extends User
      * @return Coordonates object representing the chosen placement.
      */
     @Override
-    public Coordonates chosePlacement () 
+    public Coordonates chosePlacement (Matrix matrix) 
     {
+        System.out.println( matrix.toString() ) ;
         System.out.print("Enter your move (x y): ") ;
         String input = System.console().readLine() ;
-
+        
         String[] parts = input.split("\\s+") ;
+
+        Coordonates placement = null ;
 
         if (parts.length == 2) 
         {
@@ -103,20 +106,29 @@ public class Human extends User
             {
                 int x = Integer.parseInt(parts[0]) ;
                 int y = Integer.parseInt(parts[1]) ;
-                return new Coordonates(x, y) ;
+                placement = new Coordonates(x, y) ;
             } 
             catch (NumberFormatException e) 
             {
                 System.out.println("Invalid input. Please enter two integers.") ;
 
-                return chosePlacement() ; // Retry the input
+                return chosePlacement(matrix) ; // Retry the input
             }
         } 
         else 
         {
             System.out.println("Invalid input. Please enter two integers.") ;
 
-            return chosePlacement() ; // Retry the input
+            return chosePlacement(matrix) ; // Retry the input
         }
+
+        // Check if the placement is valid
+        while (!matrix.isValidMove(placement)) 
+        {
+            System.out.println("Invalid placement! Try again.") ;
+            placement = chosePlacement(matrix) ; // Retry the input
+        }
+
+        return placement ;
     } 
 }

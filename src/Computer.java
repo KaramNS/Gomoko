@@ -20,30 +20,18 @@ public class Computer extends User
     {
         super ("Computer", 15, color) ; // IDEA : Use a default color for the computer player
     }
-
-    /**
-     * @description This method is used to choose a placement on the matrix.
-     * @param matrix
-     * @return
-     */
-    public Coordonates chosePlacement (Matrix matrix) 
-    {
-        // TODO : backtracking algorithm to find the best placement
-        // Randomly choose a placement on the matrix
-        int x = (int) (Math.random() * matrix.getLength()) ;
-        int y = (int) (Math.random() * matrix.getLength()) ;
-
-        return new Coordonates(x, y) ;
-    }
-
+    
     /**
      * @description This method is used to choose a placement on the matrix.
      * It randomly chooses a placement on the matrix.
+     * @param matrix
      * @return Coordonates The coordinates of the placement.
      */
     @Override
-    public Coordonates chosePlacement() 
+    public Coordonates chosePlacement(Matrix matrix) 
     {
+        // TODO : backtracking algorithm to find the best placement
+
         Random random = new Random() ;
         Coordonates placement = new Coordonates(random.nextInt(15) , random.nextInt(15)) ;
         return placement ;

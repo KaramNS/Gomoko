@@ -83,7 +83,7 @@ public abstract class User
     /**
      * @description Method to choose a placement on the board to play a move (place a token).
      */
-    abstract Coordonates chosePlacement () ;
+    abstract Coordonates chosePlacement (Matrix matrix) ;
 
     /**
      * Methode to return the object state as a string.
