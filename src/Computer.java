@@ -28,6 +28,7 @@ public class Computer extends User
      */
     public Coordonates chosePlacement (Matrix matrix) 
     {
+        // TODO : backtracking algorithm to find the best placement
         // Randomly choose a placement on the matrix
         int x = (int) (Math.random() * matrix.getLength()) ;
         int y = (int) (Math.random() * matrix.getLength()) ;
