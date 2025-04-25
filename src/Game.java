@@ -167,7 +167,7 @@ public class Game implements Serializable
         clear() ;
         System.out.println( this.matrix.toString() ) ;
         // TODO : chosePlacement(Matrix matrix) and handls invalid tokens placement 
-        while ( ! this.matrix.putToken(nextUser.chosePlacement(), nextUser.token() ) && nextUser.haveTokens() )
+        while ( ! this.matrix.putToken(nextUser.chosePlacement( this.matrix ), nextUser.token() ) && nextUser.haveTokens() )
         {
             nextUser = ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
             clear () ;
