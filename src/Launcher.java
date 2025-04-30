@@ -1,5 +1,6 @@
 package src;
 
+import java.io.Console;
 import java.util.Scanner;
 
 /**
@@ -10,6 +11,7 @@ import java.util.Scanner;
 public class Launcher {
     private int winCondition;
     private int size;
+    private int score = 15;
     private final Scanner scanner;
     private Matrix board;
     private User player1;
@@ -85,27 +87,43 @@ public class Launcher {
     }
 
     private void changeSettings() {
-        int boardSizeMax = 30;
-        int changeSize = 0;
-        int changeWin = 0;
-        int changeScore = 0;
-
-        while (changeSize <= boardSizeMax && winCondition <= boardSizeMax && changeScore <= boardSizeMax) {
-            String changeSizeInput = System.console().readLine();
-            changeSize = Integer.parseInt(changeSizeInput);
-            System.out.println("Choose board size ? ");
-
-            System.out.println("Change Win condition ? ");
-            String changeWinInput = System.console().readLine();
-            winCondition = Integer.parseInt(changeSizeInput);
-
-            System.out.println("Change score condition ? ");
-            String changeScoreInput = System.console().readLine();
-            changeScoreInput = Integer.parseInt(changeScoreInput);
-
+        Console console = System.console();
+        if (console == null) {
+            System.out.println("Console is not available. Please run the program from a terminal.");
+            return;
         }
 
+        int boardSizeMax = 30;
+
+        try {
+            System.out.println("Choose board size (max " + boardSizeMax + "): ");
+            int changeSize = Integer.parseInt(console.readLine());
+
+            System.out.println("Change win condition: ");
+            int changeWin = Integer.parseInt(console.readLine());
+
+            System.out.println("Change score condition (optional): ");
+            int changeScore = Integer.parseInt(console.readLine());
+
+            // Verification
+            if (changeSize <= 0 || changeSize > boardSizeMax ||
+                    changeWin <= 0 || changeWin > changeSize ||
+                    changeScore <= 0 || changeScore > 100) {
+                System.out.println("Invalid values. Please try again.");
+                return;
+            }
+
+            // Appliquer les changements
+            this.size = changeSize;
+            this.winCondition = changeWin;
+            this.score = changeScore;
+
+            System.out.println("Settings updated.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter numeric values.");
+        }
     }
+
     /*
      * Let the user choose to change game settings
      * or play with default game conditions
@@ -173,7 +191,7 @@ public class Launcher {
         System.out.println("=== Player " + playerNumber + " ===");
         String name = Human.promptForName();
         Color color = Human.promptForColor();
-        return new Human(name, color);
+        return new Human(name, score, color);
     }
 
     /**
