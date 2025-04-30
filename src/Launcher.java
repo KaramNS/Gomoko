@@ -171,8 +171,9 @@ public class Launcher {
      */
     private Human createPlayer(int playerNumber) {
         System.out.println("=== Player " + playerNumber + " ===");
-        C
-        return new Human(name, color );
+        String name = Human.promptForName();
+        Color color = Human.promptForColor();
+        return new Human(name, color);
     }
 
     /**
