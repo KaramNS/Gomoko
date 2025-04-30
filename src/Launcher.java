@@ -83,7 +83,7 @@ public class Launcher {
         System.out.println("\n=== Game Setup ===");
         System.out.println("Board Size: " + size + "x" + size);
         System.out.println("Win Condition: " + winCondition + " in a row");
-        // ajouter affichage score
+        System.out.println("Score " + score);
     }
 
     private void changeSettings() {
