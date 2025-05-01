@@ -75,6 +75,8 @@ public class Game implements Serializable
      */
     public Game (GameConditions gameConditions)
     {
+
+        // TODO : TO BE FINISHED
         this.player1 = new Human(gameConditions.getPlayerScore()) ;
         this.player2 = new Computer(Color.YELLOW) ;
 
