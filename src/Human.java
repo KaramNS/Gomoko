@@ -1,14 +1,12 @@
 package src ;
 
-import java.io.Serializable;
-
 /**
  * Humain class representing a human player in the game.
  * It extends the User class.
  * @author ELNASORY Karam
  */
 
-public class Human extends User implements Serializable
+public class Human extends User
 {
     /**
      * @description Constructor for Humain class, meant to be used to create a custom player.

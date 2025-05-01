@@ -28,7 +28,8 @@ public class Game implements Serializable
 
     private final Matrix matrix ; // final ? 
 
-    private final GameConditions gameConditions ; 
+    @SuppressWarnings("unused")
+    private final GameConditions gameConditions ; // TODO Standarized the usage of this class
 
     /**
      * @description Constructor for Game class, For testing purposes
