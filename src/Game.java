@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -21,19 +22,24 @@ public class Game implements Serializable
     private final User player1 ;
     private final User player2 ;
 
+    private User nextUser ;
+
     // private final ArrayList< User > players ; // IDEA
 
     private final Matrix matrix ; // final ? 
 
+    private final GameConditions gameConditions ; 
+
     /**
      * @description Constructor for Game class, For testing purposes
      */
-    public Game ()
+    public Game () // TODO : remove this constructor
     {
-        this.player1 = new Human(Color.PURPLE) ;
-        this.player2 = new Computer(Color.YELLOW) ;
+        this.player1 = new Human(Color.GREEN) ;
+        this.player2 = new Computer(Color.RED) ;
 
         this.matrix = new Matrix(15, 5) ;
+        this.gameConditions = new GameConditions() ; // Default game conditions
     }
 
     /**
@@ -47,6 +53,7 @@ public class Game implements Serializable
         this.player2 = player2 ;
 
         this.matrix = new Matrix(15, 5) ;
+        this.gameConditions = new GameConditions() ; // Default game conditions
     }
 
     /**
@@ -59,25 +66,49 @@ public class Game implements Serializable
         this.player2 = new Computer(Color.YELLOW) ;
 
         this.matrix = new Matrix(15, 5) ;
+        this.gameConditions = new GameConditions() ; // Default game conditions
+    }
+
+    /**
+     * @description Constructor for Game class, ??????????????
+     * @param gameConditions
+     */
+    public Game (GameConditions gameConditions)
+    {
+        this.player1 = new Human(gameConditions.getPlayerScore()) ;
+        this.player2 = new Computer(Color.YELLOW) ;
+
+        this.matrix = new Matrix(gameConditions.getMatrixSize(), gameConditions.getWinCondition()) ;
+        this.gameConditions = gameConditions ; // Default game conditions
     }
     
     /**
      * @description Save the instance in a file
      * @throws IOException
      */
-    public void save () throws IOException 
+    public void save() throws IOException 
     {
-        StringBuilder sb = new StringBuilder() ;
-        sb.append( Calendar.getInstance().getTime().toString() ) ;
+        // Format the current date-time safely
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String timestamp = formatter.format(Calendar.getInstance().getTime());
 
-        sb.append(" ") ;
-        sb.append( player1.name() ) ;
-        sb.append(" ") ;
-        sb.append( player2.name() ) ;
+        // Clean player names to be safe in filenames (optional but good practice)
+        String player1Name = player1.name().replaceAll("[^a-zA-Z0-9_-]", "_");
+        String player2Name = player2.name().replaceAll("[^a-zA-Z0-9_-]", "_");
 
-        String fileName = sb.toString() ;
+        // Construct safe filename
+        String fileName = timestamp + "_" + player1Name + "_vs_" + player2Name + ".sav";
+        String destination = "./SavedGames/" + fileName;
 
-        try ( ObjectOutputStream out = new ObjectOutputStream( new FileOutputStream( fileName ) ) ) 
+        // Create directory if it doesn't exist
+        File dir = new File("./SavedGames/");
+        if (!dir.exists()) 
+        {
+            dir.mkdirs();
+        }
+
+        // Write the object to file
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(destination))) 
         {
             out.writeObject(this);
         }
@@ -106,12 +137,13 @@ public class Game implements Serializable
     /**
      * @description Discover the saved games in the directory "SavedGames", and display them to the user.
      */
-    public static void discoverSavedGames ()
+    public static File[] discoverSavedGames ()
     {
         File directory = new File("./SavedGames/") ;
 
         File[] files = directory.listFiles() ;
 
+        int fileIndex = 0 ;
         if ( files != null && files.length > 0 )
         {
             System.out.println("Saved games:") ;
@@ -119,13 +151,44 @@ public class Game implements Serializable
             {
                 if ( file.isFile() )
                 {
-                    System.out.println( file.getName() ) ;
+                    System.out.println( ++fileIndex + ". " + file.getName() ) ;
                 }
             }
         }
         else
         {
             System.out.println("No saved games found.") ;
+        }
+        return files ;
+    }
+
+    /**
+     * @description Load a game from the saved games
+     * @return A Game instance
+     */
+    public static Game loadGame ()
+    {
+        File[] files = Game.discoverSavedGames();
+
+        System.out.print("Enter the number of the game you want to load: ") ;
+        int choice = Integer.parseInt(System.console().readLine()) ;
+        if ( choice < 1 || choice > files.length )
+        {
+            System.out.println("Invalid choice") ;
+            return null ;
+        }
+        String fileName = files[choice].getName() ;
+
+        Game game = Game.load(fileName) ;
+        if ( game == null )
+        {
+            System.out.println("Error loading game") ;
+            return null ;
+        }
+        else
+        {
+            System.out.println("Game loaded successfully") ;
+            return game ;
         }
     }
 
@@ -134,7 +197,7 @@ public class Game implements Serializable
      * @param startingUser the first user to play
      */
 
-    public void placeFirstToken (User startingUser)
+    private void placeFirstToken (User startingUser)
     {
         int center = ( this.matrix.getLength() / 2 ) + 1 ;
         System.out.println(startingUser.toString() + " Starts \n") ;
@@ -148,41 +211,50 @@ public class Game implements Serializable
     {
         Random random = new Random () ; 
         int starterChoice = random.nextInt(2) ;
-        User nextUser ;
 
         if ( starterChoice == 0 )
         {
-            nextUser = this.player1 ;
+            this.nextUser = this.player1 ;
         }
         else 
         {
-            nextUser = this.player2 ;
+            this.nextUser = this.player2 ;
         }
         
-        this.placeFirstToken(nextUser) ; 
+        this.placeFirstToken(this.nextUser) ; 
 
         // Swicht currentUser
-        nextUser = ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
+        this.nextUser = ( this.nextUser == this.player1 ) ? this.player2 : this.player1 ;
+        
+        return this.continu() ;
+    }
 
+    /**
+     * @description Continue the game until one of the players wins or there are no more tokens left
+     * @return The user who won the game // TODO
+     */
+    public User continu ()
+    {
         clear() ;
-        System.out.println( this.matrix.toString() ) ;
-        // TODO : chosePlacement(Matrix matrix) and handls invalid tokens placement 
-        while ( ! this.matrix.putToken(nextUser.chosePlacement( this.matrix ), nextUser.token() ) && nextUser.haveTokens() )
+        // System.out.println( this.matrix.toString() ) ; // TODO : delete this line
+        // chosePlacement(Matrix matrix) and handls invalid tokens placement DONE
+        
+        while ( ! this.matrix.putToken(this.nextUser.chosePlacement( this.matrix ), this.nextUser.token() ) && this.nextUser.haveTokens() )
         {
-            nextUser = ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
+            this.nextUser = ( this.nextUser == this.player1 ) ? this.player2 : this.player1 ;
             clear () ;
             System.out.println( this.matrix.toString() ) ;
         }
 
-        if ( nextUser.haveTokens() )
+        if ( this.nextUser.haveTokens() )
         {
-            System.out.println("Player " + nextUser.name() + " won the game") ;
-            return nextUser ;
+            System.out.println("Player " + this.nextUser.name() + " won the game") ;
+            return this.nextUser ;
         }
         else
         {
-            System.out.println("No more tokens left for " + nextUser.name() + " !") ;
-            return ( nextUser == this.player1 ) ? this.player2 : this.player1 ;
+            System.out.println("No more tokens left for " + this.nextUser.name() + " !") ;
+            return ( this.nextUser == this.player1 ) ? this.player2 : this.player1 ;
         }
     }
 
@@ -213,6 +285,14 @@ public class Game implements Serializable
     {
         discoverSavedGames();
         Game game = new Game();
-        game.start() ;
+        // game.start() ;
+        try 
+        {
+            game.save() ;
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
     }
 }
