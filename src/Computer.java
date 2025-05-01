@@ -1,5 +1,6 @@
 package src;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Random;
  * 
  */
 
-public class Computer extends User
+public class Computer extends User implements Serializable
 {   
     /**
      * @description Constructor for Computer class, 
@@ -19,6 +20,16 @@ public class Computer extends User
     public Computer (Color color)
     {
         super ("Computer", 15, color) ; // IDEA : Use a default color for the computer player
+    }
+
+    /**
+     * @description Constructor for Computer class, 
+     * @param score initial score of the player.
+     * @param color The Color of the player tokens.
+     */
+    public Computer (int score, Color color)
+    {
+        super ("Computer", score, color) ; // IDEA : Use a default color for the computer player
     }
     
     /**
