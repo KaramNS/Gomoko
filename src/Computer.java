@@ -1,6 +1,5 @@
 package src;
 
-import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -11,7 +10,7 @@ import java.util.Random;
  * 
  */
 
-public class Computer extends User implements Serializable
+public class Computer extends User 
 {   
     /**
      * @description Constructor for Computer class, 
