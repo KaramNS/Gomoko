@@ -1,11 +1,13 @@
 package src ;
 
+import java.io.Serializable;
+
 /**
  * User abstract class representing a player in the game.
  * It contains the player's name, tokens color and score.
  * @author ELNASORY Karam
  */
-public abstract class User 
+public abstract class User implements Serializable
 {
     private final String name ;
 

@@ -1,5 +1,6 @@
 package src;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * the number of tokens needed to win can be set in the constructor  
  * (default is 5 in a row)
  */
-public class Matrix {
+public class Matrix implements Serializable {
     
     private final ArrayList<ArrayList<Cell>> grid;
     private int numberNeededToWin = 5;

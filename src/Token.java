@@ -1,10 +1,13 @@
 package src;
+
+import java.io.Serializable;
+
 /**
  * The class represents a token that you can put in the grid, 
  * it is the Atom of the game
  * @author Largeron Jean-Baptiste + Elnasory Karam
  */
-public class Token 
+public class Token implements Serializable
 {
     private  final Color color;
 
