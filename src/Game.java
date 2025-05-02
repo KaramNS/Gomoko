@@ -78,10 +78,10 @@ public class Game implements Serializable
     {
 
         // TODO : TO BE FINISHED
-        this.player1 = new Human(gameConditions.getPlayerScore()) ;
+        this.player1 = new Human(gameConditions.playerScore()) ;
         this.player2 = new Computer(Color.YELLOW) ;
 
-        this.matrix = new Matrix(gameConditions.getMatrixSize(), gameConditions.getWinCondition()) ;
+        this.matrix = new Matrix(gameConditions.MatrixSize(), gameConditions.winCondition()) ;
         this.gameConditions = gameConditions ; // Default game conditions
     }
     
