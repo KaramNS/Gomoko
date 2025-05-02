@@ -2,7 +2,7 @@ package src;
 import java.util.Scanner;
 
 /**
- * @author Syrine-BEN HASSINE
+ * @author Syrine BEN HASSINE 
  * @description This class represents available player colors in the game
  */
 public enum Color {

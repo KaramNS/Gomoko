@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * GameConditions class representing the conditions of a game, and manages setting them.
  * It contains the player score, matrix size, and win condition.
- * @author ELNASORY Karam
+ * @author ELNASORY Karam + Syrine BEN HASSINE 
  */
 
 public class GameConditions implements Serializable
@@ -13,6 +13,8 @@ public class GameConditions implements Serializable
     private final int playerScore ;
     private final int MatrixSize ; // Square matrix size
     private final int winCondition ; // Number of pieces in a row to win
+    
+    public static final int MAX_MATRIX_SIZE = 30; // Maximum allowed size
 
     /**
      * @description Constructor for GameConditions class
@@ -92,6 +94,10 @@ public class GameConditions implements Serializable
         {
             throw new IllegalArgumentException( "Matrix size cannot be negative.") ;
         }
+        if ( MatrixSize > MAX_MATRIX_SIZE )
+        {
+            throw new IllegalArgumentException("Matrix size cannot exceed " + MAX_MATRIX_SIZE + ".") ;
+        }
     }
 
     /**
@@ -108,7 +114,7 @@ public class GameConditions implements Serializable
         int playerScore = Integer.parseInt( System.console().readLine() );
 
         // Prompt the user for the matrix size
-        System.out.print("Enter the matrix size (default 15): ");
+        System.out.print("Enter the matrix size (default 15, max " + MAX_MATRIX_SIZE + "): \" ");
         int matrixSize = Integer.parseInt( System.console().readLine() );
 
         // Prompt the user for the win condition
