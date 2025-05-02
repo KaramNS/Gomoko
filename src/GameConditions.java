@@ -42,7 +42,7 @@ public class GameConditions implements Serializable
      * @description A getter for the player score
      * @return 
      */
-    public int getPlayerScore ()
+    public int playerScore ()
     {
         return playerScore ;
     }
@@ -51,7 +51,7 @@ public class GameConditions implements Serializable
      * @description A getter for the matrix size
      * @return
      */
-    public int getMatrixSize ()
+    public int MatrixSize ()
     {
         return MatrixSize ;
     }
@@ -60,7 +60,7 @@ public class GameConditions implements Serializable
      * @description A getter for the win condition
      * @return
      */
-    public int getWinCondition ()
+    public int winCondition ()
     {
         return winCondition ;
     }
