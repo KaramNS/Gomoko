@@ -8,6 +8,8 @@ import java.util.ArrayList;
  * @descritption This class represents the  game board
  * the number of tokens needed to win can be set in the constructor  
  * (default is 5 in a row)
+ * The gameCondition object is used to initialize the game and keep in 
+ * memory the win conditions
  */
 public class Matrix implements Serializable {
     
@@ -79,7 +81,7 @@ public class Matrix implements Serializable {
     /**
      * @author Jean-Baptiste
      * Constructor, initialize the grid with the specified length and the number
-     * of tokens required to win
+     * of tokens required to win and the number of tokens players have
      * @param length The length of the matrix (square board)
      * @param numberWin the number of tokens in a row required to win
      * @param playerScore is the number of tokens the players have in the start of the game
@@ -94,6 +96,26 @@ public class Matrix implements Serializable {
             }
         }
         this.setNeighbors();
+    }
+
+
+    /**
+     * @author Jean-Baptiste
+     * Constructor, initialize the grid with a specified gameConditions object
+     * @param gameConditions1 is a GameCondtion object wanted to be used as initializer
+     */
+    public Matrix(GameConditions gameConditions1){
+        this.grid = new ArrayList<>();
+        this.gameConditions = gameConditions1;
+
+        for(int i = 0; i < this.gameConditions.MatrixSize(); i++){
+            this.grid.add(new ArrayList<>());
+            for(int j = 0; j < this.gameConditions.MatrixSize(); j++){
+                this.grid.get(i).add(new Cell());
+            }
+        }
+        this.setNeighbors();
+
     }
 
     /*######## Getters/Setter ############*/
