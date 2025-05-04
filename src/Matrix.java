@@ -19,6 +19,7 @@ public class Matrix implements Serializable {
     /*################### Constructors ##################### */
 
     /**
+     * @author Jean-Baptiste
      * Default Constructor : Initialize the grid with a size of 15x15
      * The number required to win the game is set to 5
      */
@@ -36,6 +37,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * Constructor, initialize the grid with the  specified length 
      * the number required to win is set to 5
      * @param length the length of the matrix
@@ -56,6 +58,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * Constructor, initialize the grid with the specified length and the number
      * of tokens required to win
      * @param length The length of the matrix (square board)
@@ -74,6 +77,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * Constructor, initialize the grid with the specified length and the number
      * of tokens required to win
      * @param length The length of the matrix (square board)
@@ -95,6 +99,7 @@ public class Matrix implements Serializable {
     /*######## Getters/Setter ############*/
 
     /**
+     * @author Jean-Baptiste
      *  set a cell in a position in the matrix
      * @param x is a the x axis
      * @param y is the y axis
@@ -105,6 +110,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * set a cell in a position in the matrix
      * @param coord the coordonates where to set the cell
      * @param cell is the cell you want to put in this slot
@@ -117,6 +123,7 @@ public class Matrix implements Serializable {
 
 
     /** 
+     * @author Jean-Baptiste
      * Gets the length of the squaer board
      * @return Length of the square board
      */
@@ -125,6 +132,7 @@ public class Matrix implements Serializable {
     }
 
    /** 
+    * @author Jean-Baptiste
     * Gets the height of the square board
     * @return Height of the square board
     */
@@ -159,14 +167,7 @@ public class Matrix implements Serializable {
     
     
     /**
-     * Get the cell at the specified coordinates in the grid.
-     * @param x coordinate (row index)
-     * @param y coordinate (column index)
-     public Cell getCell(int x, int y) {
-        return grid[x][y];
-    }
-    */
-    /**
+     * @author Jean-Baptiste
      * Get the cell at the specified coordinates in the grid
      * @param coord The coordonates in the grid
      * @return
@@ -180,6 +181,7 @@ public class Matrix implements Serializable {
     /*################### Methods ################### */
 
     /**
+     * @author Jean-Baptiste
      * Put a token in the game and check if it is won. If it is , 
      * return true.
      * @param coord The coordonates of the future token
@@ -204,6 +206,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * Check if the entire board is full, meaning all cells are occupied.
      * @param board The Matrix representing the game board
      */
@@ -222,6 +225,7 @@ public class Matrix implements Serializable {
 
     
     /**
+     * @author Jean-Baptiste
      * Check if you win the game
      * @return True if you win, false otherwise
      */
@@ -245,6 +249,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * Sets all valid neighbors for each cell in the grid.
      * Each cell will have its surrounding cells assigned according to the 8 directions.
      */
@@ -299,6 +304,7 @@ public class Matrix implements Serializable {
         }
     }
     /**
+     * @author Jean-Baptiste
      * Set the neighbors from a coordonates. Usefull for complexity.
      * @param coord is the coordonate you want to set the neighbors
      */
@@ -349,6 +355,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Syrine
      * Says if the move is valid, can throws a NumberFormatException
      * @param coord The coordonates you want to know if 
      * @return True if the move is valid, false otherwise
@@ -379,6 +386,7 @@ public class Matrix implements Serializable {
 
 
     /**
+     * @author Jean-Baptiste
      * Extends the Board in line and in column (one and one, right and down)
      */
     private void extendBoard(){

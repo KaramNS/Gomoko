@@ -24,7 +24,7 @@ enum Direction{
  */
 public class Cell implements Serializable {
 
-private EnumMap<Direction, Cell> directions;
+private final EnumMap<Direction, Cell> directions;
 
 private Token token;
 
