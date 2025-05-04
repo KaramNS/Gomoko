@@ -13,7 +13,7 @@ public class Matrix implements Serializable {
     
     private final ArrayList<ArrayList<Cell>> grid;
     
-    private GameConditions gameConditions;
+    private final GameConditions gameConditions;
 
 
     /*################### Constructors ##################### */
