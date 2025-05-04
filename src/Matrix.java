@@ -12,7 +12,8 @@ import java.util.ArrayList;
 public class Matrix implements Serializable {
     
     private final ArrayList<ArrayList<Cell>> grid;
-    private int numberNeededToWin = 5;
+    
+    private GameConditions gameConditions;
 
 
     /*################### Constructors ##################### */
@@ -22,11 +23,11 @@ public class Matrix implements Serializable {
      * The number required to win the game is set to 5
      */
     public Matrix(){
-        this.numberNeededToWin = 5;
+        this.gameConditions = new GameConditions();
         this.grid = new ArrayList<>();
-        for(int i = 0; i < 15; i++){
+        for(int i = 0; i < this.gameConditions.MatrixSize(); i++){
             this.grid.add(new ArrayList<>());
-            for(int j = 0; j < 15; j++){
+            for(int j = 0; j < this.gameConditions.MatrixSize(); j++){
                 this.grid.get(i).add(new Cell());
             }
         }
@@ -42,7 +43,7 @@ public class Matrix implements Serializable {
     public Matrix(int length){
 
         this.grid = new ArrayList<>();
-        this.numberNeededToWin = 5;
+        this.gameConditions = new GameConditions(15, length, 5);
 
         for(int i = 0; i < length; i++){
             this.grid.add(new ArrayList<>());
@@ -62,8 +63,7 @@ public class Matrix implements Serializable {
      */
     public Matrix(int length, int numberWin){
         this.grid = new ArrayList<>();
-        this.numberNeededToWin = numberWin;
-
+        this.gameConditions = new GameConditions(15, length, numberWin);
         for(int i = 0; i < length; i++){
             this.grid.add(new ArrayList<>());
             for(int j = 0; j < length; j++){
@@ -73,6 +73,24 @@ public class Matrix implements Serializable {
         this.setNeighbors();
     }
 
+    /**
+     * Constructor, initialize the grid with the specified length and the number
+     * of tokens required to win
+     * @param length The length of the matrix (square board)
+     * @param numberWin the number of tokens in a row required to win
+     * @param playerScore is the number of tokens the players have in the start of the game
+     */
+    public Matrix(int playerScore,int length, int numberWin){
+        this.grid = new ArrayList<>();
+        this.gameConditions = new GameConditions(playerScore, length, numberWin);
+        for(int i = 0; i < length; i++){
+            this.grid.add(new ArrayList<>());
+            for(int j = 0; j < length; j++){
+                this.grid.get(i).add(new Cell());
+            }
+        }
+        this.setNeighbors();
+    }
 
     /*######## Getters/Setter ############*/
 
@@ -107,7 +125,7 @@ public class Matrix implements Serializable {
     }
 
    /** 
-    * Gets the heught of the square board
+    * Gets the height of the square board
     * @return Height of the square board
     */
     public int getHeight(){
@@ -178,7 +196,7 @@ public class Matrix implements Serializable {
             var currentCell = this.grid.get(coord.x()).get(coord.y());
             currentCell.setToken(token);
 
-            return currentCell.isWon(numberNeededToWin);
+            return currentCell.isWon(this.gameConditions.winCondition());
         }
         else{
             return false;
@@ -212,7 +230,7 @@ public class Matrix implements Serializable {
 
         for(ArrayList<Cell> c : this.grid){
             for(Cell caseCell : c){
-                if(caseCell.isWon( this.numberNeededToWin)){
+                if(caseCell.isWon( this.gameConditions.winCondition())){
                     return true;
 
                 }
@@ -223,7 +241,7 @@ public class Matrix implements Serializable {
     }
 
     public boolean checkIsWin(Cell cell){
-        return cell.isWon(this.numberNeededToWin);
+        return cell.isWon(this.gameConditions.winCondition());
     }
 
     /**
