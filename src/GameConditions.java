@@ -24,6 +24,7 @@ public class GameConditions implements Serializable
      */
     public GameConditions ( int playerScore, int MatrixSize, int winCondition )
     {
+        validateWinConditions(playerScore, MatrixSize, winCondition);
         this.playerScore = playerScore ;
         this.MatrixSize = MatrixSize ;
         this.winCondition = winCondition ;
