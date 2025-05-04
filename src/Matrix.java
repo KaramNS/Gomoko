@@ -298,7 +298,10 @@ public class Matrix implements Serializable {
             }
         }
     }
-
+    /**
+     * Set the neighbors from a coordonates. Usefull for complexity.
+     * @param coord is the coordonate you want to set the neighbors
+     */
     public void setNeighbors(Coordonates coord){
         var currentCell = this.getCell(coord);
         int length = getLength();
