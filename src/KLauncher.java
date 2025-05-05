@@ -53,8 +53,7 @@ public class KLauncher
         switch (choice) 
         {
             case 1:
-                this.game = new Game() ;
-                this.game.start() ;
+                this.startingMenu() ;
                 break ;
 
             case 2:
@@ -83,6 +82,43 @@ public class KLauncher
         }
     }
 
+    /**
+     * @description Starting menu
+     */
+    public void startingMenu ()
+    {
+        System.out.println("Starting Menu") ;
+        System.out.println("1. Player VS Player") ;
+        System.out.println("2. Player VS Computer") ;
+        System.out.println("3. Back to Main Menu") ;
+        System.out.print("Enter your choice: ") ;
+
+        int choice = Integer.parseInt(System.console().readLine()) ;
+
+        switch (choice) 
+        {
+            case 1:
+                this.game = new Game(this.gameConditions) ; // Player vs Player
+                this.game.start() ;
+                break ;
+
+            case 2:
+                this.game = new Game(this.gameConditions) ; // Player vs Computer // TODO : use an appropriate constructor
+                this.game.start() ;
+                break ;
+
+            case 3:
+                mainMenu() ;
+                break ;
+
+            default:
+                System.out.println("Invalid choice") ;
+                startingMenu() ;
+                break ;
+        }
+    }
+
+
     /** 
      * @description Handles the inGame menu.
      */
@@ -99,7 +135,7 @@ public class KLauncher
         switch (choice) 
         {
             case 1:
-                this.game.start() ;
+                this.game.continu()  ;
 
             case 2:
                 try 
@@ -122,5 +158,16 @@ public class KLauncher
                 break ;
         }
     }
+
+
+    /**
+     * @description Main function to start the game 
+     */
+    public static void main (String [] args) 
+    {
+        KLauncher launcher = new KLauncher() ;
+        launcher.mainMenu(); 
+    }
 }
+
 
