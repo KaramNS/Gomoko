@@ -133,13 +133,15 @@ public class Launcher {
         if (mode == 1) {
             System.out.println("\n=== Player 2 Setup ===");
             player2 = createPlayer(2);
-            
+            /*
+             
             while (player2.color() == player1.color()) {
                 System.out.println("This color is already taken. Please choose another one.");
                 
                 Color newColor = Human.promptForColor();
                 player2.setColor(new Color);
             }
+            */
         } else {
             Color computerColor = (player1.color() == Color.YELLOW) ? Color.PURPLE : Color.YELLOW;
             player2 = new Computer(computerColor);

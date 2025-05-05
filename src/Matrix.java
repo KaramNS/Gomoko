@@ -174,31 +174,35 @@ public class Matrix implements Serializable {
         return this.grid.get(0).size();
     }
 
+    /**
+     * @author Syrine BEN HASSINE 
+     * Returns a string representation of the matrix
+     *  with numbered rows and columns
+     * @return Formatted string showing the matrix structure 
+     */
 
     @Override
     public String toString() {
-        String s = "";  
-        int length = this.getLength();
-        int height = this.getHeight();
-
-
-        for(int i = 0 ; i < length; i++) {
-
-            s = s+ "\n";
-
-            for(int j = 0 ; j < height ; j++){
-
-                s = s + grid.get(i).get(j)+ " ";
-
-            }
-
+        String s = "    "; 
+        int size = this.getLength();
+        
+        for (int j = 0; j < size; j++) {
+            s += String.format("%-3d", j + 1); // Format column numbers 
         }
-        s = s+ "\n";
+        s = s.replaceAll("\\d{3}$", "") + "\n"; 
+
+        // Grid rows with row numbers
+        for (int i = 0; i < size; i++) {
+            s += String.format("%2d  ", i + 1); 
+            
+            // Grid cells for current row
+            for (int j = 0; j < size; j++) {
+                s += grid.get(i).get(j) + "  "; 
+            }
+            s += "\n";
+        }
         return s;
     }
-
-
-    
     
     /**
      * @author Jean-Baptiste
