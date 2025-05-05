@@ -377,7 +377,7 @@ public class Matrix implements Serializable {
     }
 
     /**
-     * @author Syrine
+     * @author Syrine BEN HASSINE
      * Says if the move is valid, can throws a NumberFormatException
      * @param coord The coordonates you want to know if 
      * @return True if the move is valid, false otherwise
