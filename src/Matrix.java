@@ -137,6 +137,7 @@ public class Matrix implements Serializable {
      * @param y is the y axis
      * @param cell is the cell you want to put in this slot
      */
+    @Deprecated
     public void setGrid(int x, int y , Cell cell){
         this.grid.get(x).set(y, cell);
     }
@@ -147,7 +148,8 @@ public class Matrix implements Serializable {
      * @param coord the coordonates where to set the cell
      * @param cell is the cell you want to put in this slot
      */
-    public void setGrid(Coordonates coord, Cell cell){
+    @Deprecated
+     public void setGrid(Coordonates coord, Cell cell){
         this.grid.get(coord.x()).set(coord.y(), cell);
         setNeighbors();
 
