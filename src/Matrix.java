@@ -8,25 +8,29 @@ import java.util.ArrayList;
  * @descritption This class represents the  game board
  * the number of tokens needed to win can be set in the constructor  
  * (default is 5 in a row)
+ * The gameCondition object is used to initialize the game and keep in 
+ * memory the win conditions
  */
 public class Matrix implements Serializable {
     
     private final ArrayList<ArrayList<Cell>> grid;
-    private int numberNeededToWin = 5;
+    
+    private final GameConditions gameConditions;
 
 
     /*################### Constructors ##################### */
 
     /**
+     * @author Jean-Baptiste
      * Default Constructor : Initialize the grid with a size of 15x15
      * The number required to win the game is set to 5
      */
     public Matrix(){
-        this.numberNeededToWin = 5;
+        this.gameConditions = new GameConditions();
         this.grid = new ArrayList<>();
-        for(int i = 0; i < 15; i++){
+        for(int i = 0; i < this.gameConditions.MatrixSize(); i++){
             this.grid.add(new ArrayList<>());
-            for(int j = 0; j < 15; j++){
+            for(int j = 0; j < this.gameConditions.MatrixSize(); j++){
                 this.grid.get(i).add(new Cell());
             }
         }
@@ -35,6 +39,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * Constructor, initialize the grid with the  specified length 
      * the number required to win is set to 5
      * @param length the length of the matrix
@@ -42,7 +47,7 @@ public class Matrix implements Serializable {
     public Matrix(int length){
 
         this.grid = new ArrayList<>();
-        this.numberNeededToWin = 5;
+        this.gameConditions = new GameConditions(15, length, 5);
 
         for(int i = 0; i < length; i++){
             this.grid.add(new ArrayList<>());
@@ -55,6 +60,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * Constructor, initialize the grid with the specified length and the number
      * of tokens required to win
      * @param length The length of the matrix (square board)
@@ -62,8 +68,27 @@ public class Matrix implements Serializable {
      */
     public Matrix(int length, int numberWin){
         this.grid = new ArrayList<>();
-        this.numberNeededToWin = numberWin;
+        this.gameConditions = new GameConditions(15, length, numberWin);
+        for(int i = 0; i < length; i++){
+            this.grid.add(new ArrayList<>());
+            for(int j = 0; j < length; j++){
+                this.grid.get(i).add(new Cell());
+            }
+        }
+        this.setNeighbors();
+    }
 
+    /**
+     * @author Jean-Baptiste
+     * Constructor, initialize the grid with the specified length and the number
+     * of tokens required to win and the number of tokens players have
+     * @param length The length of the matrix (square board)
+     * @param numberWin the number of tokens in a row required to win
+     * @param playerScore is the number of tokens the players have in the start of the game
+     */
+    public Matrix(int playerScore,int length, int numberWin){
+        this.grid = new ArrayList<>();
+        this.gameConditions = new GameConditions(playerScore, length, numberWin);
         for(int i = 0; i < length; i++){
             this.grid.add(new ArrayList<>());
             for(int j = 0; j < length; j++){
@@ -74,9 +99,29 @@ public class Matrix implements Serializable {
     }
 
 
+    /**
+     * @author Jean-Baptiste
+     * Constructor, initialize the grid with a specified gameConditions object
+     * @param gameConditions1 is a GameCondtion object wanted to be used as initializer
+     */
+    public Matrix(GameConditions gameConditions1){
+        this.grid = new ArrayList<>();
+        this.gameConditions = gameConditions1;
+
+        for(int i = 0; i < this.gameConditions.MatrixSize(); i++){
+            this.grid.add(new ArrayList<>());
+            for(int j = 0; j < this.gameConditions.MatrixSize(); j++){
+                this.grid.get(i).add(new Cell());
+            }
+        }
+        this.setNeighbors();
+
+    }
+
     /*######## Getters/Setter ############*/
 
     /**
+     * @author Jean-Baptiste
      *  set a cell in a position in the matrix
      * @param x is a the x axis
      * @param y is the y axis
@@ -87,6 +132,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * set a cell in a position in the matrix
      * @param coord the coordonates where to set the cell
      * @param cell is the cell you want to put in this slot
@@ -99,6 +145,7 @@ public class Matrix implements Serializable {
 
 
     /** 
+     * @author Jean-Baptiste
      * Gets the length of the squaer board
      * @return Length of the square board
      */
@@ -107,7 +154,8 @@ public class Matrix implements Serializable {
     }
 
    /** 
-    * Gets the heught of the square board
+    * @author Jean-Baptiste
+    * Gets the height of the square board
     * @return Height of the square board
     */
     public int getHeight(){
@@ -141,14 +189,7 @@ public class Matrix implements Serializable {
     
     
     /**
-     * Get the cell at the specified coordinates in the grid.
-     * @param x coordinate (row index)
-     * @param y coordinate (column index)
-     public Cell getCell(int x, int y) {
-        return grid[x][y];
-    }
-    */
-    /**
+     * @author Jean-Baptiste
      * Get the cell at the specified coordinates in the grid
      * @param coord The coordonates in the grid
      * @return
@@ -162,6 +203,7 @@ public class Matrix implements Serializable {
     /*################### Methods ################### */
 
     /**
+     * @author Jean-Baptiste
      * Put a token in the game and check if it is won. If it is , 
      * return true.
      * @param coord The coordonates of the future token
@@ -178,7 +220,7 @@ public class Matrix implements Serializable {
             var currentCell = this.grid.get(coord.x()).get(coord.y());
             currentCell.setToken(token);
 
-            return currentCell.isWon(numberNeededToWin);
+            return currentCell.isWon(this.gameConditions.winCondition());
         }
         else{
             return false;
@@ -186,6 +228,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Jean-Baptiste
      * Check if the entire board is full, meaning all cells are occupied.
      * @param board The Matrix representing the game board
      */
@@ -204,6 +247,7 @@ public class Matrix implements Serializable {
 
     
     /**
+     * @author Jean-Baptiste
      * Check if you win the game
      * @return True if you win, false otherwise
      */
@@ -212,7 +256,7 @@ public class Matrix implements Serializable {
 
         for(ArrayList<Cell> c : this.grid){
             for(Cell caseCell : c){
-                if(caseCell.isWon( this.numberNeededToWin)){
+                if(caseCell.isWon( this.gameConditions.winCondition())){
                     return true;
 
                 }
@@ -223,10 +267,11 @@ public class Matrix implements Serializable {
     }
 
     public boolean checkIsWin(Cell cell){
-        return cell.isWon(this.numberNeededToWin);
+        return cell.isWon(this.gameConditions.winCondition());
     }
 
     /**
+     * @author Jean-Baptiste
      * Sets all valid neighbors for each cell in the grid.
      * Each cell will have its surrounding cells assigned according to the 8 directions.
      */
@@ -280,7 +325,11 @@ public class Matrix implements Serializable {
             }
         }
     }
-
+    /**
+     * @author Jean-Baptiste
+     * Set the neighbors from a coordonates. Usefull for complexity.
+     * @param coord is the coordonate you want to set the neighbors
+     */
     public void setNeighbors(Coordonates coord){
         var currentCell = this.getCell(coord);
         int length = getLength();
@@ -328,6 +377,7 @@ public class Matrix implements Serializable {
     }
 
     /**
+     * @author Syrine
      * Says if the move is valid, can throws a NumberFormatException
      * @param coord The coordonates you want to know if 
      * @return True if the move is valid, false otherwise
@@ -358,6 +408,7 @@ public class Matrix implements Serializable {
 
 
     /**
+     * @author Jean-Baptiste
      * Extends the Board in line and in column (one and one, right and down)
      */
     private void extendBoard(){

@@ -9,31 +9,30 @@ import java.util.Scanner;
  */
 
 public class Launcher {
-    private int winCondition;
-    private int size;
-    private int score = 15;
     private final Scanner scanner;
     private Matrix board;
     private User player1;
     private User player2;
     private User currentPlayer;
     private Game game;
+    private GameConditions gameConditions ; 
 
     // Constructeur qui fait lancer le jeu
     public Launcher() {
-        this.size = 15;
-        this.winCondition = 5;
         this.scanner = new Scanner(System.in);
-
+        this.gameConditions = new GameConditions() ; 
         this.launch();
     }
 
     // Lancer tout le jeu
     public void launch() {
         printWelcomeMessage();
+        setupSettings();
         int mode = chooseGameMode();
 
-        board = new Matrix(size, winCondition);
+        //board = new Matrix(size, winCondition);
+        board = new Matrix(gameConditions.MatrixSize(), gameConditions.winCondition());
+
         board.setNeighbors();
 
         setupPlayers(mode);
@@ -81,48 +80,11 @@ public class Launcher {
     @SuppressWarnings("unused")
     private void setupBoard() {
         System.out.println("\n=== Game Setup ===");
-        System.out.println("Board Size: " + size + "x" + size);
-        System.out.println("Win Condition: " + winCondition + " in a row");
-        System.out.println("Score " + score);
+        System.out.println("Board Size: " + gameConditions.MatrixSize() + "x" + gameConditions.MatrixSize());
+        System.out.println("Win Condition: " + gameConditions.winCondition() + " in a row");
+        System.out.println("Score: " + gameConditions.playerScore());
     }
-
-    private void changeSettings() {
-        Console console = System.console();
-        if (console == null) {
-            System.out.println("Console is not available. Please run the program from a terminal.");
-            return;
-        }
-
-        int boardSizeMax = 30;
-
-        try {
-            System.out.println("Choose board size (max " + boardSizeMax + "): ");
-            int changeSize = Integer.parseInt(console.readLine());
-
-            System.out.println("Change win condition: ");
-            int changeWin = Integer.parseInt(console.readLine());
-
-            System.out.println("Change score condition (optional): ");
-            int changeScore = Integer.parseInt(console.readLine());
-
-            // Verification
-            if (changeSize <= 0 || changeSize > boardSizeMax ||
-                    changeWin <= 0 || changeWin > changeSize ||
-                    changeScore <= 0 || changeScore > 100) {
-                System.out.println("Invalid values. Please try again.");
-                return;
-            }
-
-            // Appliquer les changements
-            this.size = changeSize;
-            this.winCondition = changeWin;
-            this.score = changeScore;
-
-            System.out.println("Settings updated.");
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter numeric values.");
-        }
-    }
+    
 
     /*
      * Let the user choose to change game settings
@@ -130,22 +92,22 @@ public class Launcher {
      */
 
     private void setupSettings() {
-        int choiseSettings = 0;
+        int choiceSettings = 0;
 
         System.out.println("\n=== Game Settings ===");
         System.out.println("1) Play with default conditions");
         System.out.println("2) Customize settings ");
 
-        while (choiseSettings != 1 && choiseSettings != 2) {
+        while (choiceSettings != 1 && choiceSettings != 2) {
             System.out.println("Enter 1 or 2 : ");
             try {
-                String choiseSettingsInput = System.console().readLine();
-                choiseSettings = Integer.parseInt(choiseSettingsInput);
+                String choiceSettingsInput = scanner.nextLine(); 
+                choiceSettings = Integer.parseInt(choiceSettingsInput);
 
-                if (choiseSettings == 1) {
+                if (choiceSettings == 1) {
                     setupBoard();
-                } else if (choiseSettings == 2) {
-                    changeSettings();
+                } else if (choiceSettings == 2) {
+                    this.gameConditions = GameConditions.customeConditions();
                 } else {
                     System.out.println("Invalid choice. Please enter 1 or 2.");
                 }
@@ -167,11 +129,16 @@ public class Launcher {
         if (mode == 1) {
             System.out.println("\n=== Player 2 Setup ===");
             player2 = createPlayer(2);
-
+            /*
+              
+            
             while (player2.color() == player1.color()) {
                 System.out.println("This color is already taken. Please choose another one.");
-                player2 = createPlayer(2);
+                
+                Color newColor = Human.promptForColor();
+                player2.setColor(new Color);
             }
+            */
         } else {
             Color computerColor = (player1.color() == Color.YELLOW) ? Color.PURPLE : Color.YELLOW;
             player2 = new Computer(computerColor);
@@ -191,7 +158,8 @@ public class Launcher {
         System.out.println("=== Player " + playerNumber + " ===");
         String name = Human.promptForName();
         Color color = Human.promptForColor();
-        return new Human(name, score, color);
+       // return new Human(name, gameConditions.playerScore(), color);
+        return new Human(name, color); 
     }
 
     /**
@@ -205,9 +173,9 @@ public class Launcher {
     private Coordonates getValidMove() {
         while (true) {
             try {
-                System.out.print("Enter row (1-" + size + "): ");
+                System.out.print("Enter row (1-" + gameConditions.MatrixSize() + "): ");
                 int row = Integer.parseInt(scanner.nextLine()) - 1;
-                System.out.print("Enter column (1-" + size + "): ");
+                System.out.print("Enter column (1-" + gameConditions.MatrixSize() + "): ");
                 int col = Integer.parseInt(scanner.nextLine()) - 1;
 
                 Coordonates coord = new Coordonates(row, col);
