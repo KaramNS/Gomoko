@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * GameConditions class representing the conditions of a game, and manages setting them.
  * It contains the player score, matrix size, and win condition.
- * @author ELNASORY Karam + Syrine BEN HASSINE 
+ * @author ELNASORY Karam
  */
 
 public class GameConditions implements Serializable
@@ -103,6 +103,8 @@ public class GameConditions implements Serializable
     /**
      * @description 
      * @return GameConditions object with custom values entered by the user
+     * @ Author ELNASORY Karam BEN HASSINE Syrine
+     * @throws IllegalArgumentException if the input is invalid
      */
     public static GameConditions customeConditions ()
     {
