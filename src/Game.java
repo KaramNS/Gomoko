@@ -28,19 +28,19 @@ public class Game implements Serializable
 
     private final Matrix matrix ; // final ? 
 
-    @SuppressWarnings("unused")
     private final GameConditions gameConditions ; // TODO Standarized the usage of this class
 
     /**
      * @description Constructor for Game class, For testing purposes
      */
+    @Deprecated
     public Game () // TODO : remove this constructor
     {
-        this.player1 = new Human(Color.GREEN) ;
+        this.player1 = new Human(Human.promptForName(), 15, Color.GREEN) ;
         this.player2 = new Computer(Color.RED) ;
 
-        this.matrix = new Matrix(15, 5) ;
         this.gameConditions = new GameConditions() ; // Default game conditions
+        this.matrix = new Matrix(this.gameConditions) ;
     }
 
     /**
@@ -48,26 +48,28 @@ public class Game implements Serializable
      * @param player1 the first player
      * @param player2 the second player
      */
-    public Game ( Human player1, Human player2 )
+    public Game ( Human player1, Human player2 ) //TODO add game conditions in param
+
     {
         this.player1 = player1 ;
         this.player2 = player2 ;
 
-        this.matrix = new Matrix(15, 5) ;
         this.gameConditions = new GameConditions() ; // Default game conditions
+        this.matrix = new Matrix(this.gameConditions) ;
     }
 
     /**
      * @description Constructor for Game class, Human vs Computer
      * @param player
+     * @deprecated
      */
     public Game (Human player)
     {
         this.player1 = player ;
         this.player2 = new Computer(Color.YELLOW) ;
 
-        this.matrix = new Matrix(15, 5) ;
         this.gameConditions = new GameConditions() ; // Default game conditions
+        this.matrix = new Matrix(this.gameConditions) ;
     }
 
     /**
@@ -76,13 +78,12 @@ public class Game implements Serializable
      */
     public Game (GameConditions gameConditions)
     {
-
         // TODO : TO BE FINISHED
         this.player1 = new Human(gameConditions.playerScore()) ;
         this.player2 = new Computer(Color.RED) ;
 
-        this.matrix = new Matrix(gameConditions.MatrixSize(), gameConditions.winCondition()) ;
         this.gameConditions = gameConditions ; // Default game conditions
+        this.matrix = new Matrix(this.gameConditions) ;
     }
     
     /**
@@ -208,7 +209,8 @@ public class Game implements Serializable
     }
     
     /**
-     * @description Start the game 
+     * Start the game 
+     * 
      */
     public User start () // TODO : return a boolean false to go to in game menu, true 
     {
@@ -239,8 +241,6 @@ public class Game implements Serializable
     public User continu ()
     {
         clear() ;
-        // System.out.println( this.matrix.toString() ) ; // TODO : delete this line
-        // chosePlacement(Matrix matrix) and handls invalid tokens placement DONE
         
         while ( ! this.matrix.putToken(this.nextUser.chosePlacement( this.matrix ), this.nextUser.token() ) && this.nextUser.haveTokens() )
         {
@@ -284,6 +284,12 @@ public class Game implements Serializable
         }
     }
 
+    /**
+     * @description Main function to start the game 
+     * @param args
+     */
+    // TODO : remove this function and use the KLauncher class to start the game
+    @Deprecated
     public static void main (String [] args)
     {
         discoverSavedGames();
