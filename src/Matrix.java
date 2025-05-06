@@ -1,7 +1,7 @@
 package src;
 
 import java.io.Serializable;
-import java.lang.*;
+import java.lang.*; // TODO : remove this import
 import java.util.ArrayList;
 
 
@@ -411,7 +411,7 @@ public class Matrix implements Serializable {
      * @exception FormatEx
      * @exception IllegalArgumentException if you use a coordonates that is not possible to use
      */
-    private boolean isValidMove(Coordonates coord)throws IllegalArgumentException {
+    public boolean isValidMove(Coordonates coord)throws IllegalArgumentException {
         int size = this.getLength();
        
 
