@@ -412,7 +412,8 @@ public class Matrix implements Serializable {
      */
     public boolean isValidMove(Coordonates coord)throws IllegalArgumentException {
         int size = this.getLength();
-       
+       // TODO : Remove the exception and use a boolean instead
+        // TODO : This has a border effect 
 
                 if (coord.x() >= 0 && coord.x() < size && coord.y() >= 0 && coord.y() < size) {
                     Cell cell = this.getCell(coord);
