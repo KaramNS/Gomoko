@@ -31,19 +31,6 @@ public class Game implements Serializable
     private final GameConditions gameConditions ; // TODO Standarized the usage of this class
 
     /**
-     * @description Constructor for Game class, For testing purposes
-     */
-    @Deprecated
-    public Game () // TODO : remove this constructor
-    {
-        this.player1 = new Human(Human.promptForName(), 15, Color.GREEN) ;
-        this.player2 = new Computer(Color.RED) ;
-
-        this.gameConditions = new GameConditions() ; // Default game conditions
-        this.matrix = new Matrix(this.gameConditions) ;
-    }
-
-    /**
      * @description Constructor for Game class, Human vs Human
      * @param player1 the first player
      * @param player2 the second player
@@ -53,20 +40,6 @@ public class Game implements Serializable
     {
         this.player1 = player1 ;
         this.player2 = player2 ;
-
-        this.gameConditions = new GameConditions() ; // Default game conditions
-        this.matrix = new Matrix(this.gameConditions) ;
-    }
-
-    /**
-     * @description Constructor for Game class, Human vs Computer
-     * @param player
-     * @deprecated
-     */
-    public Game (Human player)
-    {
-        this.player1 = player ;
-        this.player2 = new Computer(Color.YELLOW) ;
 
         this.gameConditions = new GameConditions() ; // Default game conditions
         this.matrix = new Matrix(this.gameConditions) ;
