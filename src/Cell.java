@@ -151,7 +151,13 @@ private Token token;
      */
     public boolean isWon(int total){
 
-        for(Direction dir : Direction.values()){
+        Direction[] directionsSplitted = {
+            Direction.UP,
+            Direction.LEFT,
+            Direction.UP_LEFT,
+            Direction.UP_RIGHT
+        };
+        for(Direction dir : directionsSplitted){
             int count = 1;
             count += countColor(dir);
             count += countColor(getOpposite(dir));

@@ -1,7 +1,9 @@
 package src;
 
 import java.io.Serializable;
+import java.lang.*;
 import java.util.ArrayList;
+
 
 /**
  * @author Jean-Baptiste + Syrine BEN HASSINE 
@@ -24,7 +26,9 @@ public class Matrix implements Serializable {
      * @author Jean-Baptiste
      * Default Constructor : Initialize the grid with a size of 15x15
      * The number required to win the game is set to 5
+     * @deprecated Use Matrix(GameConditions gameConditions1)
      */
+    @Deprecated
     public Matrix(){
         this.gameConditions = new GameConditions();
         this.grid = new ArrayList<>();
@@ -43,7 +47,9 @@ public class Matrix implements Serializable {
      * Constructor, initialize the grid with the  specified length 
      * the number required to win is set to 5
      * @param length the length of the matrix
+     * @deprecated Use Matrix(GameConditions gameConditions1)
      */
+    @Deprecated
     public Matrix(int length){
 
         this.grid = new ArrayList<>();
@@ -65,7 +71,9 @@ public class Matrix implements Serializable {
      * of tokens required to win
      * @param length The length of the matrix (square board)
      * @param numberWin the number of tokens in a row required to win
+     * @deprecated Use Matrix(GameConditions gameConditions1)
      */
+    @Deprecated
     public Matrix(int length, int numberWin){
         this.grid = new ArrayList<>();
         this.gameConditions = new GameConditions(15, length, numberWin);
@@ -85,7 +93,9 @@ public class Matrix implements Serializable {
      * @param length The length of the matrix (square board)
      * @param numberWin the number of tokens in a row required to win
      * @param playerScore is the number of tokens the players have in the start of the game
+     * @deprecated Use Matrix(GameConditions gameConditions1)
      */
+    @Deprecated
     public Matrix(int playerScore,int length, int numberWin){
         this.grid = new ArrayList<>();
         this.gameConditions = new GameConditions(playerScore, length, numberWin);
@@ -127,6 +137,7 @@ public class Matrix implements Serializable {
      * @param y is the y axis
      * @param cell is the cell you want to put in this slot
      */
+    @Deprecated
     public void setGrid(int x, int y , Cell cell){
         this.grid.get(x).set(y, cell);
     }
@@ -137,7 +148,8 @@ public class Matrix implements Serializable {
      * @param coord the coordonates where to set the cell
      * @param cell is the cell you want to put in this slot
      */
-    public void setGrid(Coordonates coord, Cell cell){
+    @Deprecated
+     public void setGrid(Coordonates coord, Cell cell){
         this.grid.get(coord.x()).set(coord.y(), cell);
         setNeighbors();
 
@@ -162,31 +174,35 @@ public class Matrix implements Serializable {
         return this.grid.get(0).size();
     }
 
+    /**
+     * @author Syrine BEN HASSINE 
+     * Returns a string representation of the matrix
+     *  with numbered rows and columns
+     * @return Formatted string showing the matrix structure 
+     */
 
     @Override
     public String toString() {
-        String s = "";  
-        int length = this.getLength();
-        int height = this.getHeight();
-
-
-        for(int i = 0 ; i < length; i++) {
-
-            s = s+ "\n";
-
-            for(int j = 0 ; j < height ; j++){
-
-                s = s + grid.get(i).get(j)+ " ";
-
-            }
-
+        String s = "    "; 
+        int size = this.getLength();
+        
+        for (int j = 0; j < size; j++) {
+            s += String.format("%-3d", j + 1); // Format column numbers 
         }
-        s = s+ "\n";
+        s = s.replaceAll("\\d{3}$", "") + "\n"; 
+
+        // Grid rows with row numbers
+        for (int i = 0; i < size; i++) {
+            s += String.format("%2d  ", i + 1); 
+            
+            // Grid cells for current row
+            for (int j = 0; j < size; j++) {
+                s += grid.get(i).get(j) + "  "; 
+            }
+            s += "\n";
+        }
         return s;
     }
-
-
-    
     
     /**
      * @author Jean-Baptiste
@@ -249,8 +265,11 @@ public class Matrix implements Serializable {
     /**
      * @author Jean-Baptiste
      * Check if you win the game
-     * @return True if you win, false otherwise
+     * @return True if you win, false otherwise 
+     * @deprecated putToken() in Cell object do the same, putToken() return
+     * true if you won the game
      */
+    @Deprecated
     public boolean checkIsWin(){
 
 
@@ -266,6 +285,14 @@ public class Matrix implements Serializable {
         return false;
     }
 
+    /**
+     * @author Jean-Baptiste
+     * Check if you win the game
+     * @return True if you win, false otherwise 
+     * @deprecated putToken() in Cell object do the same, putToken() return
+     * true if you won the game
+     */
+    @Deprecated
     public boolean checkIsWin(Cell cell){
         return cell.isWon(this.gameConditions.winCondition());
     }
@@ -327,7 +354,7 @@ public class Matrix implements Serializable {
     }
     /**
      * @author Jean-Baptiste
-     * Set the neighbors from a coordonates. Usefull for complexity.
+     * Set the neighbors from a coordonates. Usefull for less complexity.
      * @param coord is the coordonate you want to set the neighbors
      */
     public void setNeighbors(Coordonates coord){
@@ -377,31 +404,28 @@ public class Matrix implements Serializable {
     }
 
     /**
-     * @author Syrine
+     * @author Syrine BEN HASSINE + Jean-Baptiste 
      * Says if the move is valid, can throws a NumberFormatException
      * @param coord The coordonates you want to know if 
      * @return True if the move is valid, false otherwise
+     * @exception FormatEx
+     * @exception IllegalArgumentException if you use a coordonates that is not possible to use
      */
-    public boolean isValidMove(Coordonates coord)  {
+    private boolean isValidMove(Coordonates coord)throws IllegalArgumentException {
         int size = this.getLength();
        
-            try {
+
                 if (coord.x() >= 0 && coord.x() < size && coord.y() >= 0 && coord.y() < size) {
                     Cell cell = this.getCell(coord);
                     if (cell.getColor() == Color.WHITE) {
                         return true;
                     }
-                    System.out.println("That cell is already occupied! Try another.");
-                    return false;
+                    throw new IllegalArgumentException("Invalid position! The cell is already used");
                 } else {
-                    System.out.println("Invalid position! Please enter values between 1 and " + size);
-                    return false;
+                    throw new IllegalArgumentException("Invalid position! Please enter values between 1 and " + size);
                 
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Please enter numbers only.");
-                return false;
-            }
+
         
     }
 

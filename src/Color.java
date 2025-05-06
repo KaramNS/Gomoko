@@ -17,15 +17,31 @@ public enum Color {
 
     private final String ansiCode;
 
+    /**
+     * Constructor for the Color enum.
+     *
+     * @param ansiCode The ANSI escape code used to display the color.
+     */
+
     Color(String ansiCode) {
         this.ansiCode = ansiCode + "\u001B[0m";
     }
+
+    /**
+     * Returns the string representation of the color,
+     * including the ANSI code for colored output.
+     *
+     * @return The string containing the ANSI code and the color character.
+     */
 
     @Override
     public String toString() {
         return this.ansiCode;
     }
 
+    /**
+     * Displays the list of available colors (excluding white) in the console.
+     */
 
     public static void displayAvailableColors() {
         System.out.println("Available colors:");
@@ -37,6 +53,14 @@ public enum Color {
         }
     }
 
+    /**
+     * Allows a player to choose a color from the available options.
+     *
+     * @param scanner      The Scanner object used to read user input.
+     * @param playerNumber The player number who is selecting the color.
+     * @return The Color chosen by the player.
+     */
+    
     public static Color chooseColor(Scanner scanner, int playerNumber) {
         Color[] colors = Color.values();
         displayAvailableColors();

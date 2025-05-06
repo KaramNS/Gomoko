@@ -4,7 +4,7 @@ import java.io.Console;
 import java.util.Scanner;
 
 /**
- * @author Syrine-BEN HASSINE
+ * @author Syrine BEN HASSINE
  * @description This class manages the launching of the game, can acte
  */
 
@@ -17,14 +17,19 @@ public class Launcher {
     private Game game;
     private GameConditions gameConditions ; 
 
-    // Constructeur qui fait lancer le jeu
+    /**
+     * Constructor that initializes the scanner and game conditions,
+     * and starts the launch sequence.
+     */
     public Launcher() {
         this.scanner = new Scanner(System.in);
         this.gameConditions = new GameConditions() ; 
         this.launch();
     }
 
-    // Lancer tout le jeu
+    /**
+     * Launches the game setup and starts the game.
+     */
     public void launch() {
         printWelcomeMessage();
         setupSettings();
@@ -86,9 +91,8 @@ public class Launcher {
     }
     
 
-    /*
-     * Let the user choose to change game settings
-     * or play with default game conditions
+    /**
+     * Allows the user to play with default or custom game conditions.
      */
 
     private void setupSettings() {
@@ -130,8 +134,7 @@ public class Launcher {
             System.out.println("\n=== Player 2 Setup ===");
             player2 = createPlayer(2);
             /*
-              
-            
+             
             while (player2.color() == player1.color()) {
                 System.out.println("This color is already taken. Please choose another one.");
                 
@@ -170,6 +173,11 @@ public class Launcher {
         System.out.println(board);
     }
 
+    /**
+     * Prompts the user for a valid move on the board.
+     *
+     * @return A valid Coordonates object chosen by the user.
+     */
     private Coordonates getValidMove() {
         while (true) {
             try {

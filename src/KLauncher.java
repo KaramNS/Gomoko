@@ -5,9 +5,10 @@ import java.io.IOException;
 /**
  * KLauncher class representing the launcher for the game.
  * It contains the main method to start the game.
- * @author ELNASORY Karam
+ * @author ELNASORY Karam + Syrine BEN HASSINE 
  */
 
+ //add computer affichage , welcome message , 
 public class KLauncher 
 {
     private Game game ; // The on going game
@@ -24,10 +25,22 @@ public class KLauncher
     }
 
     /**
+     * Displays a welcome message at the start of the game.
+     */
+    private void printWelcomeMessage() {
+        System.out.println("=====================================");
+        System.out.println("🎮  Welcome to GOMOKU GAME !!");
+        System.out.println("=====================================");
+        System.out.println("Get ready to challenge a friend or the computer!");
+        System.out.println();
+    }
+
+    /**
      * @description Main menu
      */
     public void mainMenu ()
     {
+        printWelcomeMessage();
         System.out.println("Main Menu") ;
         System.out.println("1. Start Game") ;
         System.out.println("2. Load Game") ;
