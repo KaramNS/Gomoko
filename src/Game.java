@@ -256,25 +256,4 @@ public class Game implements Serializable
             System.out.println("Erreur lors de l'effacement de la console : " + e.getMessage());
         }
     }
-
-    /**
-     * @description Main function to start the game 
-     * @param args
-     */
-    // TODO : remove this function and use the KLauncher class to start the game
-    @Deprecated
-    public static void main (String [] args)
-    {
-        discoverSavedGames();
-        Game game = new Game();
-        // game.start() ;
-        try 
-        {
-            game.save() ;
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
-    }
 }
