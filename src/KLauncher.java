@@ -14,7 +14,7 @@ public class KLauncher
     private GameConditions gameConditions ; // The game conditions
 
     /**
-     * 
+     * Constructor 
      */
     public KLauncher () 
     {
@@ -105,7 +105,6 @@ public class KLauncher
         }
     }
 
-
     /** 
      * @description Handles the inGame menu.
      */
@@ -145,7 +144,6 @@ public class KLauncher
                 break ;
         }
     }
-
 
     /**
      * @description Main function to start the game 
