@@ -13,8 +13,9 @@ import java.util.Random;
 public class Computer extends User 
 {   
     /**
-     * @description Constructor for Computer class, 
+     * Constructor for Computer class, 
      * @param color The Color of the player.
+     * @description creats a computer player with a default score of 15.
      */
     public Computer (Color color)
     {
@@ -22,9 +23,10 @@ public class Computer extends User
     }
 
     /**
-     * @description Constructor for Computer class, 
+     * Constructor for Computer class, 
      * @param score initial score of the player.
      * @param color The Color of the player tokens.
+     * @description This constructor is meant to be used to set a custom score for the computer player.
      */
     public Computer (int score, Color color)
     {
@@ -32,10 +34,11 @@ public class Computer extends User
     }
     
     /**
-     * @description This method is used to choose a placement on the matrix.
+     * This method is used to prompt the computer to choose a placement on the matrix.
      * It randomly chooses a placement on the matrix.
-     * @param matrix
+     * @param matrix that the computer will play on.
      * @return Coordonates The coordinates of the placement.
+     * @description This method is meant to be used with a backtracking algorithm to find the best placement.
      */
     @Override
     public Coordonates chosePlacement(Matrix matrix) 
