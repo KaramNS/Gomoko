@@ -22,6 +22,7 @@ public class Human extends User
      * @description Constructor for Humain class, meant to be used for new players.
      * @param name name of the player
      * @param color color of the player
+     * @deprecated
      */
     public Human (String name, Color color) 
     {
@@ -32,6 +33,7 @@ public class Human extends User
      * @description Constructor for Humain class, for new players, interact's with the user.
      * @param color color of the player
      * Will prompt the user for their name, and init the score to 15 (default).
+     * @deprecated
      */
     public Human (Color color)
     {
