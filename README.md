@@ -63,5 +63,7 @@ java -jar Gomoku.jar
 
 ## Authors
 
-- **Syrine BEN HASSINE**
 - **ELNASORY Karam**
+- **Jean-Baptiste LARGERON**
+- **Syrine BEN HASSINE**
+
