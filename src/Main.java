@@ -1,9 +1,10 @@
 package src;
 
 public class Main {
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) {
         @SuppressWarnings("unused")
-        Launcher launcher = new Launcher();
+
+        KLauncher launcher = new KLauncher();
+        launcher.mainMenu();
     }
 }
