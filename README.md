@@ -9,6 +9,21 @@ A Java implementation of the classic **Gomoku** (Five in a Row) strategy board g
 - **Customizable Rules**: Configurable board size (default 15×15, max 30×30) and win condition (default 5 in a row).
 - **Console Interface**: Interactive command-line menus.
 
+- **Minimax Algorithm**: The computer player uses the Minimax algorithm with Alpha-Beta pruning to choose the best move.
+
+### Algorithm Overview
+
+```mermaid
+graph TD
+    A["chosePlacement()"] --> B["getFeasibleMoves()"]
+    B --> C["For each move: simulate → minimax → undo"]
+    C --> D{"Depth=0 or terminal?"}
+    D -- Yes --> E["evaluateBoard()"]
+    D -- No --> F["Alpha-Beta pruning"]
+    F --> C
+```
+
+
 ## Project Structure
 
 ```
