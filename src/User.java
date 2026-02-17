@@ -59,7 +59,7 @@ public abstract class User implements Serializable
     }
 
     /**
-     * @description Method to check if the player has tokens left.
+     * Method to check if the player has tokens left.
      * @return boolean indicating if the player has tokens left.
      */
     public boolean haveTokens ()
@@ -83,7 +83,7 @@ public abstract class User implements Serializable
     }
 
     /**
-     * @description Method to choose a placement on the board to play a move (place a token).
+     * Method to choose a placement on the board to play a move (place a token).
      */
     abstract Coordonates chosePlacement (Matrix matrix) ;
 

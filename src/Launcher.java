@@ -86,7 +86,7 @@ public class Launcher {
     }
 
     /**
-     * @description Main menu
+     * Main menu
      */
     public void mainMenu() {
         printWelcomeMessage();
@@ -149,7 +149,7 @@ public class Launcher {
     }
 
     /**
-     * @description Starting menu
+     * Starting menu
      */
     public void startingMenu() {
         printHeader("⚔️  START GAME  ⚔️");
@@ -226,7 +226,7 @@ public class Launcher {
     }
 
     /**
-     * @description Handles the inGame menu.
+     * Handles the inGame menu.
      */
     public void inGameMenu() {
         System.out.println("\n" + CYAN + "=== In-Game Menu ===" + RESET);

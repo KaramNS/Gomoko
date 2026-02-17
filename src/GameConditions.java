@@ -3,148 +3,136 @@ package src;
 import java.io.Serializable;
 
 /**
- * GameConditions class representing the conditions of a game, and manages setting them.
+ * GameConditions class representing the conditions of a game, and manages
+ * setting them.
  * It contains the player score, matrix size, and win condition.
+ * 
  * @author ELNASORY Karam
  */
 
-public class GameConditions implements Serializable
-{
-    private final int playerScore ;
-    private final int MatrixSize ; // Square matrix size
-    private final int winCondition ; // Number of pieces in a row to win
-    
+public class GameConditions implements Serializable {
+    private final int playerScore;
+    private final int MatrixSize; // Square matrix size
+    private final int winCondition; // Number of pieces in a row to win
+
     public static final int MAX_MATRIX_SIZE = 30; // Maximum allowed size
 
     /**
-     * @description Constructor for GameConditions class
+     * Constructor for GameConditions class
      * @param playerScore
      * @param MatrixSize
      * @param winCondition
      */
-    public GameConditions ( int playerScore, int MatrixSize, int winCondition )
-    {
+    public GameConditions(int playerScore, int MatrixSize, int winCondition) {
         validateWinConditions(playerScore, MatrixSize, winCondition);
-        this.playerScore = playerScore ;
-        this.MatrixSize = MatrixSize ;
-        this.winCondition = winCondition ;
+        this.playerScore = playerScore;
+        this.MatrixSize = MatrixSize;
+        this.winCondition = winCondition;
     }
 
     /**
-     * @description Constructor for GameConditions class, default values
-     * playerScore = 15, MatrixSize = 15, winCondition = 5
+     * Constructor for GameConditions class, default values
+     *              playerScore = 15, MatrixSize = 15, winCondition = 5
      */
-    public GameConditions ()
-    {
-        this.playerScore = 15 ;
-        this.MatrixSize = 15 ;
-        this.winCondition = 5 ;
+    public GameConditions() {
+        this.playerScore = 15;
+        this.MatrixSize = 15;
+        this.winCondition = 5;
     }
 
     /**
-     * @description A getter for the player score
-     * @return 
-     */
-    public int playerScore ()
-    {
-        return playerScore ;
-    }
-
-    /**
-     * @description A getter for the matrix size
+     * A getter for the player score
      * @return
      */
-    public int MatrixSize ()
-    {
-        return MatrixSize ;
+    public int playerScore() {
+        return playerScore;
     }
 
     /**
-     * @description A getter for the win condition
+     * A getter for the matrix size
      * @return
      */
-    public int winCondition ()
-    {
-        return winCondition ;
+    public int MatrixSize() {
+        return MatrixSize;
     }
 
     /**
-     * @description Validate win conditions
+     * A getter for the win condition
+     * @return
+     */
+    public int winCondition() {
+        return winCondition;
+    }
+
+    /**
+     * Validate win conditions
      * @param playerScore
      * @param MatrixSize
      * @param winCondition
      * 
-     * @throws IllegalArgumentException if the win condition is greater than the matrix size, or if the player score or matrix size is negative.
+     * @throws IllegalArgumentException if the win condition is greater than the
+     *                                  matrix size, or if the player score or
+     *                                  matrix size is negative.
      * @param playerScore
      */
-    public static void validateWinConditions ( int playerScore, int MatrixSize, int winCondition ) throws IllegalArgumentException 
-    {
-        if ( winCondition < 0 ) 
-        {
-            throw new IllegalArgumentException("Win condition cannot be negative.") ;
+    public static void validateWinConditions(int playerScore, int MatrixSize, int winCondition)
+            throws IllegalArgumentException {
+        if (winCondition < 0) {
+            throw new IllegalArgumentException("Win condition cannot be negative.");
         }
-        if ( winCondition > MatrixSize ) 
-        {
-            throw new IllegalArgumentException("Win condition cannot be greater than matrix size.") ;
+        if (winCondition > MatrixSize) {
+            throw new IllegalArgumentException("Win condition cannot be greater than matrix size.");
         }
-        if ( playerScore < 0 ) 
-        {
-            throw new IllegalArgumentException("Player score cannot be negative.") ;
+        if (playerScore < 0) {
+            throw new IllegalArgumentException("Player score cannot be negative.");
         }
-        if ( MatrixSize < 0 ) 
-        {
-            throw new IllegalArgumentException( "Matrix size cannot be negative.") ;
+        if (MatrixSize < 0) {
+            throw new IllegalArgumentException("Matrix size cannot be negative.");
         }
-        if ( MatrixSize > MAX_MATRIX_SIZE )
-        {
-            throw new IllegalArgumentException("Matrix size cannot exceed " + MAX_MATRIX_SIZE + ".") ;
+        if (MatrixSize > MAX_MATRIX_SIZE) {
+            throw new IllegalArgumentException("Matrix size cannot exceed " + MAX_MATRIX_SIZE + ".");
         }
     }
 
     /**
-     * @description 
+     * 
      * @return GameConditions object with custom values entered by the user
-     * @ Author ELNASORY Karam  BEN HASSINE Syrine
+     * @author ELNASORY Karam BEN HASSINE Syrine
      * @throws IllegalArgumentException if the input is invalid
      */
-    public static GameConditions customeConditions ()
-    {
+    public static GameConditions customeConditions() {
         // Prompt the user for the matrix size, player score, and win condition
         // Validate the input and create a new GameConditions object
-    
+
         // Prompt the user for the player score
         System.out.print("Enter the player score (default 15): ");
-        int playerScore = Integer.parseInt( System.console().readLine() );
+        int playerScore = Integer.parseInt(System.console().readLine());
 
         // Prompt the user for the matrix size
         System.out.print("Enter the matrix size (default 15, max " + MAX_MATRIX_SIZE + "): \" ");
-        int matrixSize = Integer.parseInt( System.console().readLine() );
+        int matrixSize = Integer.parseInt(System.console().readLine());
 
         // Prompt the user for the win condition
         System.out.print("Enter the win condition (default 5): ");
-        int winCondition = Integer.parseInt( System.console().readLine() );
+        int winCondition = Integer.parseInt(System.console().readLine());
 
-        try
-        {
-            validateWinConditions(playerScore, matrixSize, winCondition) ;
+        try {
+            validateWinConditions(playerScore, matrixSize, winCondition);
 
             // If the input is valid, create a new GameConditions object
-            return new GameConditions(playerScore, matrixSize, winCondition); 
-        } 
-        catch ( IllegalArgumentException e ) 
-        {
-            System.out.println(e.getMessage()) ;
-            return customeConditions() ; // Retry with new input
+            return new GameConditions(playerScore, matrixSize, winCondition);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return customeConditions(); // Retry with new input
         }
     }
 
-    /** 
-     * @description toString method for GameConditions class
+    /**
+     * toString method for GameConditions class
      * @return String representation of the GameConditions object
      */
-    public String toString ()
-    {
-        return "GameConditions [playerScore=" + playerScore + " | MatrixSize=" + MatrixSize + "| winCondition=" + winCondition + "]" ;
+    public String toString() {
+        return "GameConditions [playerScore=" + playerScore + " | MatrixSize=" + MatrixSize + "| winCondition="
+                + winCondition + "]";
     }
 }
-

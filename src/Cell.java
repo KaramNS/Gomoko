@@ -19,7 +19,7 @@ enum Direction{
 
 /**
  * @author Jean-Baptiste
- * @description This class represent a cell in the matrix, wich corresponds to a slot on
+ * This class represent a cell in the matrix, wich corresponds to a slot on
  * the board. It can indicate if it is won or not and its value is its color.
  */
 public class Cell implements Serializable {

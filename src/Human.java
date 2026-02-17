@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Human extends User {
 
     /**
-     * @description Constructor for Humain class, meant to be used to create a
+     * Constructor for Humain class, meant to be used to create a
      *              custom player.
      * @param name  The name of the player.
      * @param score The score of the player.
@@ -22,7 +22,7 @@ public class Human extends User {
     }
 
     /**
-     * @description This constructor is meant to be used with
+     * This constructor is meant to be used with
      * @param score to be parametered if we want to change the game initial
      *              conditions.
      */
@@ -31,7 +31,7 @@ public class Human extends User {
     }
 
     /**
-     * @description Method to prompt the user for their name.
+     * Method to prompt the user for their name.
      * @return The name of the player as a String.
      */
     public static String promptForName() {
@@ -65,7 +65,7 @@ public class Human extends User {
     }
 
     /**
-     * @description Method to choose a placement on the board.
+     * Method to choose a placement on the board.
      *              Handles input validation and allows returning (-1, -1) for menu
      *              access.
      */

@@ -29,7 +29,7 @@ public class Game implements Serializable {
     private final GameConditions gameConditions; // TODO Standarized the usage of this class
 
     /**
-     * @description Constructor for Game class, Human vs Human
+     * Constructor for Game class, Human vs Human
      * @param player1 the first player
      * @param player2 the second player
      */
@@ -44,7 +44,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @description Constructor for Game class
+     * Constructor for Game class
      * @param gameConditions
      */
     public Game(GameConditions gameConditions) {
@@ -56,7 +56,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @description Constructor for Game class with specific opponent
+     * Constructor for Game class with specific opponent
      */
     public Game(GameConditions gameConditions, User p2) {
         this.player1 = new Human(gameConditions.playerScore());
@@ -67,7 +67,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @description Save the instance in a file
+     * Save the instance in a file
      * @throws IOException
      */
     public void save() throws IOException {
@@ -91,7 +91,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @description Load a Game instance from a file
+     * Load a Game instance from a file
      */
     public static Game load(String fileName) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("./SavedGames/" + fileName))) {
@@ -105,7 +105,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @description Discover the saved games in the directory "SavedGames"
+     * Discover the saved games in the directory "SavedGames"
      */
     public static File[] discoverSavedGames() {
         File directory = new File("./SavedGames/");
@@ -127,7 +127,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @description Load a game from the saved games
+     * Load a game from the saved games
      */
     public static Game loadGame() {
         File[] files = Game.discoverSavedGames();
@@ -159,7 +159,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @description Place the first token in the center of the matrix
+     * Place the first token in the center of the matrix
      */
     private void placeFirstToken(User startingUser) {
         int center = (this.matrix.getLength() / 2);
@@ -190,7 +190,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @description Continue the game until one of the players wins or there are no
+     * Continue the game until one of the players wins or there are no
      *              more tokens left
      * @return boolean: true if game over (win/draw), false if interrupted for menu
      */
@@ -246,7 +246,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @description Clear the console, to get a cleaner terminal
+     * Clear the console, to get a cleaner terminal
      */
     public static void clear() {
         try {

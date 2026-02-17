@@ -1,81 +1,69 @@
 package src;
-import java.util.Scanner;
 
 /**
  * @author Syrine BEN HASSINE 
- * @description This class represents available player colors in the game
+ * This class represents available player colors in the game
+ */
+
+/**
+ * Enum representing the different player colors, each with an ANSI color code,
+ * a Unicode symbol, and an abbreviation.
  */
 public enum Color {
-    RED("\u001B[31m■"),    
-    BLUE("\u001B[34m■"),   
-    GREEN("\u001B[32m■"),  
-    YELLOW("\u001B[33m■"), 
-    PURPLE("\u001B[35m■"), 
-    ORANGE("\u001B[38;5;208m■"), 
-    BLACK("\u001B[30m■"),  
-    WHITE("\u001B[37m□");
+    BLUE("\u001B[34m", "\u25A0", "B"),
+    GREEN("\u001B[32m", "\u25A0", "G"),
+    YELLOW("\u001B[33m", "\u25A0", "Y"),
+    PURPLE("\u001B[35m", "\u25A0", "P"),
+    ORANGE("\u001B[38;5;208m", "\u25A0", "O"),
+    WHITE("\u001B[37m", "\u25A1", "W"),
+    RED("\u001B[31m", "\u25A0", "R");
 
     private final String ansiCode;
+    private final String symbol;
+    private final String abbr;
+
+    // Detect OS
+    private static final boolean IS_WINDOWS = System.getProperty("os.name").toLowerCase().contains("win");
 
     /**
      * Constructor for the Color enum.
-     *
-     * @param ansiCode The ANSI escape code used to display the color.
+     * 
+     * @param ansiCode The ANSI escape code for the color.
+     * @param symbol   The Unicode symbol representing the color.
+     * @param abbr     The ASCII abbreviation for the color.
      */
-
-    Color(String ansiCode) {
-        this.ansiCode = ansiCode + "\u001B[0m";
+    Color(String ansiCode, String symbol, String abbr) {
+        this.ansiCode = ansiCode;
+        this.symbol = symbol;
+        this.abbr = abbr;
     }
 
     /**
-     * Returns the string representation of the color,
-     * including the ANSI code for colored output.
-     *
-     * @return The string containing the ANSI code and the color character.
+     * Returns a textual representation of the color adapted to the OS:
+     * ASCII abbreviation on Windows, colored symbol on Mac/Linux.
+     * 
+     * @return A string representing the color for user display.
      */
-
     @Override
     public String toString() {
-        return this.ansiCode;
+        if (IS_WINDOWS) {
+            return ansiCode + abbr + "\u001B[0m";
+        } else {
+            return ansiCode + symbol + "\u001B[0m";
+        }
     }
 
     /**
-     * Displays the list of available colors (excluding white) in the console.
+     * Displays the list of available colors in the terminal.
+     * adapt to OS
      */
-
     public static void displayAvailableColors() {
         System.out.println("Available colors:");
         int index = 1;
         for (Color color : Color.values()) {
-            if (!color.name().equals("WHITE")) {
-                System.out.printf("%d. %s (%s)%n", index++, color, color.name());
+            if (color != WHITE) { // Allow RED, Computer will pick another
+                System.out.printf("%d. %s (%s)%n", index++, color.toString(), color.name());
             }
         }
     }
-
-    /**
-     * Allows a player to choose a color from the available options.
-     *
-     * @param scanner      The Scanner object used to read user input.
-     * @param playerNumber The player number who is selecting the color.
-     * @return The Color chosen by the player.
-     */
-    
-    public static Color chooseColor(Scanner scanner, int playerNumber) {
-        Color[] colors = Color.values();
-        displayAvailableColors();
-        while (true) {
-            try {
-                System.out.print("Select color for Player " + playerNumber + " (1-" + (colors.length - 1) + "): ");
-                int choice = Integer.parseInt(scanner.nextLine());
-                if (choice >= 1 && choice < colors.length && colors[choice - 1] != WHITE) {
-                    return colors[choice - 1];
-                }
-                System.out.println("Invalid selection! Try again.");
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number!");
-            }
-        }
-    }
-
 }
