@@ -10,15 +10,15 @@ import java.io.IOException;
  */
 
 // add computer affichage , welcome message ,
-public class KLauncher {
+public class Launcher {
     private Game game; // The on going game
     private GameConditions gameConditions; // The game conditions
 
     /**
      * Constructor
      */
-    public KLauncher() {
-        // Constructor for KLauncher class
+    public Launcher() {
+        // Constructor for Launcher class
         this.game = null;
         this.gameConditions = new GameConditions(); // Default game conditions
     }
@@ -147,13 +147,5 @@ public class KLauncher {
                 inGameMenu();
                 break;
         }
-    }
-
-    /**
-     * @description Main function to start the game
-     */
-    public static void main(String[] args) {
-        KLauncher launcher = new KLauncher();
-        launcher.mainMenu();
     }
 }
