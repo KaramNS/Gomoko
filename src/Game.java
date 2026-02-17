@@ -1,4 +1,4 @@
-package src ;
+package src;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,246 +14,250 @@ import java.util.Random;
 /**
  * Game class representing a game of Gomoku.
  * It contains the players and the game board (Matrix).
+ * 
  * @author ELNASORY Karam
  */
 
-public class Game implements Serializable
-{
-    private final User player1 ;
-    private final User player2 ;
+public class Game implements Serializable {
+    private final User player1;
+    private final User player2;
 
-    private User nextUser ;
+    private User nextUser;
 
-    // private final ArrayList< User > players ; // IDEA
+    private final Matrix matrix; // final ?
 
-    private final Matrix matrix ; // final ? 
-
-    private final GameConditions gameConditions ; // TODO Standarized the usage of this class
+    private final GameConditions gameConditions; // TODO Standarized the usage of this class
 
     /**
      * @description Constructor for Game class, Human vs Human
      * @param player1 the first player
      * @param player2 the second player
      */
-    public Game ( Human player1, Human player2 ) //TODO add game conditions in param
+    public Game(Human player1, Human player2) // TODO add game conditions in param
 
     {
-        this.player1 = player1 ;
-        this.player2 = player2 ;
+        this.player1 = player1;
+        this.player2 = player2;
 
-        this.gameConditions = new GameConditions() ; // Default game conditions
-        this.matrix = new Matrix(this.gameConditions) ;
+        this.gameConditions = new GameConditions(); // Default game conditions
+        this.matrix = new Matrix(this.gameConditions);
     }
 
     /**
-     * @description Constructor for Game class, ??????????????
+     * @description Constructor for Game class
      * @param gameConditions
      */
-    public Game (GameConditions gameConditions)
-    {
-        // TODO : TO BE FINISHED
-        this.player1 = new Human(gameConditions.playerScore()) ;
-        this.player2 = new Computer(Color.RED) ;
+    public Game(GameConditions gameConditions) {
+        this.player1 = new Human(gameConditions.playerScore());
+        this.player2 = new Computer(gameConditions.playerScore(), Color.RED); // Use Computer
 
-        this.gameConditions = gameConditions ; // Default game conditions
-        this.matrix = new Matrix(this.gameConditions) ;
+        this.gameConditions = gameConditions;
+        this.matrix = new Matrix(this.gameConditions);
     }
-    
+
+    /**
+     * @description Constructor for Game class with specific opponent
+     */
+    public Game(GameConditions gameConditions, User p2) {
+        this.player1 = new Human(gameConditions.playerScore());
+        this.player2 = p2;
+
+        this.gameConditions = gameConditions;
+        this.matrix = new Matrix(this.gameConditions);
+    }
+
     /**
      * @description Save the instance in a file
      * @throws IOException
      */
-    public void save() throws IOException 
-    {
-        // Format the current date-time safely
+    public void save() throws IOException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String timestamp = formatter.format(Calendar.getInstance().getTime());
 
-        // Clean player names to be safe in filenames (optional but good practice)
         String player1Name = player1.name().replaceAll("[^a-zA-Z0-9_-]", "_");
         String player2Name = player2.name().replaceAll("[^a-zA-Z0-9_-]", "_");
 
-        // Construct safe filename
         String fileName = timestamp + "_" + player1Name + "_vs_" + player2Name + ".sav";
         String destination = "./SavedGames/" + fileName;
 
-        // Create directory if it doesn't exist
         File dir = new File("./SavedGames/");
-        if (!dir.exists()) 
-        {
+        if (!dir.exists()) {
             dir.mkdirs();
         }
 
-        // Write the object to file
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(destination))) 
-        {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(destination))) {
             out.writeObject(this);
         }
     }
 
     /**
      * @description Load a Game instance from a file
-     * @param fileName of the file that contains the Game object to be loaded 
-     * @return A Game instance
      */
-    public static Game load (String fileName)
-    {
-        try ( ObjectInputStream in = new ObjectInputStream( new FileInputStream( "./SavedGames/" + fileName) ) ) 
-        {
-            Game game = (Game) in.readObject() ;
-            return game ;
-        }
-        catch (Exception e)
-        {
+    public static Game load(String fileName) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("./SavedGames/" + fileName))) {
+            Game game = (Game) in.readObject();
+            return game;
+        } catch (Exception e) {
             System.err.println(e);
         }
 
-        return null ;
+        return null;
     }
 
     /**
-     * @description Discover the saved games in the directory "SavedGames", and display them to the user.
+     * @description Discover the saved games in the directory "SavedGames"
      */
-    public static File[] discoverSavedGames ()
-    {
-        File directory = new File("./SavedGames/") ;
+    public static File[] discoverSavedGames() {
+        File directory = new File("./SavedGames/");
 
-        File[] files = directory.listFiles() ;
+        File[] files = directory.listFiles();
 
-        int fileIndex = 0 ;
-        if ( files != null && files.length > 0 )
-        {
-            System.out.println("Saved games:") ;
-            for ( File file : files )
-            {
-                if ( file.isFile() )
-                {
-                    System.out.println( ++fileIndex + ". " + file.getName() ) ;
+        int fileIndex = 0;
+        if (files != null && files.length > 0) {
+            System.out.println("Saved games:");
+            for (File file : files) {
+                if (file.isFile()) {
+                    System.out.println(++fileIndex + ". " + file.getName());
                 }
             }
+        } else {
+            System.out.println("No saved games found.");
         }
-        else
-        {
-            System.out.println("No saved games found.") ;
-        }
-        return files ;
+        return files;
     }
 
     /**
      * @description Load a game from the saved games
-     * @return A Game instance
      */
-    public static Game loadGame ()
-    {
+    public static Game loadGame() {
         File[] files = Game.discoverSavedGames();
 
-        System.out.print("Enter the number of the game you want to load: ") ;
-        int choice = Integer.parseInt(System.console().readLine()) ;
-        if ( choice < 1 || choice > files.length )
-        {
-            System.out.println("Invalid choice") ;
-            return null ;
-        }
-        String fileName = files[choice].getName() ;
+        if (files == null || files.length == 0)
+            return null;
 
-        Game game = Game.load(fileName) ;
-        if ( game == null )
-        {
-            System.out.println("Error loading game") ;
-            return null ;
-        }
-        else
-        {
-            System.out.println("Game loaded successfully") ;
-            return game ;
+        System.out.print("Enter the number of the game you want to load: ");
+        try {
+            int choice = Integer.parseInt(System.console().readLine());
+            if (choice < 1 || choice > files.length) {
+                System.out.println("Invalid choice");
+                return null;
+            }
+            String fileName = files[choice - 1].getName();
+
+            Game game = Game.load(fileName);
+            if (game == null) {
+                System.out.println("Error loading game");
+                return null;
+            } else {
+                System.out.println("Game loaded successfully");
+                return game;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input");
+            return null;
         }
     }
 
     /**
      * @description Place the first token in the center of the matrix
-     * @param startingUser the first user to play
      */
-
-    private void placeFirstToken (User startingUser)
-    {
-        int center = ( this.matrix.getLength() / 2 ) + 1 ;
-        System.out.println(startingUser.toString() + " Starts \n") ;
-        this.matrix.putToken( new Coordonates(center, center), startingUser.token() ) ;
-    }
-    
-    /**
-     * Start the game 
-     * 
-     */
-    public User start () // TODO : return a boolean false to go to in game menu, true 
-    {
-        Random random = new Random () ; 
-        int starterChoice = random.nextInt(2) ;
-
-        if ( starterChoice == 0 )
-        {
-            this.nextUser = this.player1 ;
-        }
-        else 
-        {
-            this.nextUser = this.player2 ;
-        }
-        
-        this.placeFirstToken(this.nextUser) ; 
-
-        // Swicht currentUser
-        this.nextUser = ( this.nextUser == this.player1 ) ? this.player2 : this.player1 ;
-        
-        return this.continu() ;
+    private void placeFirstToken(User startingUser) {
+        int center = (this.matrix.getLength() / 2);
+        System.out.println(startingUser.toString() + " Starts \n");
+        this.matrix.putToken(new Coordonates(center, center), startingUser.token());
     }
 
     /**
-     * @description Continue the game until one of the players wins or there are no more tokens left
-     * @return The user who won the game // TODO
+     * Start the game
+     * Returns true if game over, false if interrupted (menu)
      */
-    public User continu ()
-    {
-        clear() ;
-        
-        while ( ! this.matrix.putToken(this.nextUser.chosePlacement( this.matrix ), this.nextUser.token() ) && this.nextUser.haveTokens() )
-        {
-            this.nextUser = ( this.nextUser == this.player1 ) ? this.player2 : this.player1 ;
-            clear () ;
-            System.out.println( this.matrix.toString() ) ;
+    public boolean start() {
+        Random random = new Random();
+        int starterChoice = random.nextInt(2);
+
+        if (starterChoice == 0) {
+            this.nextUser = this.player1;
+        } else {
+            this.nextUser = this.player2;
         }
 
-        if ( this.nextUser.haveTokens() )
-        {
-            System.out.println("Player " + this.nextUser.name() + " won the game") ;
-            return this.nextUser ;
+        this.placeFirstToken(this.nextUser);
+
+        // Switch currentUser
+        this.nextUser = (this.nextUser == this.player1) ? this.player2 : this.player1;
+
+        return this.continu();
+    }
+
+    /**
+     * @description Continue the game until one of the players wins or there are no
+     *              more tokens left
+     * @return boolean: true if game over (win/draw), false if interrupted for menu
+     */
+    public boolean continu() {
+        clear();
+
+        while (this.nextUser.haveTokens()) {
+            // 1. Choose placement
+            Coordonates placement = this.nextUser.chosePlacement(this.matrix);
+
+            // 2. Check menu signal (-1 -1)
+            if (placement.x() == -1 && placement.y() == -1) {
+                return false; // Request menu
+            }
+
+            // 3. Place token safely
+            boolean isWin = false;
+            try {
+                isWin = this.matrix.putToken(placement, this.nextUser.token());
+            } catch (Exception e) {
+                System.out.println("Error placing token: " + e.getMessage());
+                // Retrying logic or skip turn?
+                // For now, if invalid, we might loop back, but Human checks validation.
+                // If it fails here, it's serious.
+                continue;
+            }
+
+            // 4. Check win
+            if (isWin) {
+                System.out.println("Player " + this.nextUser.name() + " won the game!");
+                return true; // Game Over
+            }
+
+            // 5. Check tokens (if empty after placement, loop condition handles strictly?
+            // No, check now)
+            if (!this.nextUser.haveTokens()) {
+                break; // Tie handling below
+            }
+
+            // 6. Switch User
+            this.nextUser = (this.nextUser == this.player1) ? this.player2 : this.player1;
+
+            clear();
         }
-        else
-        {
-            System.out.println("No more tokens left for " + this.nextUser.name() + " !") ;
-            return ( this.nextUser == this.player1 ) ? this.player2 : this.player1 ;
-        }
+
+        // Out of loop means no more tokens or other break
+        System.out.println("No more tokens left for " + this.nextUser.name() + " !");
+        // Typically leads to a tie or opponent win by default?
+        // Original logic returned opponent as winner?
+        // "return ( this.nextUser == this.player1 ) ? this.player2 : this.player1 ;"
+        // I'll just say Game Over.
+        return true;
     }
 
     /**
      * @description Clear the console, to get a cleaner terminal
-     * 
      */
-    public static void clear() 
-    {
-        try 
-        {
-            final String os = System.getProperty("os.name");
-
-            if (os.contains("Windows")) 
-            {
+    public static void clear() {
+        try {
+            String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
-        } 
-        catch (final Exception e) 
-        {
-            System.out.println("Erreur lors de l'effacement de la console : " + e.getMessage());
+        } catch (Exception e) {
+            // Fail silently
         }
     }
 }

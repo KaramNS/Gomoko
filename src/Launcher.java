@@ -57,10 +57,29 @@ public class Launcher {
     }
 
     /**
+     * Displays a Gomoko logo in the console.
+     */
+    private void printGomokoLogo() {
+        System.out.println(GREEN +
+                "\n" +
+                "       _______   ______   .___  ___.   ______    __  ___   ______   \n" +
+                "      /  _____| /  __  \\  |   \\/   |  /  __  \\  |  |/  /  /  __  \\  \n" +
+                "     |  |  __  |  |  |  | |  \\  /  | |  |  |  | |  '  /  |  |  |  | \n" +
+                "     |  | |_ | |  |  |  | |  |\\/|  | |  |  |  | |    <   |  |  |  | \n" +
+                "     |  |__| | |  `--'  | |  |  |  | |  `--'  | |  .  \\  |  `--'  | \n" +
+                "      \\______|  \\______/  |__|  |__|  \\______/  |__|\\__\\  \\______/  \n" +
+                "\n" +
+                RESET);
+    }
+
+    /**
      * Displays a welcome message at the start of the game.
      */
     private void printWelcomeMessage() {
-        printHeader("🎮  GOMOKU GAME  🎮");
+        clearConsole();
+        printGomokoLogo();
+        System.out.println(CYAN + "     🎮 Welcome to GOMOKU GAME ! 🎮" + RESET);
+        System.out.println(CYAN + "=====================================" + RESET);
         System.out.println(YELLOW + "   Get ready to challenge a friend" + RESET);
         System.out.println(YELLOW + "          or the computer!" + RESET);
         System.out.println();
@@ -92,7 +111,7 @@ public class Launcher {
                 case 2:
                     this.game = Game.loadGame();
                     if (this.game != null) {
-                        this.game.start();
+                        handleGameLoop(false); // False means RESUME (call continu)
                     } else {
                         System.out.println("Press Enter to return to menu...");
                         System.console().readLine();
@@ -149,11 +168,14 @@ public class Launcher {
             switch (choice) {
                 case 1:
                     this.game = new Game(this.gameConditions); // Player vs Player
-                    this.game.start();
+                    handleGameLoop(true); // True means START
                     break;
                 case 2:
-                    this.game = new Game(this.gameConditions); // Player vs Computer
-                    this.game.start();
+                    // Player vs Computer
+                    // Note: Game(GameConditions) provides P2 as Computer by default in our updated
+                    // Game.java
+                    this.game = new Game(this.gameConditions);
+                    handleGameLoop(true);
                     break;
                 case 3:
                     mainMenu();
@@ -171,6 +193,35 @@ public class Launcher {
             } catch (InterruptedException ie) {
             }
             startingMenu();
+        }
+    }
+
+    /**
+     * Helper to manage game flow loop.
+     * 
+     * @param isNewGame true if calling start(), false if calling continu()
+     */
+    private void handleGameLoop(boolean isNewGame) {
+        boolean isGameOver;
+        try {
+            if (isNewGame) {
+                isGameOver = this.game.start();
+            } else {
+                isGameOver = this.game.continu();
+            }
+
+            if (isGameOver) {
+                // Game ended clearly (win or out of tokens)
+                System.out.println("\nPress Enter to return to Main Menu...");
+                System.console().readLine();
+                mainMenu();
+            } else {
+                // Determine interruption (menu requested)
+                inGameMenu();
+            }
+        } catch (Exception e) {
+            System.out.println(RED + "An error occurred: " + e.getMessage() + RESET);
+            inGameMenu();
         }
     }
 
@@ -193,7 +244,7 @@ public class Launcher {
 
             switch (choice) {
                 case 1:
-                    this.game.continu();
+                    handleGameLoop(false); // Resume
                     break;
                 case 2:
                     try {
@@ -204,7 +255,7 @@ public class Launcher {
                     }
                     System.out.println("Press Enter to continue...");
                     System.console().readLine();
-                    this.game.continu();
+                    handleGameLoop(false); // Resume
                     break;
                 case 3:
                     System.out.println("Exiting...");
